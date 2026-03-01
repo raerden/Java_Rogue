@@ -1,5 +1,7 @@
 package domain.items;
 
+import java.util.Random;
+
 public enum ConsumableType {
     HEALTH("здоровья"),
     STRENGTH("силы"),
@@ -13,6 +15,11 @@ public enum ConsumableType {
 
     public String getDisplayName() {
         return displayName;
+    }
+
+    public static ConsumableType getRandom() {
+        ConsumableType[] types = values();
+        return types[new Random().nextInt(types.length)];
     }
 }
 

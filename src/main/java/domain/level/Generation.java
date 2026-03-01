@@ -1,6 +1,13 @@
 package domain.level;
 
 import domain.Position;
+import domain.items.BaseItem;
+import domain.items.Food;
+import domain.items.ItemType;
+import domain.monsters.Enemy;
+import domain.monsters.Ghost;
+import domain.monsters.Ogre;
+import domain.monsters.Zombie;
 import domain.player.Player;
 
 import java.util.*;
@@ -76,10 +83,91 @@ public class Generation {
         level.setStairsDown(level.getRoom(endRoom).getRandomFreePosition(1));
 
         // 4. Размещаем сущности
-        //populateLevel(level, levelNumber);
+        populateLevel(level, startRoom);
 
         return level;
     }
+
+    private void populateLevel(Level level, int startRoom) {
+        Random random = new Random();
+        Position stairsDown = level.getStairsDown(); // получаем позицию лестницы
+
+        for (int roomNum = 0; roomNum < ROOM_COUNT; roomNum++) {
+            // Пропускаем стартовую комнату
+            if (roomNum == startRoom) continue;
+
+            // Получаем все свободные позиции в комнате через метод Level
+            List<Position> freePositions = level.getFreePositionsInRoom(roomNum);
+
+            // Если нет свободных позиций, пропускаем комнату
+            if (freePositions.isEmpty()) continue;
+
+            if (stairsDown != null && level.getRoom(roomNum).isPositionInRoom(stairsDown)) {
+                freePositions.removeIf(pos -> pos.equal(stairsDown));
+            }
+
+            // Если после удаления лестницы не осталось свободных позиций, пропускаем комнату
+            if (freePositions.isEmpty()) continue;
+            // Перемешиваем для случайного выбора
+            Collections.shuffle(freePositions);
+
+            int positionIndex = 0;
+            Room room = level.getRoom(roomNum);
+
+            // Генерируем врага (80% шанс) если можно добавить и есть свободные позиции
+            int chanceToGenerateEnemy = random.nextInt(10); //80 %
+            if (chanceToGenerateEnemy > 1 && room.canAddEnemy() && positionIndex < freePositions.size()) {
+                Enemy enemy = EntityGenerator.generateEnemyForLevel(level.getLevelNumber());
+                enemy.setPosition(freePositions.get(positionIndex));
+
+                // Добавляем через Level, который синхронизирует с Room и units
+                if (level.addEntity(enemy, roomNum)) {
+                    positionIndex++;
+                }
+            }
+
+            // Генерируем предметы (0-3 предмета)
+            int itemsToGenerate = random.nextInt(1, 4); // 1-3
+            for (int i = 0; i < itemsToGenerate && room.canAddItem() && positionIndex < freePositions.size(); i++) {
+                BaseItem item = EntityGenerator.generateRandomItem();
+                item.setPosition(freePositions.get(positionIndex));
+
+                // Добавляем через Level
+                if (level.addEntity(item, roomNum)) {
+                    positionIndex++;
+                }
+            }
+        }
+    }
+
+//    public BaseItem generateRandomItem(int level){
+//        ItemType itemTipe = ItemType.getRandomItem();
+//        if (itemTipe.equals(ItemType.FOOD) {
+//            return new Food("Bread", );
+//        }
+//    }
+//
+//    public Enemy generateRandomEnemy(int level, Position position){
+//        List<String> list = Arrays.asList("Ghost", "Ogre", "SnakeMagician", "Vampire", "Zombie");
+//        Random rand = new Random();
+//
+//        String randomEnemyType = list.get(rand.nextInt(list.size()));
+//        return new Enemy("Lary", randomEnemyType, level, position);
+//        if (randomEnemyType.equals("Zombie")) {
+//            return new Zombie("Lary", level, position);
+//        }else if (randomEnemyType.equals("Ghost")) {
+//            return new Ghost("Lary", level, position);
+//        }else if (randomEnemyType.equals("Ogre")) {
+//            return new Ogre("Lary", level, position);
+//        }else if (randomEnemyType.equals("Ghost")) {
+//            return new Ghost("Lary", level, position);
+//        }
+//    }
+
+    //Enemy: [z, g, z]
+    //for x in l:
+    //  x.update(
+
 
     public int getRoomAtDistance(int startRoom, boolean[][] connections) {
         int n = connections.length;

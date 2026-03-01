@@ -8,8 +8,8 @@ import domain.player.Player;
 public class Treasure extends BaseItem {
     private int value;
 
-    public Treasure(String name, char symbol, int value, Position position) {
-        super(name, symbol, ItemType.TREASURE, position);
+    public Treasure(String name, int value, Position position) {
+        super(name, ItemType.TREASURE, position);
         this.value = value;
     }
     public void apply(Player player){
@@ -18,5 +18,9 @@ public class Treasure extends BaseItem {
 
     public int getValue(){
         return value;
+    }
+    @Override
+    public char getDisplayChar() {
+        return '*';
     }
 }

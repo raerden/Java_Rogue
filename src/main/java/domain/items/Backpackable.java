@@ -4,6 +4,10 @@ import domain.player.Player;
 import domain.Position;
 
 public interface Backpackable {
+
+    /**
+    *Использование на player
+     */
     void apply(Player player);
 
     /**
@@ -15,10 +19,5 @@ public interface Backpackable {
      * Получить название предмета
      */
     String getName();
-
-    /**
-     * Получить символ для отрисовки
-     */
-    char getSymbol();
 
 }

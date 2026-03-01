@@ -9,8 +9,8 @@ public class Scroll extends BaseItem implements Entity, Backpackable {
     private final ConsumableType effectType;          // Тип свитка (enum)
     private final int bonus;         // На сколько повышает характеристику
 
-    public Scroll(String name, char symbol, int bonus, ConsumableType effectType, Position position) {
-        super(name, symbol, ItemType.SCROLL, position);
+    public Scroll(String name, int bonus, ConsumableType effectType, Position position) {
+        super(name, ItemType.SCROLL, position);
         this.effectType = effectType;
         this.bonus = bonus;
     }
@@ -18,9 +18,9 @@ public class Scroll extends BaseItem implements Entity, Backpackable {
     public void apply(Player player) {
         switch (effectType) {
             case HEALTH:
-                //здесь потом заменить вывод сообщения под статусную строку
+                //todo здесь потом заменить вывод сообщения под статусную строку
                 System.out.printf("%s зачитал %s и увеличил максимальное здоровье до %d\n",
-                        player.getType(), name, player.getMaxHealth() + bonus
+                        player.getName(), name, player.getMaxHealth() + bonus
                 );
                 player.setMaxHealth(player.getMaxHealth() + bonus);
                 break;
@@ -35,10 +35,10 @@ public class Scroll extends BaseItem implements Entity, Backpackable {
         }
     }
 
-    @Override
-    public void setPosition(Position position) {
-        throw new UnsupportedOperationException("Свиток нельзя переместить!");
-    }
+//    @Override
+//    public void setPosition(Position position) {
+//        throw new UnsupportedOperationException("Свиток нельзя переместить!");
+//    }
 
     public ConsumableType getConsumableType() {
         return effectType;
@@ -54,5 +54,9 @@ public class Scroll extends BaseItem implements Entity, Backpackable {
                 name, type, bonus, position);
     }
 
+    @Override
+    public char getDisplayChar() {
+        return '~';
+    }
 
 }

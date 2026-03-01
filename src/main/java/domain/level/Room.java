@@ -2,6 +2,8 @@ package domain.level;
 
 import domain.Entity;
 import domain.Position;
+import domain.items.BaseItem;
+import domain.monsters.Enemy;
 
 import java.util.*;
 
@@ -13,8 +15,13 @@ public class Room {
     private final Door[] doors = new Door[MAX_DOORS];
     private boolean isFreePositions;
 
+
+
     //Координаты сущностей в комнате.
     private List<Entity> entities = new ArrayList<>();
+    // Разделяем сущности по типам для их подсчета в комнате
+    private List<Enemy> enemies = new ArrayList<>();
+    private List<BaseItem> items = new ArrayList<>();
 
     // минимальные размеры комнаты
     private static final int minRoomWidth = 8;
@@ -169,7 +176,7 @@ public class Room {
     }
 
     //Проверить что позиция не занята
-    private boolean isPositionFree(Position position) {
+    public boolean isPositionFree(Position position) {
         for (Entity entity : entities) {
             if (position.equal(entity.getPosition())) {
                 return false;
@@ -182,14 +189,46 @@ public class Room {
         if (isFreePositions &&
                 isPositionInRoom(entity.getPosition()) &&
                 isPositionFree(entity.getPosition())) {
-            entities.add(entity);
+            if (entity instanceof BaseItem && canAddItem()){
+                items.add((BaseItem) entity);
+                entities.add(entity);
+            }
+            else if (entity instanceof Enemy && canAddEnemy()){
+                enemies.add((Enemy) entity);
+                entities.add(entity);
+            }
+            else {
+                entities.add(entity);
+            }
+
             return true;
         }
         return false;
     }
 
+
+//    // Метод для получения всех свободных позиций
+//    public List<Position> getFreePositions() {
+//        // возвращает все свободные клетки в комнате
+//    }
+
+    // Проверка лимитов на типы сущностей
+    public boolean canAddEnemy() {
+        return enemies.size() < 1; // максимум 1 враг
+    }
+
+    public boolean canAddItem() {
+        return items.size() < 3; // максимум 3 предмета
+    }
+
     public void deleteEntity(Entity entity) {
         entities.remove(entity);
+        if (entity instanceof BaseItem){
+            items.remove(entity);
+        }
+        if (entity instanceof Enemy){
+            enemies.remove(entity);
+        }
     }
 
 }

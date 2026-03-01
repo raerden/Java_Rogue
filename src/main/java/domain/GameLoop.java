@@ -47,7 +47,7 @@ public class GameLoop {
                 presentation.displayStartMenu();
                 break;
             case PAUSE:
-                //presentation.displayPauseMenu();
+                presentation.displayPauseMenu();
                 break;
             case GAME:
                 presentation.displayGame(currentGame);
@@ -114,9 +114,9 @@ public class GameLoop {
         }
     }
 
-    private void handlePauseInput(KeyStroke key) {
+    private void handlePauseInput(KeyStroke key) throws IOException {
         if (key.getKeyType() == KeyType.Escape) {
-            state = FSM_State.GAME;
+            running = false;
             return;
         }
 
@@ -126,14 +126,22 @@ public class GameLoop {
                 case '1': // Resume
                     state = FSM_State.GAME;
                     break;
-                case '2': // Save & Exit
-                    saveAndExit();
+                case '2': // New game
+                    String name = presentation.displayEnterNameDialog();
+                    if (name != null && !name.isEmpty()) {
+                        currentGame = null;
+                        currentGame = new Game(name);
+                        currentGame.generateLevel(1);
+                        state = FSM_State.GAME;
+                    }
                     break;
-                case '3': // Main Menu
-                    state = FSM_State.START;
-                    currentGame = null;
+                case '3': // Save game
+                    saveGame();
                     break;
-                case '4': // Leaders
+                case '4': // Load game
+                    loadGame();
+                    break;
+                case '5': // Leaders
                     state = FSM_State.LEADERS;
                     break;
             }
@@ -142,8 +150,7 @@ public class GameLoop {
 
     private void handleGameInput(KeyStroke key) {
         if (key.getKeyType() == KeyType.Escape) {
-//            state = FSM_State.PAUSE;
-            state = FSM_State.START;
+            state = FSM_State.PAUSE;
             return;
         }
 
@@ -153,18 +160,26 @@ public class GameLoop {
             switch (c) {
                 case 'W':
                 case 'w':
+                case 'Ц':
+                case 'ц':
                     currentGame.moveUp();
                     return;
                 case 'S':
                 case 's':
+                case 'Ы':
+                case 'ы':
                     currentGame.moveDown();
                     return;
                 case 'A':
                 case 'a':
+                case 'Ф':
+                case 'ф':
                     currentGame.moveLeft();
                     return;
                 case 'D':
                 case 'd':
+                case 'В':
+                case 'в':
                     currentGame.moveRight();
                     return;
                 case 'p':

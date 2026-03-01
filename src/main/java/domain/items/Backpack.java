@@ -42,7 +42,7 @@ public class Backpack {
 
     private boolean tryAddToList(List<Backpackable> list, Backpackable item) {
         if (list.size() >= MAX_ITEMS_PER_TYPE) {
-            System.out.println("Рюкзак полон для предметов этого типа!");
+            System.out.println("Рюкзак полон для предметов этого типа! " + item);
             return false;
         }
         return list.add(item);

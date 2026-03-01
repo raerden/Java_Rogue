@@ -8,8 +8,8 @@ public class Weapon extends BaseItem{
     private final int bonusDexterity;
     private boolean equipped;
 
-    public Weapon(String name, char symbol, int bonusStrength, int bonusDexterity, Position position) {
-        super(name, symbol, ItemType.WEAPON, position);
+    public Weapon(String name, int bonusStrength, int bonusDexterity, Position position) {
+        super(name, ItemType.WEAPON, position);
         this.bonusStrength = bonusStrength;
         this.bonusDexterity = bonusDexterity;
         this.equipped = false;
@@ -20,7 +20,7 @@ public class Weapon extends BaseItem{
         player.setStrength(player.getStrength() + bonusStrength);
         player.setDexterity(player.getDexterity() + bonusDexterity);
         System.out.printf("%s снарядил %s, Strength стала %d, Dexterity стала %d\n",
-                player.getType(), name, player.getStrength(), player.getDexterity()
+                player.getName(), name, player.getStrength(), player.getDexterity()
         );
         equipped = true;
     }
@@ -30,7 +30,7 @@ public class Weapon extends BaseItem{
             player.setStrength(Math.max(player.getStrength() - bonusStrength, 1));
             player.setDexterity(Math.max(player.getDexterity() - bonusDexterity, 1));
             System.out.printf("%s убрал %s, Strength стала %d, Dexterity стала %d\n",
-                    player.getType(), name, player.getStrength(), player.getDexterity()
+                    player.getName(), name, player.getStrength(), player.getDexterity()
             );
             equipped = false;
             return true;
@@ -39,10 +39,10 @@ public class Weapon extends BaseItem{
         }
     }
 
-    @Override
-    public void setPosition(Position position) {
-        throw new UnsupportedOperationException("Оружие нельзя переместить!");
-    }
+//    @Override
+//    public void setPosition(Position position) {
+//        throw new UnsupportedOperationException("Оружие нельзя переместить!");
+//    }
 
     public int getBonusStrength() {
         return bonusStrength;
@@ -56,5 +56,10 @@ public class Weapon extends BaseItem{
     public String toString() {
         return String.format("Оружие '%s' (%s +%d) (%s +%d) на %s",
                 name, ConsumableType.STRENGTH, bonusStrength, ConsumableType.DEXTERITY, bonusDexterity, position);
+    }
+
+    @Override
+    public char getDisplayChar() {
+        return '/';
     }
 }
