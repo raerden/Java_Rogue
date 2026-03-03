@@ -135,32 +135,62 @@ public class Level {
         return freePositions;
     }
 
+
+ //Получить список свободных позиций в комнате вокруг указанной точки
+     public List<Position> getFreeNearPositions(Position current) {
+        int roomNumber = findRoomByPosition(current);
+        if (roomNumber == -1) {
+            return null; // точка не в комнате
+        }
+
+        Room room = rooms[roomNumber];
+        List<Position> freePositions = new ArrayList<>();
+
+        // 2. Проверяем все 8 направлений (включая диагонали)
+        int[] dx = {-1, 0, 1, -1, 1, -1, 0, 1};
+        int[] dy = {-1, -1, -1, 0, 0, 1, 1, 1};
+
+        for (int i = 0; i < dx.length; i++) {
+            Position checkPos = new Position(
+                    current.getX() + dx[i],
+                    current.getY() + dy[i]
+            );
+
+            // Проверяем, что позиция внутри комнаты
+            if (!room.isPositionInRoom(checkPos)) {
+                continue;
+            }
+
+            // Проверяем, что позиция свободна (нет сущностей)
+            if (units.getEntityAt(checkPos) != null) {
+                continue;
+            }
+
+            // Проверяем, что это не лестница вниз
+            if (checkPos.equal(stairsDown)) {
+                continue;
+            }
+
+            // Все проверки пройдены - позиция свободна
+            freePositions.add(checkPos);
+        }
+
+        // 3. Возвращаем null, если свободных позиций нет
+        return freePositions.isEmpty() ? null : freePositions;
+    }
+
+    //найти номер комнаты по позиции, если она в комнате
+    private int findRoomByPosition(Position position) {
+        for (int i = 0; i < rooms.length; i++) {
+            if (rooms[i].isPositionInRoom(position)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public Set<Entity> getAllEntities() {
         return units.getAllEntities();
     }
-    //    private static final int[][] ROOM_COORDS = {
-//            {0, 0, 22, 9},    // комната 1
-//            {25, 0, 47, 9},   // комната 2
-//            {50, 0, 72, 9},   // комната 3
-//            {0, 11, 22, 20},  // комната 4
-//            {25, 11, 47, 20}, // комната 5
-//            {50, 11, 72, 20}, // комната 6
-//            {0, 22, 22, 30},  // комната 7
-//            {25, 22, 47, 30}, // комната 8
-//            {50, 22, 72, 30}  // комната 9
-//    };
-//
-//    public Level(int level) {
-//        this.rooms = generateRooms();
-//    }
-//
-//    private ArrayList<Room> generateRooms() {
-//        ArrayList<Room> rooms = new ArrayList<>(9);
-//        for (int i = 0; i < 9; i++) {
-//            Position min = new Position(ROOM_COORDS[i][0], ROOM_COORDS[i][1]);
-//            Position max = new Position(ROOM_COORDS[i][2], ROOM_COORDS[i][3]);
-//            rooms.add(new Room(min, max));
-//        }
-//        return rooms;
-//    }
+
 }

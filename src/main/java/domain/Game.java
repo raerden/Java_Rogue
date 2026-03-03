@@ -1,9 +1,14 @@
 package domain;
 
-import domain.items.Potion;
+import domain.items.Backpackable;
+import domain.items.ItemType;
+import domain.items.Weapon;
 import domain.level.*;
 import domain.player.Player;
 import domain.monsters.*;
+
+import java.util.List;
+import java.util.Random;
 
 
 public class Game {
@@ -13,9 +18,12 @@ public class Game {
     private int currentRoom = -1;//-1 если игрок не в комнате
     private int currentCorridor = -1;//-1 если игрок не в коридоре
     private boolean playerMoved = false; // флаг для отслеживания хода игрока
+    private String gameLog;
+    private ItemType backpackCurrentItems; // Текущая вкладка рюкзака
+    private static final Random RANDOM = new Random();
 
     public Game(String name) {
-        this.player = new Player(name, new Position(0, 0));
+        this.player = new Player(name, null);
         // генерируем первый уровень
         generateLevel(1);
 
@@ -35,8 +43,9 @@ public class Game {
             player.getBackpack().addItem(EntityGenerator.generateRandomScroll());
         }
 
-    }
+        setGameLog("Game started");
 
+    }
 
     public void generateLevel(int levelNumber) {
         this.currentLevel = generator.generateLevel(levelNumber);
@@ -67,6 +76,8 @@ public class Game {
 
         //Проверка, что под ногами: 1. предмет, 2. выход с уровня
 
+        playerMoved = true;
+        update();
     }
 
     public void update() {
@@ -136,28 +147,89 @@ public class Game {
     public void moveLeft() {
         Position newPosition = new Position(player.getPosition().getX() - 1, player.getPosition().getY());
         setNewPosition(newPosition);
-        playerMoved = true;
-        update();
     }
 
     public void moveRight() {
         Position newPosition = new Position(player.getPosition().getX() + 1, player.getPosition().getY());
         setNewPosition(newPosition);
-        playerMoved = true;
-        update();
     }
 
     public void moveUp() {
         Position newPosition = new Position(player.getPosition().getX(), player.getPosition().getY() - 1);
         setNewPosition(newPosition);
-        playerMoved = true;
-        update();
     }
 
     public void moveDown() {
         Position newPosition = new Position(player.getPosition().getX(), player.getPosition().getY() + 1);
         setNewPosition(newPosition);
-        playerMoved = true;
-        update();
+    }
+
+    public void selectBackpackItem(int itemIndex) {
+        List<Backpackable> backpackItemsList = player.getBackpack().getListByType(backpackCurrentItems);
+
+        if (itemIndex > backpackItemsList.size()) return;
+
+        //получили нажатую клавишу в выбранном отделе рюкзака (0-9)
+        //Но список идет от 0. кнопка 1 соотвествует 0 в списке рюкзака
+        itemIndex--;
+
+        if (backpackCurrentItems == ItemType.WEAPON) { //смена оружия
+            // бросить оружие из рук
+            if (itemIndex == -1) {
+                dropCurrentWeapon();
+            } else  if (dropCurrentWeapon()) {
+                // если оружие успешно сброшено или руки были пустые
+                // применить выбранное оружие
+                player.equipWeapon((Weapon) backpackItemsList.get(itemIndex));
+                //удалить предмет из списка
+                backpackItemsList.remove(itemIndex);
+            }
+        } else {//используем еду, зелье, свиток
+            backpackItemsList.get(itemIndex).apply(player);
+            backpackItemsList.remove(itemIndex);
+        }
+    }
+
+    private boolean dropCurrentWeapon() {
+        Weapon currentWeapon = player.getEquippedWeapon();
+        if (currentWeapon == null) return true;
+        //проверить есть ли рядом свободная клетка, чтобы сбросить оружие
+        Position freePosToDrop = getFreePositionNearPlayer();
+        if (freePosToDrop != null) {
+            //добавить currentWeapon в предметы на карте в указанную позицию
+            currentLevel.addEntity(currentWeapon, currentRoom);
+            player.equipWeapon(null);
+            System.out.println(currentRoom + "Выбросил на пол " + currentWeapon.toString());
+            return true;
+        }
+        System.out.println("Нельзя выбросить оружие. На полу нет свободного места.");
+        return false;
+    }
+
+    private Position getFreePositionNearPlayer() {
+        List<Position> freePosList = currentLevel.getFreeNearPositions(player.getPosition());
+        Position randomPos = null;
+        if (freePosList != null && !freePosList.isEmpty()) {
+            int randomIndex = RANDOM.nextInt(freePosList.size());
+            randomPos = freePosList.get(randomIndex);
+        }
+        return randomPos;
+    }
+
+
+    public void setGameLog(String str) {
+        gameLog = str;
+    }
+
+    public String getGameLog() {
+        return gameLog;
+    }
+
+    public void setBackpackCurrentItems(ItemType itemType) {
+        backpackCurrentItems = itemType;
+    }
+
+    public ItemType getBackpackCurrentItems() {
+        return backpackCurrentItems;
     }
 }

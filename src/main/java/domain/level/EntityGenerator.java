@@ -110,7 +110,7 @@ public class EntityGenerator {
 
     private static String generatePotionName(ConsumableType type) {
         String[] prefixesForHeal = {"Живая вода", "Активированный уголь", "Подорожник", "Зелье исцеления"};
-        String[] prefixesForStrength = {"Балтика 9", "Cветлое нефильтрованное", "Сила Огра"};
+        String[] prefixesForStrength = {"Балтика 9", "Cветлое нефильтрованное", "Сила Огра", "Шнапс бабы Зины"};
         String[] prefixesForDexterity = {"Скользкий тип", "Нео", "Я у мамы вор"};
         String prefix;
         if (type.equals(ConsumableType.HEALTH)) {

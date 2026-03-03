@@ -2,10 +2,11 @@ package domain;
 
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
+import domain.items.ItemType;
 import presentation.Presentation;
 
 import java.io.IOException;
-
+import java.lang.Character;
 
 public class GameLoop {
     private final Presentation presentation;
@@ -53,7 +54,7 @@ public class GameLoop {
                 presentation.displayGame(currentGame);
                 break;
             case BACKPACK:
-                //presentation.displayBackpack(currentGame.getBackpack());
+                presentation.displayBackpack(currentGame);
                 break;
             case LEADERS:
                 presentation.displayLeaderboard();
@@ -156,51 +157,38 @@ public class GameLoop {
 
         // Обработка символов
         if (key.getKeyType() == KeyType.Character) {
-            char c = key.getCharacter();
+            char c = Character.toLowerCase(key.getCharacter());
             switch (c) {
-                case 'W':
-                case 'w':
-                case 'Ц':
-                case 'ц':
+                case 'w': case 'ц':
                     currentGame.moveUp();
                     return;
-                case 'S':
-                case 's':
-                case 'Ы':
-                case 'ы':
+                case 's': case 'ы':
                     currentGame.moveDown();
                     return;
-                case 'A':
-                case 'a':
-                case 'Ф':
-                case 'ф':
+                case 'a': case 'ф':
                     currentGame.moveLeft();
                     return;
-                case 'D':
-                case 'd':
-                case 'В':
-                case 'в':
+                case 'd': case 'в':
                     currentGame.moveRight();
                     return;
-                case 'p':
+                case 'p':case 'з':
                     saveGame();
                     return;
-                case 'h':
-                    //currentGame.setCurrentBackpack("HEALTH");
+                case 'h': case 'р':
+                    currentGame.setBackpackCurrentItems(ItemType.WEAPON);
                     state = FSM_State.BACKPACK;
                     return;
-                case 'j':
-                    //currentGame.setCurrentBackpack("WEAPONS");
+                case 'j': case 'о':
+                    currentGame.setBackpackCurrentItems(ItemType.FOOD);
                     state = FSM_State.BACKPACK;
                     return;
-                case 'k':
-                    //currentGame.setCurrentBackpack("ITEMS");
+                case 'k': case 'л':
+                    currentGame.setBackpackCurrentItems(ItemType.POTION);
                     state = FSM_State.BACKPACK;
                     return;
-                case 'e':
-                    //currentGame.setCurrentBackpack("EQUIPMENT");
+                case 'e': case 'у':
+                    currentGame.setBackpackCurrentItems(ItemType.SCROLL);
                     state = FSM_State.BACKPACK;
-                    return;
             }
         }
 
@@ -213,11 +201,30 @@ public class GameLoop {
         }
 
         if (key.getKeyType() == KeyType.Character) {
-            char c = key.getCharacter();
+            char c = Character.toLowerCase(key.getCharacter());
+
             if (c >= '0' && c <= '9') {
                 // Выбор предмета по номеру (0-9)
                 int itemIndex = c - '0';
-                //currentGame.selectBackpackItem(itemIndex);
+                currentGame.selectBackpackItem(itemIndex);
+            }
+
+            switch (c) {
+                case 'h': case 'р':
+                    currentGame.setBackpackCurrentItems(ItemType.WEAPON);
+                    state = FSM_State.BACKPACK;
+                    return;
+                case 'j': case 'о':
+                    currentGame.setBackpackCurrentItems(ItemType.FOOD);
+                    state = FSM_State.BACKPACK;
+                    return;
+                case 'k': case 'л':
+                    currentGame.setBackpackCurrentItems(ItemType.POTION);
+                    state = FSM_State.BACKPACK;
+                    return;
+                case 'e': case 'у':
+                    currentGame.setBackpackCurrentItems(ItemType.SCROLL);
+                    state = FSM_State.BACKPACK;
             }
         }
     }

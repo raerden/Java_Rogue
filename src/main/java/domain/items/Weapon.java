@@ -54,8 +54,8 @@ public class Weapon extends BaseItem{
 
     @Override
     public String toString() {
-        return String.format("Оружие '%s' (%s +%d) (%s +%d) на %s",
-                name, ConsumableType.STRENGTH, bonusStrength, ConsumableType.DEXTERITY, bonusDexterity, position);
+        return String.format("Оружие '%s' (%s +%d) (%s +%d)",
+                name, ConsumableType.STRENGTH, bonusStrength, ConsumableType.DEXTERITY, bonusDexterity);
     }
 
     @Override

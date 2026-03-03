@@ -3,10 +3,10 @@ package domain.items;
 import java.util.Random;
 
 public enum ItemType {
-    WEAPON("оружие"),
-    FOOD("еда"),
-    POTION("зелье"),
-    SCROLL("свиток"),
+    WEAPON("Weapons"),
+    FOOD("Foods"),
+    POTION("Potions"),
+    SCROLL("Scrolls"),
     TREASURE("сокровища");
 
     private static final Random RANDOM = new Random();

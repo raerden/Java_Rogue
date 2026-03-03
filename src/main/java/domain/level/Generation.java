@@ -196,21 +196,8 @@ public class Generation {
             }
         }
         // Если не нашлось комнаты на удалении в 2 шага
-
         return farRooms.isEmpty() ? -1 :
                 farRooms.get(new Random().nextInt(farRooms.size()));
-
-//        // Создаем список комнат с их расстояниями
-//        List<RoomDistance> roomDistances = new ArrayList<>();
-//        for (int room = 0; room < n; room++) {
-//            if (room != startRoom && dist[room] != -1) {
-//                roomDistances.add(new RoomDistance(room, dist[room]));
-//            }
-//        }
-
-//        // Сортируем по убыванию расстояния
-//        Collections.sort(roomDistances, (a, b) -> b.distance - a.distance);
-
     }
 
     // Вспомогательный класс для хранения пары комната-расстояние
