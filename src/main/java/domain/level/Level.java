@@ -64,13 +64,6 @@ public class Level {
         return stairsDown;
     }
 
-    /**
-     * Добавление происходит на уровень и в комнату
-     * <p>Проверяет позицию сущности, ее нахождение в комнате </p>
-     * @param entity
-     * @param roomNumber
-     * @return
-     */
     public boolean addEntity(Entity entity, int roomNumber) {
         if (roomNumber < 0 || roomNumber >= rooms.length) {
             return false;
@@ -90,6 +83,7 @@ public class Level {
 
         // Проверяем, свободна ли позиция в комнате
         if (!room.isPositionFree(entity.getPosition())) {
+            System.out.println("Позиция занята: " + entity.getPosition());
             return false;
         }
 
@@ -146,7 +140,7 @@ public class Level {
         Room room = rooms[roomNumber];
         List<Position> freePositions = new ArrayList<>();
 
-        // 2. Проверяем все 8 направлений (включая диагонали)
+        // Проверяем все 8 направлений (включая диагонали)
         int[] dx = {-1, 0, 1, -1, 1, -1, 0, 1};
         int[] dy = {-1, -1, -1, 0, 0, 1, 1, 1};
 
@@ -161,8 +155,7 @@ public class Level {
                 continue;
             }
 
-            // Проверяем, что позиция свободна (нет сущностей)
-            if (units.getEntityAt(checkPos) != null) {
+            if (!room.isPositionFree(checkPos)) {
                 continue;
             }
 
@@ -179,10 +172,10 @@ public class Level {
         return freePositions.isEmpty() ? null : freePositions;
     }
 
-    //найти номер комнаты по позиции, если она в комнате
+    //найти номер комнаты по позиции. Дверь тоже учитывается
     private int findRoomByPosition(Position position) {
         for (int i = 0; i < rooms.length; i++) {
-            if (rooms[i].isPositionInRoom(position)) {
+            if (rooms[i].isPositionInRoom(position) || rooms[i].isPositionInDoor(position)) {
                 return i;
             }
         }

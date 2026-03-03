@@ -107,10 +107,6 @@ public class Game {
         }
     }
 
-    /**
-     * Находит номер комнаты по позиции
-     * @return номер комнаты или -1, если позиция не в комнате
-     */
     private int findRoomByPosition(Position position) {
         Room[] rooms = currentLevel.getRooms();
         for (int i = 0; i < rooms.length; i++) {
@@ -179,9 +175,9 @@ public class Game {
                 dropCurrentWeapon();
             } else  if (dropCurrentWeapon()) {
                 // если оружие успешно сброшено или руки были пустые
-                // применить выбранное оружие
+                // взять выбранное оружие в руки
                 player.equipWeapon((Weapon) backpackItemsList.get(itemIndex));
-                //удалить предмет из списка
+                //удалить оружие из списка рюкзака
                 backpackItemsList.remove(itemIndex);
             }
         } else {//используем еду, зелье, свиток
@@ -197,9 +193,9 @@ public class Game {
         Position freePosToDrop = getFreePositionNearPlayer();
         if (freePosToDrop != null) {
             //добавить currentWeapon в предметы на карте в указанную позицию
+            currentWeapon.setPosition(freePosToDrop);
             currentLevel.addEntity(currentWeapon, currentRoom);
             player.equipWeapon(null);
-            System.out.println(currentRoom + "Выбросил на пол " + currentWeapon.toString());
             return true;
         }
         System.out.println("Нельзя выбросить оружие. На полу нет свободного места.");
