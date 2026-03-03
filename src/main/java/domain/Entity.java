@@ -6,4 +6,3 @@ public interface Entity {
 
     void setPosition(Position position);
 }
-// rjdsg

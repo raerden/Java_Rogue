@@ -16,10 +16,7 @@ import domain.Position;
 import domain.items.Backpackable;
 import domain.items.BaseItem;
 import domain.items.ItemType;
-import domain.level.Corridor;
-import domain.level.Door;
-import domain.level.Level;
-import domain.level.Room;
+import domain.level.*;
 import domain.monsters.Enemy;
 import domain.player.Player;
 
@@ -103,6 +100,11 @@ public class Presentation {
         terminal.close();
     }
 
+
+
+
+
+    /*
     public void displayGame(Game game) throws IOException {
         clear();
         printRooms(game.getCurrentLevel());                     // печать комнат
@@ -120,7 +122,7 @@ public class Presentation {
 
         printGameLog(game);
     }
-
+*/
     private void printStatusBar(Game game) throws IOException {
         //печать строки состояния
         // Player | Level: 1 | HP: 10(45) | Strength: 22 | Agility: 15 | Gold: 33
@@ -192,6 +194,7 @@ public class Presentation {
         }
     }
 
+    /*
     private void printCorridors(Level currentLevel) throws IOException {
         List<Corridor> corridors = currentLevel.getCorridors();
         for (int i = 0; i < corridors.size(); i++) {
@@ -246,6 +249,8 @@ public class Presentation {
             printRoomBox(room.getLeftCorner(), room.getRightCorner(), COLORBOUND, COLORBGROUND);
         }
     }
+*/
+
 
     private void printRoomBox(Position leftCorner, Position rightCorner, TextColor color, TextColor bgcolor) throws IOException {
         int leftX = leftCorner.getX();
@@ -466,4 +471,245 @@ public class Presentation {
     public InputProvider getScreen() {
         return screen;
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void printDoors(Level level, ExplorationState exploration) throws IOException {
+        Room[] rooms = level.getRooms();
+
+        for (int i = 0; i < rooms.length; i++) {
+            Room room = rooms[i];
+            Door[] doors = room.getDoors();
+
+            // Проверяем каждую дверь
+            for (int doorIndex = 0; doorIndex < doors.length; doorIndex++) {
+                Door door = doors[doorIndex];
+                if (door == null) continue;
+
+                Position doorPos = door.getPosition();
+
+                // Рисуем дверь если:
+                // 1. Она видима сейчас ИЛИ
+                // 2. Комната посещена (тогда двери видны всегда)
+                if (exploration.isCellVisible(doorPos) || exploration.isRoomVisited(i)) {
+                    char doorChar = getDoorChar(doorIndex);
+                    putCh(doorChar, doorPos.getX(), doorPos.getY(),
+                            COLORDOOR, COLORBGROUND);
+                }
+            }
+        }
+    }
+
+    private char getDoorChar(int doorIndex) {
+        // Определяем символ двери по направлению
+        switch (doorIndex) {
+            case 0: return '─'; // Северная дверь (горизонтальная)
+            case 1: return '│'; // Восточная дверь (вертикальная)
+            case 2: return '─'; // Южная дверь (горизонтальная)
+            case 3: return '│'; // Западная дверь (вертикальная)
+            default: return '+';
+        }
+    }
+
+    private void printVisibleEntities(Level level, ExplorationState exploration) throws IOException {
+        Set<Entity> allEntities = level.getAllEntities();
+
+        for (Entity entity : allEntities) {
+            // Пропускаем игрока (его отображаем отдельно)
+            if (entity instanceof Player) continue;
+
+            Position pos = entity.getPosition();
+            if (pos == null) continue;
+
+            // Рисуем сущность только если она видима
+            if (exploration.isCellVisible(pos)) {
+                if (entity instanceof BaseItem) {
+                    BaseItem item = (BaseItem) entity;
+                    putCh(item.getDisplayChar(), pos.getX(), pos.getY(),
+                            COLORITEM, COLORBGROUND);
+
+                } else if (entity instanceof Enemy) {
+                    Enemy enemy = (Enemy) entity;
+                    putCh(enemy.getDisplayChar(), pos.getX(), pos.getY(),
+                            enemy.getDisplayColor(), COLORBGROUND);
+                }
+            }
+        }
+    }
+
+    private void printRooms(Level level, ExplorationState exploration) throws IOException {
+        Room[] rooms = level.getRooms();
+
+        for (int i = 0; i < rooms.length; i++) {
+            Room room = rooms[i];
+
+            if (exploration.isRoomVisited(i)) {
+                // Комната полностью исследована - рисуем всё
+                printRoomBox(room.getLeftCorner(), room.getRightCorner(),
+                        COLORBOUND, COLORBGROUND);
+                printRoomFloor(room, exploration); // Рисуем пол только в видимых клетках
+
+            } else {
+                // Комната не исследована - рисуем только видимые части
+                printVisibleRoomParts(room, exploration);
+            }
+        }
+    }
+
+    private void printRoomFloor(Room room, ExplorationState exploration) throws IOException {
+        Position lc = room.getLeftCorner();
+        Position rc = room.getRightCorner();
+
+        // Рисуем пол только в видимых клетках внутри комнаты
+        for (int x = lc.getX() + 1; x < rc.getX(); x++) {
+            for (int y = lc.getY() + 1; y < rc.getY(); y++) {
+                Position pos = new Position(x, y);
+                if (exploration.isCellVisible(pos)) {
+                    putCh(ROOMFLOOR.charAt(0), x, y, COLORBOUND, COLORBGROUND);
+                }
+            }
+        }
+    }
+
+    private void printVisibleRoomParts(Room room, ExplorationState exploration) throws IOException {
+        Position lc = room.getLeftCorner();
+        Position rc = room.getRightCorner();
+
+        // Проходим по всем клеткам комнаты (включая стены)
+        for (int x = lc.getX(); x <= rc.getX(); x++) {
+            for (int y = lc.getY(); y <= rc.getY(); y++) {
+                Position pos = new Position(x, y);
+
+                // Если клетка видима
+                if (exploration.isCellVisible(pos)) {
+
+                    // Определяем, стена это или внутренность комнаты
+                    if (isWallPosition(pos, room)) {
+                        // Это стена - рисуем соответствующий символ
+                        char wallChar = getWallChar(pos, room);
+                        putCh(wallChar, x, y, COLORBOUND, COLORBGROUND);
+                    } else {
+                        // Это внутренность комнаты
+                        putCh(ROOMFLOOR.charAt(0), x, y, COLORBOUND, COLORBGROUND);
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean isWallPosition(Position pos, Room room) {
+        Position lc = room.getLeftCorner();
+        Position rc = room.getRightCorner();
+
+        return pos.getX() == lc.getX() || pos.getX() == rc.getX() ||
+                pos.getY() == lc.getY() || pos.getY() == rc.getY();
+    }
+
+    private char getWallChar(Position pos, Room room) {
+        Position lc = room.getLeftCorner();
+        Position rc = room.getRightCorner();
+
+        // Определяем углы
+        if (pos.getX() == lc.getX() && pos.getY() == lc.getY()) return '╔';
+        if (pos.getX() == rc.getX() && pos.getY() == lc.getY()) return '╗';
+        if (pos.getX() == lc.getX() && pos.getY() == rc.getY()) return '╚';
+        if (pos.getX() == rc.getX() && pos.getY() == rc.getY()) return '╝';
+
+        // Горизонтальные стены
+        if (pos.getY() == lc.getY() || pos.getY() == rc.getY()) return '═';
+
+        // Вертикальные стены
+        return '║';
+    }
+
+    // Обновленный метод printCorridors с учетом тумана войны
+    private void printCorridors(Level level, ExplorationState exploration) throws IOException {
+        List<Corridor> corridors = level.getCorridors();
+
+        for (Corridor corridor : corridors) {
+            Position lc = corridor.getLeftCorner();
+            Position rc = corridor.getRightCorner();
+
+            // Проходим по всем клеткам коридора
+            for (int x = lc.getX(); x <= rc.getX(); x++) {
+                for (int y = lc.getY(); y <= rc.getY(); y++) {
+                    Position pos = new Position(x, y);
+
+                    // Рисуем клетку коридора если:
+                    // 1. Она видима сейчас ИЛИ
+                    // 2. Она была посещена ранее (постоянная память карты)
+                    if (exploration.isCellVisible(pos) || exploration.isCellVisited(pos)) {
+                        putCh(PASSAGE.charAt(0), x, y, COLORPASSAGE, COLORBGROUND);
+                    }
+                }
+            }
+        }
+    }
+
+    // Главный метод отрисовки
+    public void displayGame(Game game) throws IOException {
+        clear();
+        Level level = game.getCurrentLevel();
+        ExplorationState exploration = level.getExplorationState();
+        Player player = game.getPlayer();
+
+        // Обновляем видимость перед отрисовкой
+        game.updateVisibility();
+
+        // Рисуем в правильном порядке (от фона к переднему плану)
+        printRooms(level, exploration);                 // Стены комнат
+        printCorridors(level, exploration);             // Коридоры
+        printDoors(level, exploration);                 // Двери
+
+        // Лестница вниз
+        Position stairs = level.getStairsDown();
+        if (exploration.isCellVisible(stairs) ||
+                exploration.isRoomVisited(findRoomByPosition(stairs, level))) {
+            putCh(STAIRSDOWN.charAt(0), stairs.getX(), stairs.getY(),
+                    COLORSTAIRS, COLORBGROUND);
+        }
+
+        printVisibleEntities(level, exploration);        // Монстры и предметы
+        printPlayer(player);                             // Игрок (всегда видим)
+
+        printStatusBar(game);
+        printGameLog(game);
+
+        refresh();
+    }
+
+    // Вспомогательный метод для поиска комнаты по позиции
+    private int findRoomByPosition(Position pos, Level level) {
+        Room[] rooms = level.getRooms();
+        for (int i = 0; i < rooms.length; i++) {
+            if (rooms[i].isPositionInRoom(pos) || rooms[i].isPositionInDoor(pos)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
+
 }

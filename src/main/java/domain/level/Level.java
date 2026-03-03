@@ -9,18 +9,17 @@ public class Level {
     private final int levelNumber;
     private final Room[] rooms;
     private final List<Corridor> corridors;
-    //private final Map<Position, Entity> entities; // позиция -> сущность
     private final LevelUnits units;
     private int startRoom;
     private int endRoom;
     private Position stairsDown; // лестница вниз
+    private ExplorationState explorationState;
 
     public Level(int levelNumber, Room[] rooms, List<Corridor> corridors /*, List<Corridor> corridors */) {
         this.levelNumber = levelNumber;
         this.rooms = rooms;
         this.corridors = corridors; // коридоры - список одномерных палок. С координатами начала и конца
         this.units = new LevelUnits();
-        //this.entities = new HashMap<>();
     }
 
     public Room[] getRooms() {
@@ -41,6 +40,7 @@ public class Level {
 
     public void setStartRoom(int startRoom) {
         this.startRoom = startRoom;
+        this.explorationState = new ExplorationState(startRoom);
     }
 
     public int getStartRoom() {
@@ -186,4 +186,7 @@ public class Level {
         return units.getAllEntities();
     }
 
+    public ExplorationState getExplorationState() {
+        return explorationState;
+    }
 }

@@ -25,4 +25,12 @@ public class Corridor {
                 position.getX() <= rightCorner.getX() &&
                 position.getY() <= rightCorner.getY();
     }
+
+    public boolean isHorizontal() {
+        return leftCorner.getY() == rightCorner.getY();
+    }
+
+    public boolean isVertical() {
+        return leftCorner.getX() == rightCorner.getX();
+    }
 }
