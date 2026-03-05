@@ -13,10 +13,14 @@ public class Exploration {
     private final Set<String> currentlyVisibleCells = new HashSet<>(); // Клетки, видимые в текущий момент
     private final Level level;
     private final Player player;
+    private boolean showAllMap = false;
 
     public Exploration(Level level, Player player) {
         this.level = level;
         this.player = player;
+        if (player.getName().equals("IDDQD")) {
+            this.showAllMap = true;
+        }
     }
 
     public void markRoomVisited(int roomIndex) {
@@ -24,6 +28,7 @@ public class Exploration {
     }
 
     public boolean isRoomVisited(int roomIndex) {
+        if (showAllMap) return true;
         return visitedRooms.contains(roomIndex);
     }
 
@@ -32,6 +37,7 @@ public class Exploration {
     }
 
     public boolean isCellVisited(Position pos) {
+        if (showAllMap) return true;
         return everVisitedCells.contains(pos.getX() + "," + pos.getY());
     }
 
@@ -40,6 +46,7 @@ public class Exploration {
     }
 
     public boolean isCellVisible(Position pos) {
+        if (showAllMap) return true;
         return currentlyVisibleCells.contains(pos.getX() + "," + pos.getY());
     }
 
@@ -47,20 +54,11 @@ public class Exploration {
         currentlyVisibleCells.clear();
     }
 
-    public int getSightRadius() {
-        return SIGHT_RADIUS;
-    }
-
-
-
     // Добавление области видимости
     public void updateVisibility() {
         clearVisible();
+
         int currentRoom = level.findRoomByPosition(player.getPosition());
-
-        // Рассчитываем видимые клетки с учетом препятствий
-        calculateVisibleCells(player.getPosition());
-
         if (currentRoom >= 0) {
             //отмечаем посещенную комнату
             if (!isRoomVisited(currentRoom)) {
@@ -72,6 +70,9 @@ public class Exploration {
         } else {
             corridorSimpleVision(player.getPosition());
         }
+
+        // Рассчитываем видимые клетки с учетом препятствий
+        calculateVisibleCells(player.getPosition());
     }
 
     private void corridorSimpleVision(Position currentPos) {
@@ -81,19 +82,19 @@ public class Exploration {
         Position right = new Position(currentPos.getX() + 1, currentPos.getY());
         Position up = new Position(currentPos.getX(), currentPos.getY() - 1);
         Position down = new Position(currentPos.getX(), currentPos.getY() + 1);
-        if (findCorridorByPosition(left) != null || isDoorAtPosition(left)) {
+        if (level.findCorridorByPosition(left) != null || isDoorAtPosition(left)) {
             markVisible(left);
             lookThroughDoor(left);
         }
-        if (findCorridorByPosition(right) != null || isDoorAtPosition(right)) {
+        if (level.findCorridorByPosition(right) != null || isDoorAtPosition(right)) {
             markVisible(right);
             lookThroughDoor(right);
         }
-        if (findCorridorByPosition(up) != null || isDoorAtPosition(up)) {
+        if (level.findCorridorByPosition(up) != null || isDoorAtPosition(up)) {
             markVisible(up);
             lookThroughDoor(up);
         }
-        if (findCorridorByPosition(down) != null || isDoorAtPosition(down)) {
+        if (level.findCorridorByPosition(down) != null || isDoorAtPosition(down)) {
             markVisible(down);
             lookThroughDoor(down);
         }
@@ -105,7 +106,7 @@ public class Exploration {
         int startY = center.getY();
 
         // Определяем, где стоит игрок
-        Corridor corridorPlayer = findCorridorByPosition(center);
+        Corridor corridorPlayer = level.findCorridorByPosition(center);
         boolean isInCorridor = (corridorPlayer != null);
         boolean isInDoor = isDoorAtPosition(center);
 
@@ -157,7 +158,7 @@ public class Exploration {
 
 
                 // Луч в коридоре
-                if (findCorridorByPosition(checkPos) != null) {
+                if (level.findCorridorByPosition(checkPos) != null) {
                     // Если игрок не в коридоре и это первая клетка коридора,
                     if (!isInCorridor && !isInDoor) {
                         // Мы в комнате и луч уперся в коридор - обрываем
@@ -200,8 +201,8 @@ public class Exploration {
 
     private boolean hasStraightCorridorLine(Position from, Position to) {
         // Проверяем, что обе точки в коридоре
-        Corridor fromCorridor = findCorridorByPosition(from);
-        Corridor toCorridor = findCorridorByPosition(to);
+        Corridor fromCorridor = level.findCorridorByPosition(from);
+        Corridor toCorridor = level.findCorridorByPosition(to);
 
         if (fromCorridor == null || toCorridor == null) return false;
 
@@ -214,7 +215,7 @@ public class Exploration {
             // Проверяем каждую клетку между ними
             for (int y = minY + 1; y < maxY; y++) {
                 Position checkPos = new Position(from.getX(), y);
-                if (findCorridorByPosition(checkPos) == null) {
+                if (level.findCorridorByPosition(checkPos) == null) {
                     return false; // Разрыв
                 }
             }
@@ -228,7 +229,7 @@ public class Exploration {
             // Проверяем каждую клетку между ними
             for (int x = minX + 1; x < maxX; x++) {
                 Position checkPos = new Position(x, from.getY());
-                if (findCorridorByPosition(checkPos) == null) {
+                if (level.findCorridorByPosition(checkPos) == null) {
                     return false; // Разрыв
                 }
             }
@@ -316,16 +317,6 @@ public class Exploration {
         }
         return false;
     }
-
-    private Corridor findCorridorByPosition(Position pos) {
-        for (Corridor corridor : level.getCorridors()) {
-            if (corridor.positionInCorridor(pos)) {
-                return corridor;
-            }
-        }
-        return null;
-    }
-
 
     // Смотрим в комнату через дверь
     private void lookThroughDoor(Position doorPos) {

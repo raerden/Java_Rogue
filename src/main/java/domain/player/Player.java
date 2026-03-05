@@ -7,8 +7,6 @@ import domain.items.*;
 
 import java.util.*;
 
-import domain.level.Room;
-
 /**
  * Важно у игрока:
  * <p>Взаимодействие с предметами через рюкзак</p>

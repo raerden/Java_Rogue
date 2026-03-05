@@ -1,11 +1,10 @@
-package domain;
+package domain.items;
 
-import domain.items.Backpackable;
-import domain.items.BaseItem;
-import domain.items.ItemType;
+import domain.Entity;
+import domain.Position;
 import domain.player.Player;
 
-public class Treasure extends BaseItem {
+public class Treasure extends BaseItem  {
     private int value;
 
     public Treasure(String name, int value, Position position) {

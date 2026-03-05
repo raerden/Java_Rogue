@@ -1,8 +1,7 @@
 package domain.level;
 
 
-import domain.Position;
-import domain.Treasure;
+import domain.items.Treasure;
 import domain.items.*;
 import domain.monsters.*;
 

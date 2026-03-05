@@ -46,9 +46,9 @@ public class LevelUnits {
         return true;
     }
 
-    private Entity findEntityAt(Position pos) {
+    public Entity findEntityAt(Position pos) {
         for (Entity e : entities) {
-            if (e.getPosition().equals(pos)) {
+            if (e.getPosition().equal(pos)) {
                 return e;
             }
         }

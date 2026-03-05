@@ -21,11 +21,6 @@ public class Food extends BaseItem{
         );
     }
 
-//    @Override
-//    public void setPosition(Position position) {
-//        throw new UnsupportedOperationException("Еду нельзя переместить!");
-//    }
-
     public ConsumableType getConsumableType() {
         return effectType;
     }

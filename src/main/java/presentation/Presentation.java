@@ -132,7 +132,7 @@ public class Presentation {
         int strLength = 15 + nameStr.length();
         putString(" | " , strLength , WINDOW_HEIGHT - 1, MENUBGROUND, COLORBGROUND);
 
-        String levelStr = "Level " + game.getCurrentLevel().getLevelNumber();
+        String levelStr = "Level " + game.getLevel().getLevelNumber();
         putString(levelStr, strLength + 3, WINDOW_HEIGHT - 1, MENUBGROUND, COLORBGROUND);
         strLength += levelStr.length() + 3;
         putString(" | " , strLength , WINDOW_HEIGHT - 1, MENUBGROUND, COLORBGROUND);
@@ -165,92 +165,6 @@ public class Presentation {
         if (player != null)
             putCh(player.getDisplayChar(), player.getPosition().getX(), player.getPosition().getY(), player.getDisplayColor(), COLORBGROUND);
     }
-
-    private void printAllEntities(Level level) throws IOException {
-        Set<Entity> allEntities = level.getAllEntities();
-
-        for (Entity entity : allEntities) {
-            // Пропускаем игрока (его отображаем отдельно)
-            if (entity instanceof Player) continue;
-
-            Position pos = entity.getPosition();
-            if (pos == null) continue;
-
-            // Определяем символ и цвет для каждого типа сущности
-            if (entity instanceof BaseItem) {
-                BaseItem item = (BaseItem) entity;
-                // Определяем символ для предмета
-                char symbol = item.getDisplayChar();
-                //TextColor color = getItemColor(item);
-                putCh(symbol, pos.getX(), pos.getY(), COLORITEM, COLORBGROUND);
-
-            } else if (entity instanceof Enemy) {
-                Enemy enemy = (Enemy) entity;
-                // Используем getDisplayChar() из Enemy
-                char symbol = enemy.getDisplayChar();
-                //TextColor color = getEnemyColor(enemy);
-                putCh(symbol, pos.getX(), pos.getY(), enemy.getDisplayColor(), COLORBGROUND);
-            }
-        }
-    }
-
-    /*
-    private void printCorridors(Level currentLevel) throws IOException {
-        List<Corridor> corridors = currentLevel.getCorridors();
-        for (int i = 0; i < corridors.size(); i++) {
-            Corridor corridor = corridors.get(i);
-            int x1 = corridor.getLeftCorner().getX();
-            int y1 = corridor.getLeftCorner().getY();
-            int x2 = corridor.getRightCorner().getX();
-            int y2 = corridor.getRightCorner().getY();
-
-            // рисуем включительно по x2 и y2
-            for (int x = x1; x <= x2; x++) {
-                for (int y = y1; y <= y2; y++) {
-                    putCh(PASSAGE.charAt(0), x, y, COLORPASSAGE, COLORBGROUND);
-                }
-            }
-        }
-    }
-
-    private void printDoors(Level currentLevel) throws IOException {
-        for (int i = 0; i < ROOM_COUNT; i++) {
-            Door[] doors = currentLevel.getRoom(i).getDoors();
-
-            if(currentLevel.getRoom(i).getUpperDoor() != null) {
-                putCh(HORIZDOOR.charAt(0),
-                        currentLevel.getRoom(i).getUpperDoor().getPosition().getX(),
-                        currentLevel.getRoom(i).getUpperDoor().getPosition().getY(),
-                        COLORDOOR, COLORBGROUND);
-            }
-            if(doors[1] != null) {
-                putCh(VERTDOOR.charAt(0),
-                        currentLevel.getRoom(i).getRigthDoor().getPosition().getX(),
-                        currentLevel.getRoom(i).getRigthDoor().getPosition().getY(),
-                        COLORDOOR, COLORBGROUND);
-            }
-            if(doors[2] != null) {
-                putCh(HORIZDOOR.charAt(0),
-                        currentLevel.getRoom(i).getBottomDoor().getPosition().getX(),
-                        currentLevel.getRoom(i).getBottomDoor().getPosition().getY(),
-                        COLORDOOR, COLORBGROUND);
-            }
-            if(doors[3] != null) {
-                putCh(VERTDOOR.charAt(0),
-                        currentLevel.getRoom(i).getLeftDoor().getPosition().getX(),
-                        currentLevel.getRoom(i).getLeftDoor().getPosition().getY(),
-                        COLORDOOR, COLORBGROUND);
-            }
-        }
-    }
-
-    private void printRooms(Level currentLevel) throws IOException {
-        for (Room room : currentLevel.getRooms()) {
-            printRoomBox(room.getLeftCorner(), room.getRightCorner(), COLORBOUND, COLORBGROUND);
-        }
-    }
-*/
-
 
     private void printRoomBox(Position leftCorner, Position rightCorner, TextColor color, TextColor bgcolor) throws IOException {
         int leftX = leftCorner.getX();
@@ -472,29 +386,6 @@ public class Presentation {
         return screen;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private void printDoors(Level level, Exploration exploration) throws IOException {
         Room[] rooms = level.getRooms();
 
@@ -670,7 +561,7 @@ public class Presentation {
     // Главный метод отрисовки
     public void displayGame(Game game) throws IOException {
         clear();
-        Level level = game.getCurrentLevel();
+        Level level = game.getLevel();
         Exploration exploration = game.getExploration();
         Player player = game.getPlayer();
 

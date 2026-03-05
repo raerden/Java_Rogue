@@ -2,6 +2,8 @@ package domain.level;
 
 import domain.Entity;
 import domain.Position;
+import domain.items.BaseItem;
+import domain.monsters.Enemy;
 
 import java.util.*;
 
@@ -49,10 +51,6 @@ public class Level {
         this.endRoom = endRoom;
     }
 
-    public int getEndRoom() {
-        return endRoom;
-    }
-
     public void setStairsDown(Position stairsDown) {
         this.stairsDown = stairsDown;
 
@@ -98,6 +96,10 @@ public class Level {
         }
 
         return false;
+    }
+
+    public void deleteEntity(Entity entity) {
+        units.deleteEntity(entity);
     }
 
     public List<Position> getFreePositionsInRoom(int roomNumber) {
@@ -180,11 +182,33 @@ public class Level {
         return -1;
     }
 
+    public Corridor findCorridorByPosition(Position position) {
+        for (Corridor corridor : corridors) {
+            if (corridor.positionInCorridor(position)) {
+                return corridor;
+            }
+        }
+        return null;
+    }
+
     public Set<Entity> getAllEntities() {
         return units.getAllEntities();
     }
 
-//    public Exploration getExplorationState() {
-//        return explorationState;
-//    }
+    public Entity getEnemyByPos(Position pos) {
+        Entity entity = units.findEntityAt(pos);
+        if (entity instanceof Enemy) {
+            return entity;
+        }
+        return null;
+    }
+
+    public Entity getBaseItemByPos(Position pos) {
+        Entity entity = units.findEntityAt(pos);
+        if (entity instanceof BaseItem) {
+            return entity;
+        }
+        return null;
+    }
+
 }
