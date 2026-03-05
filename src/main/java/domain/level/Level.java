@@ -13,7 +13,6 @@ public class Level {
     private int startRoom;
     private int endRoom;
     private Position stairsDown; // лестница вниз
-    private ExplorationState explorationState;
 
     public Level(int levelNumber, Room[] rooms, List<Corridor> corridors /*, List<Corridor> corridors */) {
         this.levelNumber = levelNumber;
@@ -40,7 +39,6 @@ public class Level {
 
     public void setStartRoom(int startRoom) {
         this.startRoom = startRoom;
-        this.explorationState = new ExplorationState(startRoom);
     }
 
     public int getStartRoom() {
@@ -173,7 +171,7 @@ public class Level {
     }
 
     //найти номер комнаты по позиции. Дверь тоже учитывается
-    private int findRoomByPosition(Position position) {
+    public int findRoomByPosition(Position position) {
         for (int i = 0; i < rooms.length; i++) {
             if (rooms[i].isPositionInRoom(position) || rooms[i].isPositionInDoor(position)) {
                 return i;
@@ -186,7 +184,7 @@ public class Level {
         return units.getAllEntities();
     }
 
-    public ExplorationState getExplorationState() {
-        return explorationState;
-    }
+//    public Exploration getExplorationState() {
+//        return explorationState;
+//    }
 }

@@ -1,292 +1,106 @@
-package domain;
+package domain.level;
 
-import domain.items.Backpackable;
-import domain.items.ItemType;
-import domain.items.Weapon;
-import domain.level.*;
+import domain.Position;
 import domain.player.Player;
-import domain.monsters.*;
 
-import java.util.List;
-import java.util.Random;
+import java.util.HashSet;
+import java.util.Set;
 
+public class Exploration {
+    private static final int SIGHT_RADIUS = 16;                  // Радиус обзора
+    private final Set<Integer> visitedRooms = new HashSet<>();         // Посещенные комнаты
+    private final Set<String> everVisitedCells = new HashSet<>();      // Все клетки, которые когда-либо видел игрок
+    private final Set<String> currentlyVisibleCells = new HashSet<>(); // Клетки, видимые в текущий момент
+    private final Level level;
+    private final Player player;
 
-public class Game {
-    private Level currentLevel;
-    private Player player;
-    private Generation generator = new Generation();
-    private int currentRoom = -1;//-1 если игрок не в комнате
-    private int currentCorridor = -1;
-    private String gameLog;
-    private ItemType backpackCurrentItems; // Текущая вкладка рюкзака
-    private static final Random RANDOM = new Random();
-    private Exploration exploration;
-
-    public Game(String name) {
-        this.player = new Player(name, null);
-
-        // генерируем первый уровень
-        generateLevel(1);
-
-        for (int i = 0; i < 9; i++) {
-            player.getBackpack().addItem(EntityGenerator.generateRandomFood());
-        }
-
-        for (int i = 0; i < 9; i++) {
-            player.getBackpack().addItem(EntityGenerator.generateRandomWeapon());
-        }
-
-        for (int i = 0; i < 9; i++) {
-            player.getBackpack().addItem(EntityGenerator.generateRandomPotion());
-        }
-
-        for (int i = 0; i < 9; i++) {
-            player.getBackpack().addItem(EntityGenerator.generateRandomScroll());
-        }
-
-        setGameLog("Game started");
-
+    public Exploration(Level level, Player player) {
+        this.level = level;
+        this.player = player;
     }
 
-    public void updateVisible() {
-        exploration.updateVisibility();
+    public void markRoomVisited(int roomIndex) {
+        visitedRooms.add(roomIndex);
     }
 
-    public Exploration getExploration() {
-        return exploration;
+    public boolean isRoomVisited(int roomIndex) {
+        return visitedRooms.contains(roomIndex);
     }
 
-    public void generateLevel(int levelNumber) {
-        this.currentLevel = generator.generateLevel(levelNumber);
-
-        // помещаем игрока в стартовую комнату
-        currentRoom = currentLevel.getStartRoom();
-        Position position = currentLevel.getRoom(currentRoom).getRandomFreePosition();
-        player.setPosition(position);
-
-        // Создаем объект расчета тумана войны и хранения пройденных комнат и маршрутов
-        exploration = new Exploration(currentLevel, player);
-        exploration.markRoomVisited(currentRoom);
+    public void markCellVisited(Position pos) {
+        everVisitedCells.add(pos.getX() + "," + pos.getY());
     }
 
-    public Level getCurrentLevel() {
-        return currentLevel;
+    public boolean isCellVisited(Position pos) {
+        return everVisitedCells.contains(pos.getX() + "," + pos.getY());
     }
 
-    public Player getPlayer() {
-        return  player;
+    public void markCellVisible(Position pos) {
+        currentlyVisibleCells.add(pos.getX() + "," + pos.getY());
     }
 
-    private void setNewPosition(Position newPosition) {
-        //проверка монстра:
-        //нанести удар
-        //если удар убил монстра: 1.забираем золото, 2.встаем на клетку
-        //иначе
-        //Проверка границ комнат и, коридоров
-        if (checkBounds(newPosition)) {
-            player.setPosition(newPosition);
-
-        }
-
-        //Проверка, что под ногами: 1. предмет, 2. выход с уровня
-
-        //После хода игрока, ходят все монстры
-        moveAllEnemies();
+    public boolean isCellVisible(Position pos) {
+        return currentlyVisibleCells.contains(pos.getX() + "," + pos.getY());
     }
 
-    private void moveAllEnemies() {
-        // Получаем всех врагов с уровня
-        for (Entity entity : currentLevel.getAllEntities()) {
-            if (entity instanceof Enemy) {
-                Enemy enemy = (Enemy) entity;
-
-                // Определяем текущую комнату врага
-                int enemyRoom = findRoomByPosition(enemy.getPosition());
-                if (enemyRoom != -1) {
-                    Room room = currentLevel.getRoom(enemyRoom);
-                    enemy.movePattern(room, player);
-                }
-                // Если враг в коридоре - можно добавить логику позже
-            }
-        }
+    public void clearVisible() {
+        currentlyVisibleCells.clear();
     }
 
-    private int findRoomByPosition(Position position) {
-        Room[] rooms = currentLevel.getRooms();
-        for (int i = 0; i < rooms.length; i++) {
-            if (rooms[i].isPositionInRoom(position) || rooms[i].isPositionInDoor(position)) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    private boolean checkBounds(Position newPosition) {
-        //Проверить стены комнаты
-        Room[] rooms = currentLevel.getRooms();
-        //-1 если игрок не в коридоре
-        for (int i = 0; i < rooms.length; i++) {
-            if (rooms[i].isPositionInRoom(newPosition) || rooms[i].isPositionInDoor(newPosition)) {
-                currentRoom = i;
-                currentCorridor = -1;
-                return true;
-            }
-        }
-
-        //Проверить коридор
-        for (Corridor corridor : currentLevel.getCorridors()) {
-            if (corridor.positionInCorridor(newPosition)) {
-                currentCorridor = currentLevel.getCorridors().indexOf(corridor);
-                currentRoom = -1;
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public void moveLeft() {
-        Position newPosition = new Position(player.getPosition().getX() - 1, player.getPosition().getY());
-        setNewPosition(newPosition);
-    }
-
-    public void moveRight() {
-        Position newPosition = new Position(player.getPosition().getX() + 1, player.getPosition().getY());
-        setNewPosition(newPosition);
-    }
-
-    public void moveUp() {
-        Position newPosition = new Position(player.getPosition().getX(), player.getPosition().getY() - 1);
-        setNewPosition(newPosition);
-    }
-
-    public void moveDown() {
-        Position newPosition = new Position(player.getPosition().getX(), player.getPosition().getY() + 1);
-        setNewPosition(newPosition);
-    }
-
-    public void selectBackpackItem(int itemIndex) {
-        List<Backpackable> backpackItemsList = player.getBackpack().getListByType(backpackCurrentItems);
-
-        if (itemIndex > backpackItemsList.size()) return;
-
-        //получили нажатую клавишу в выбранном отделе рюкзака (0-9)
-        //Но список идет от 0. кнопка 1 соотвествует 0 в списке рюкзака
-        itemIndex--;
-
-        if (backpackCurrentItems == ItemType.WEAPON) { //смена оружия
-            // бросить оружие из рук
-            if (itemIndex == -1) {
-                dropCurrentWeapon();
-            } else  if (dropCurrentWeapon()) {
-                // если оружие успешно сброшено или руки были пустые
-                // взять выбранное оружие в руки
-                player.equipWeapon((Weapon) backpackItemsList.get(itemIndex));
-                //удалить оружие из списка рюкзака
-                backpackItemsList.remove(itemIndex);
-            }
-        } else {//используем еду, зелье, свиток
-            backpackItemsList.get(itemIndex).apply(player);
-            backpackItemsList.remove(itemIndex);
-        }
-    }
-
-    private boolean dropCurrentWeapon() {
-        Weapon currentWeapon = player.getEquippedWeapon();
-        if (currentWeapon == null) return true;
-        //проверить есть ли рядом свободная клетка, чтобы сбросить оружие
-        Position freePosToDrop = getFreePositionNearPlayer();
-        if (freePosToDrop != null) {
-            //добавить currentWeapon в предметы на карте в указанную позицию
-            currentWeapon.setPosition(freePosToDrop);
-            currentLevel.addEntity(currentWeapon, currentRoom);
-            player.equipWeapon(null);
-            return true;
-        }
-        System.out.println("Нельзя выбросить оружие. На полу нет свободного места.");
-        return false;
-    }
-
-    private Position getFreePositionNearPlayer() {
-        List<Position> freePosList = currentLevel.getFreeNearPositions(player.getPosition());
-        Position randomPos = null;
-        if (freePosList != null && !freePosList.isEmpty()) {
-            int randomIndex = RANDOM.nextInt(freePosList.size());
-            randomPos = freePosList.get(randomIndex);
-        }
-        return randomPos;
-    }
-
-
-    public void setGameLog(String str) {
-        gameLog = str;
-    }
-
-    public String getGameLog() {
-        return gameLog;
-    }
-
-    public void setBackpackCurrentItems(ItemType itemType) {
-        backpackCurrentItems = itemType;
-    }
-
-    public ItemType getBackpackCurrentItems() {
-        return backpackCurrentItems;
+    public int getSightRadius() {
+        return SIGHT_RADIUS;
     }
 
 
 
-
-    /*
     // Добавление области видимости
     public void updateVisibility() {
-        ExplorationState exploration = currentLevel.getExplorationState();
-        exploration.clearVisible();
+        clearVisible();
+        int currentRoom = level.findRoomByPosition(player.getPosition());
 
         // Рассчитываем видимые клетки с учетом препятствий
-        calculateVisibleCells(player.getPosition(), exploration);
+        calculateVisibleCells(player.getPosition());
 
         if (currentRoom >= 0) {
             //отмечаем посещенную комнату
-            if (!exploration.isRoomVisited(currentRoom)) {
-                exploration.markRoomVisited(currentRoom);
+            if (!isRoomVisited(currentRoom)) {
+                markRoomVisited(currentRoom);
             }
             if (isDoorAtPosition(player.getPosition())) {
-                corridorSimpleVision(player.getPosition(), exploration);
+                corridorSimpleVision(player.getPosition());
             }
         } else {
-            corridorSimpleVision(player.getPosition(), exploration);
+            corridorSimpleVision(player.getPosition());
         }
     }
 
-    private void corridorSimpleVision(Position currentPos, ExplorationState exploration) {
-        markVisible(currentPos, exploration);
+    private void corridorSimpleVision(Position currentPos) {
+        markVisible(currentPos);
         //найти соседние клетки коридора и отметить их
         Position left = new Position(currentPos.getX() - 1, currentPos.getY());
         Position right = new Position(currentPos.getX() + 1, currentPos.getY());
         Position up = new Position(currentPos.getX(), currentPos.getY() - 1);
         Position down = new Position(currentPos.getX(), currentPos.getY() + 1);
         if (findCorridorByPosition(left) != null || isDoorAtPosition(left)) {
-            markVisible(left, exploration);
-            lookThroughDoor(left, exploration);
+            markVisible(left);
+            lookThroughDoor(left);
         }
         if (findCorridorByPosition(right) != null || isDoorAtPosition(right)) {
-            markVisible(right, exploration);
-            lookThroughDoor(right, exploration);
+            markVisible(right);
+            lookThroughDoor(right);
         }
         if (findCorridorByPosition(up) != null || isDoorAtPosition(up)) {
-            markVisible(up, exploration);
-            lookThroughDoor(up, exploration);
+            markVisible(up);
+            lookThroughDoor(up);
         }
         if (findCorridorByPosition(down) != null || isDoorAtPosition(down)) {
-            markVisible(down, exploration);
-            lookThroughDoor(down, exploration);
+            markVisible(down);
+            lookThroughDoor(down);
         }
     }
 
 
-    private void calculateVisibleCells(Position center, ExplorationState exploration) {
-        int radius = currentLevel.getExplorationState().getSightRadius();
+    private void calculateVisibleCells(Position center) {
         int startX = center.getX();
         int startY = center.getY();
 
@@ -310,7 +124,7 @@ public class Game {
             int currentRoom = -1;
 
             //движемся по лучу проверяя клетки под ним
-            for (int i = 0; i < radius; i++) {
+            for (int i = 0; i < SIGHT_RADIUS; i++) {
                 x += dx * 0.5;
                 y += dy * 0.5;
 
@@ -350,19 +164,20 @@ public class Game {
                         break;
                     }
                     // Останавливаем луч в неиследованных клетках
-                    if (!exploration.isCellVisited(checkPos)) {
+                    if (!isCellVisited(checkPos)) {
                         break;
                     }
                     //игрок в коридоре и луч в коридоре. Проверить что коридор прямой
                     if (isInCorridor) {
-                        hasStraightCorridorLine(center,checkPos);
+                        if(!hasStraightCorridorLine(center,checkPos))
+                            break;
                     }
-                    markVisible(checkPos, exploration);
+                    markVisible(checkPos);
                     continue;
                 }
 
                 // Если мы вошли в комнату
-                int roomAtPos = findRoomByPosition(checkPos);
+                int roomAtPos = level.findRoomByPosition(checkPos);
                 if (roomAtPos != -1) {
                     if (!enteredRoom) {
                         enteredRoom = true;
@@ -377,7 +192,7 @@ public class Game {
                 }
 
                 // Отмечаем клетку
-                markVisible(checkPos, exploration);
+                markVisible(checkPos);
             }
         }
     }
@@ -389,9 +204,6 @@ public class Game {
         Corridor toCorridor = findCorridorByPosition(to);
 
         if (fromCorridor == null || toCorridor == null) return false;
-
-        // Проверяем, что это один и тот же коридор
-        if (fromCorridor != toCorridor) return false;
 
         // Проверяем, что линия прямая (горизонталь или вертикаль)
         if (from.getX() == to.getX()) {
@@ -426,14 +238,14 @@ public class Game {
         return false; // Не прямая линия
     }
 
-    private void markVisible(Position pos, ExplorationState exploration) {
-        exploration.markCellVisible(pos);
-        exploration.markCellVisited(pos);
+    private void markVisible(Position pos) {
+        markCellVisible(pos);
+        markCellVisited(pos);
     }
 
 
     private boolean isDoorAtPosition(Position pos) {
-        for (Room room : currentLevel.getRooms()) {
+        for (Room room : level.getRooms()) {
             for (Door door : room.getDoors()) {
                 if (door != null && door.getPosition().equal(pos)) {
                     return true;
@@ -444,7 +256,7 @@ public class Game {
     }
 
     private Position findDoorAtPosition(Position pos) {
-        for (Room room : currentLevel.getRooms()) {
+        for (Room room : level.getRooms()) {
             for (Door door : room.getDoors()) {
                 if (door != null && door.getPosition().equal(pos)) {
                     return door.getPosition();
@@ -456,7 +268,7 @@ public class Game {
 
     private boolean isWall(Position pos) {
         // Проверяем все комнаты
-        for (Room room : currentLevel.getRooms()) {
+        for (Room room : level.getRooms()) {
             Position lc = room.getLeftCorner();
             Position rc = room.getRightCorner();
 
@@ -477,24 +289,23 @@ public class Game {
 
     private boolean isClosedDoor(Position pos) {
         // Проверяем все двери во всех комнатах
-        for (Room room : currentLevel.getRooms()) {
+        for (Room room : level.getRooms()) {
             for (Door door : room.getDoors()) {
                 if (door != null && door.getPosition().equal(pos)) {
                     // Дверь закрыта если:
                     // 1. Игрок не стоит в этой двери
                     // 2. Комната с другой стороны двери не посещена
                     // 3. Нет прямой видимости через дверь
-                    Player player = getPlayer();
+
                     if (player != null && player.getPosition().equal(pos)) {
                         return false; // Игрок в двери - она "открыта" для обзора
                     }
 
                     // Проверяем, видна ли комната с другой стороны
-                    int roomWithDoor = findRoomByPosition(pos);
+                    int roomWithDoor = level.findRoomByPosition(pos);
                     if (roomWithDoor != -1) {
-                        ExplorationState exploration = currentLevel.getExplorationState();
                         // Если комната посещена, дверь считается открытой для обзора
-                        if (exploration.isRoomVisited(roomWithDoor)) {
+                        if (isRoomVisited(roomWithDoor)) {
                             return false;
                         }
                     }
@@ -507,7 +318,7 @@ public class Game {
     }
 
     private Corridor findCorridorByPosition(Position pos) {
-        for (Corridor corridor : currentLevel.getCorridors()) {
+        for (Corridor corridor : level.getCorridors()) {
             if (corridor.positionInCorridor(pos)) {
                 return corridor;
             }
@@ -517,14 +328,14 @@ public class Game {
 
 
     // Смотрим в комнату через дверь
-    private void lookThroughDoor(Position doorPos, ExplorationState exploration) {
-        int roomNumber = findRoomByPosition(doorPos);
+    private void lookThroughDoor(Position doorPos) {
+        int roomNumber = level.findRoomByPosition(doorPos);
         if (roomNumber == -1) return;
 
-        Room room = currentLevel.getRoom(roomNumber);
+        Room room = level.getRoom(roomNumber);
 
         // Если комната не исследована, прерываем
-        if (!exploration.isRoomVisited(roomNumber)) return;
+        if (!isRoomVisited(roomNumber)) return;
 
         // Определяем направление от двери внутрь комнаты
         Position direction = getDirectionIntoRoom(doorPos, room);
@@ -540,7 +351,7 @@ public class Game {
             if (room.isPositionInRoom(lookPos)) {
                 // Проверяем, нет ли стены на пути
                 if (!isWall(lookPos)) {
-                    markVisible(lookPos, exploration);
+                    markVisible(lookPos);
                 }
             }
         }
@@ -569,5 +380,4 @@ public class Game {
 
         return null;
     }
-*/
 }

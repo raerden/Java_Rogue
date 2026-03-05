@@ -15,7 +15,6 @@ public class Room {
     private final Position rightCorner;
     private final Door[] doors = new Door[MAX_DOORS];
     private boolean isFreePositions;
-    private boolean isVisitedRoom = false;
 
     //Координаты сущностей в комнате.
     private List<Entity> entities = new ArrayList<>();
@@ -230,14 +229,4 @@ public class Room {
             enemies.remove(entity);
         }
     }
-
-    public boolean isVisitedRoom() {
-        return isVisitedRoom;
-    }
-
-    public void markRoomVisited(Player player) {
-        if (!isVisitedRoom && isPositionInRoom(player.getPosition()))
-            isVisitedRoom = true;
-    }
-
 }

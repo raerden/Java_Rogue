@@ -495,7 +495,7 @@ public class Presentation {
 
 
 
-    private void printDoors(Level level, ExplorationState exploration) throws IOException {
+    private void printDoors(Level level, Exploration exploration) throws IOException {
         Room[] rooms = level.getRooms();
 
         for (int i = 0; i < rooms.length; i++) {
@@ -532,7 +532,7 @@ public class Presentation {
         }
     }
 
-    private void printVisibleEntities(Level level, ExplorationState exploration) throws IOException {
+    private void printVisibleEntities(Level level, Exploration exploration) throws IOException {
         Set<Entity> allEntities = level.getAllEntities();
 
         for (Entity entity : allEntities) {
@@ -558,7 +558,7 @@ public class Presentation {
         }
     }
 
-    private void printRooms(Level level, ExplorationState exploration) throws IOException {
+    private void printRooms(Level level, Exploration exploration) throws IOException {
         Room[] rooms = level.getRooms();
 
         for (int i = 0; i < rooms.length; i++) {
@@ -577,7 +577,7 @@ public class Presentation {
         }
     }
 
-    private void printRoomFloor(Room room, ExplorationState exploration) throws IOException {
+    private void printRoomFloor(Room room, Exploration exploration) throws IOException {
         Position lc = room.getLeftCorner();
         Position rc = room.getRightCorner();
 
@@ -592,7 +592,7 @@ public class Presentation {
         }
     }
 
-    private void printVisibleRoomParts(Room room, ExplorationState exploration) throws IOException {
+    private void printVisibleRoomParts(Room room, Exploration exploration) throws IOException {
         Position lc = room.getLeftCorner();
         Position rc = room.getRightCorner();
 
@@ -644,7 +644,7 @@ public class Presentation {
     }
 
     // Обновленный метод printCorridors с учетом тумана войны
-    private void printCorridors(Level level, ExplorationState exploration) throws IOException {
+    private void printCorridors(Level level, Exploration exploration) throws IOException {
         List<Corridor> corridors = level.getCorridors();
 
         for (Corridor corridor : corridors) {
@@ -671,11 +671,11 @@ public class Presentation {
     public void displayGame(Game game) throws IOException {
         clear();
         Level level = game.getCurrentLevel();
-        ExplorationState exploration = level.getExplorationState();
+        Exploration exploration = game.getExploration();
         Player player = game.getPlayer();
 
         // Обновляем видимость перед отрисовкой
-        game.updateVisibility();
+        game.updateVisible();
 
         // Рисуем в правильном порядке (от фона к переднему плану)
         printRooms(level, exploration);                 // Стены комнат
