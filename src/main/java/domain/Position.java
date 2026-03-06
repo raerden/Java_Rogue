@@ -20,14 +20,6 @@ public class Position {
         return new Position(this.x + dx, this.y + dy);
     }
 
-    //определение дистанции до другой точки
-    //для включения преследования монстром при вхождении игрока в круг враждебности
-    public double distanceTo(Position other) {
-        int dx = this.x - other.x;
-        int dy = this.y - other.y;
-        return Math.sqrt(dx*dx + dy*dy);
-    }
-
     public boolean equal(Position position) {
         return x == position.getX() && y == position.getY();
     }

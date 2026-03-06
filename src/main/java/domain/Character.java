@@ -57,7 +57,7 @@ public abstract class Character implements Entity{
 
     @Override
     public String toString() {
-        return String.format("Character (%d/%d hp) | Сила: %d | Ловкость: %d | Position: %s",
+        return String.format(" (%d/%d hp) | Сила: %d | Ловкость: %d | Position: %s",
                 health, maxHealth, strength, dexterity, position);
     }
 

@@ -18,6 +18,7 @@ import domain.items.BaseItem;
 import domain.items.ItemType;
 import domain.level.*;
 import domain.monsters.Enemy;
+import domain.monsters.Ghost;
 import domain.player.Player;
 
 import java.awt.*;
@@ -100,29 +101,6 @@ public class Presentation {
         terminal.close();
     }
 
-
-
-
-
-    /*
-    public void displayGame(Game game) throws IOException {
-        clear();
-        printRooms(game.getCurrentLevel());                     // печать комнат
-        printDoors(game.getCurrentLevel());                     // печать дверей
-        printCorridors(game.getCurrentLevel());                 // печать коридоров
-        putCh(STAIRSDOWN.charAt(0),                             // печать лестницы вниз
-                game.getCurrentLevel().getStairsDown().getX(),
-                game.getCurrentLevel().getStairsDown().getY(),
-                COLORSTAIRS, COLORBGROUND);
-
-        printAllEntities(game.getCurrentLevel());               // Печать сущностей
-
-        printStatusBar(game);                                   // Печать строки состояния
-        printPlayer(game.getPlayer());                          // Печать игрока
-
-        printGameLog(game);
-    }
-*/
     private void printStatusBar(Game game) throws IOException {
         //печать строки состояния
         // Player | Level: 1 | HP: 10(45) | Strength: 22 | Agility: 15 | Gold: 33
@@ -435,13 +413,17 @@ public class Presentation {
 
             // Рисуем сущность только если она видима
             if (exploration.isCellVisible(pos)) {
-                if (entity instanceof BaseItem) {
-                    BaseItem item = (BaseItem) entity;
+                if (entity instanceof BaseItem item) {
                     putCh(item.getDisplayChar(), pos.getX(), pos.getY(),
                             COLORITEM, COLORBGROUND);
+                } else if (entity instanceof Enemy enemy) {
+                    if (enemy instanceof Ghost ghost) {
+                        // Приводим к Ghost
+                        if (ghost.isInvisible()) {
+                            continue;
+                        }
+                    }
 
-                } else if (entity instanceof Enemy) {
-                    Enemy enemy = (Enemy) entity;
                     putCh(enemy.getDisplayChar(), pos.getX(), pos.getY(),
                             enemy.getDisplayColor(), COLORBGROUND);
                 }

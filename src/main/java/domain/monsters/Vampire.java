@@ -28,7 +28,7 @@ public class Vampire extends Enemy {
                 (int)(BASE_HEALTH * ((double) enemyLevel * HEALTH_GROWTH + 1.0) * (1 + random.nextDouble() * VARIATION - VARIATION/2)),
                 (int)(BASE_STRENGTH * ((double) enemyLevel * STRENGTH_GROWTH + 1.0) * (1 + random.nextDouble() * VARIATION - VARIATION/2)),
                 (int)(BASE_DEXTERITY * ((double) enemyLevel * DEXTERITY_GROWTH + 1.0) * (1 + random.nextDouble() * VARIATION - VARIATION/2)),
-                EnemyType.ZOMBIE, BASE_HOSTILITY, BASE_TREASURE);
+                EnemyType.VAMPIRE, BASE_HOSTILITY, BASE_TREASURE);
     }
     private boolean firstAttack = true;
 

@@ -86,7 +86,7 @@ public class Potion extends BaseItem {
     @Override
     public String toString() {
         String status = isUsed ? " (использовано)" : "";
-        return String.format("Зелье '%s' (%s +%d)%s",
+        return String.format("'%s' (%s +%d)%s",
                 name, effectType.getDisplayName(), bonus, status);
     }
 

@@ -13,7 +13,7 @@ public class Exploration {
     private final Set<String> currentlyVisibleCells = new HashSet<>(); // Клетки, видимые в текущий момент
     private final Level level;
     private final Player player;
-    private boolean showAllMap = false;
+    private boolean showAllMap = true;
 
     public Exploration(Level level, Player player) {
         this.level = level;

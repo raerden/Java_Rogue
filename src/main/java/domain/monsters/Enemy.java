@@ -45,7 +45,7 @@ public abstract class Enemy extends Character {
             return false;
         }
 
-        // Вычисляем расстояние до игрока
+//        // Вычисляем расстояние до игрока
         int dx = Math.abs(player.getPosition().getX() - this.position.getX());
         int dy = Math.abs(player.getPosition().getY() - this.position.getY());
         int distance = dx + dy; // Манхэттенское расстояние, то есть зона реагирования визуализированна в виде ромба

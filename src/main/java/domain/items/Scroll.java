@@ -44,7 +44,7 @@ public class Scroll extends BaseItem implements Entity, Backpackable {
 
     @Override
     public String toString() {
-        return String.format("Свиток '%s' (%s +%d)",
+        return String.format("'%s' (%s +%d)",
                 name, type, bonus);
     }
 

@@ -4,6 +4,7 @@ import com.googlecode.lanterna.TextColor;
 import domain.*;
 import domain.Character;
 import domain.items.*;
+import domain.monsters.Enemy;
 
 import java.util.*;
 
@@ -17,8 +18,8 @@ import java.util.*;
  * <p>Реализовывать ли передвижение?</p>
  */
 public class Player extends Character implements Entity {
-    String name;
-    private Backpack backpack;
+    private final String name;
+    private final Backpack backpack;
     private Weapon equippedWeapon;
     private int score; // собранные сокровища
     private List<TemporaryEffect> activeEffects;
@@ -206,6 +207,20 @@ public class Player extends Character implements Entity {
                 iterator.remove();
             }
         }
+    }
+
+    public boolean attack(Enemy enemy) {
+        if (enemy == null || !enemy.isAlive() || !this.isAlive()){
+            return false;
+        }
+        boolean wasAttacked = false;
+        double hitChance = this.calculateHitChance(enemy.getDexterity());
+        if (Math.random() < hitChance) {
+            int damage = calculateHitDamage();
+            enemy.takeDamage(damage, this);
+            wasAttacked = true;
+        }
+        return wasAttacked;
     }
 
     public List<TemporaryEffect> getActiveEffects() {

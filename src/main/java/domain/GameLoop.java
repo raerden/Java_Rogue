@@ -30,6 +30,9 @@ public class GameLoop {
         presentation.start();
 
         while (running) {
+            if (currentGame != null && currentGame.getPlayer().getHealth() == 0) {
+                state = FSM_State.START;
+            }
             render();
             presentation.refresh();
 
