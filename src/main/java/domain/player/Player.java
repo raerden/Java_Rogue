@@ -209,18 +209,17 @@ public class Player extends Character implements Entity {
         }
     }
 
-    public boolean attack(Enemy enemy) {
+    public int attack(Enemy enemy) {
         if (enemy == null || !enemy.isAlive() || !this.isAlive()){
-            return false;
+            return -1;
         }
-        boolean wasAttacked = false;
+        int damage = 0;
         double hitChance = this.calculateHitChance(enemy.getDexterity());
         if (Math.random() < hitChance) {
-            int damage = calculateHitDamage();
+            damage = calculateHitDamage();
             enemy.takeDamage(damage, this);
-            wasAttacked = true;
         }
-        return wasAttacked;
+        return damage;
     }
 
     public List<TemporaryEffect> getActiveEffects() {

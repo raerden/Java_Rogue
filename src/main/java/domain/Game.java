@@ -1,5 +1,6 @@
 package domain;
 
+import datalayer.GameStats;
 import domain.items.*;
 import domain.level.*;
 import domain.player.Player;
@@ -18,12 +19,16 @@ public class Game {
     private ItemType backpackCurrentItems; // Текущая вкладка рюкзака
     private static final Random RANDOM = new Random();
     private Exploration exploration;
+    private GameStats gameStats;
 
     public Game(String name) {
         this.player = new Player(name, null);
 
         // генерируем первый уровень
         generateLevel(1);
+
+        // Создаем объект для статистики игры
+        this.gameStats = new GameStats(name);
 
         for (int i = 0; i < 9; i++) {
             player.getBackpack().addItem(EntityGenerator.generateRandomFood());
@@ -47,21 +52,27 @@ public class Game {
     private void setNewPosition(Position newPosition) {
         setGameLog("");
 
-        //проверить не спит ли игрок
-
         Entity baseItem = level.getBaseItemByPos(newPosition);
         Enemy enemy = (Enemy) level.getEnemyByPos(newPosition);
 
         if (enemy != null && !player.isAsleep()) {
             setGameLog("Игрок атаковал " + enemy.getType() + enemy.toString());
-            player.attack(enemy);
+            int damage = player.attack(enemy);
+            if (damage == 0) {
+                gameStats.addMiss();
+            } else if (damage > 0) {
+                gameStats.addAttack();
+            }
             if (!enemy.isAlive()) {
                 setGameLog(enemy.getType() + " убит. Получено " + enemy.getTreasureValue() + " золота.");
                 player.setScore(enemy.getTreasureValue());
-                level.deleteEntity(enemy);
+                gameStats.addScore(enemy.getTreasureValue());
+                gameStats.addKill();
+                level.deleteEntity(enemy);      //Удалить животное
             }
         } else if (!player.isAsleep() && checkBounds(newPosition)) { //Проверка границ комнат и, коридоров
             player.setPosition(newPosition);
+            gameStats.addStep();    //добавить шаг в стату
         }
 
         player.processTurn();
@@ -86,7 +97,6 @@ public class Game {
 
         if (player.getHealth() == 0) {
             //Игрок убит
-            System.out.println("Игрок убит");
             setGameLog("Вы были убиты! Конец игры!");
         }
     }
@@ -114,6 +124,7 @@ public class Game {
                 setGameLog("You are won game!");
             } else {
                 generateLevel(level.getLevelNumber() + 1);
+                gameStats.addLevel();
             }
         }
     }
@@ -214,6 +225,13 @@ public class Game {
             }
         } else {//используем еду, зелье, свиток
             backpackItemsList.get(itemIndex).apply(player);
+
+            switch (backpackItemsList.get(itemIndex).getType()) {
+                case FOOD -> gameStats.addFoodConsumed();
+                case POTION -> gameStats.addElixirConsumed();
+                case SCROLL -> gameStats.addScrollRead();
+            }
+
             backpackItemsList.remove(itemIndex);
         }
     }
