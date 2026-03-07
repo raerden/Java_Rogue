@@ -50,6 +50,7 @@ public class LoadSaveData {
         try {
             String filename = SAVE_DIR + "save_game.json";
             String json = Files.readString(Paths.get(filename));
+
             Game game = Game.fromJson(json);
 
             System.out.println("Игра загружена из файла: " + filename);

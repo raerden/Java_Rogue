@@ -10,7 +10,7 @@ import java.util.Random;
 public class Vampire extends Enemy {
     //Базовые статы
     private static final double BASE_HEALTH = 50;
-    private static final double BASE_STRENGTH = 8;
+    private static final double BASE_STRENGTH = 5;
     private static final double BASE_DEXTERITY = 15;
     //Прирост базовых стат за уровень коэффициент (будет округляться из-за int)
     private static final double HEALTH_GROWTH = 0.03;
@@ -159,7 +159,7 @@ public class Vampire extends Enemy {
     @Override
     protected void applySpecialAttackEffects(Player player) {
 
-        int healthReduction = 5;
+        int healthReduction = 2;
         player.setMaxHealth(player.getMaxHealth() - healthReduction);
         // Вампир восстанавливает здоровье
         this.heal(healthReduction);

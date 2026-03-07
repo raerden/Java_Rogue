@@ -159,8 +159,8 @@ public class Player extends Character implements Entity {
     private void removeEffectBonuses(TemporaryEffect effect) {
         switch (effect.getType()) {
             case HEALTH:
-                setMaxHealth(Math.max(getMaxHealth() - effect.getBonus(), 1));
                 setHealth(Math.max(getHealth() - effect.getBonus(), 1));
+                setMaxHealth(Math.max(getMaxHealth() - effect.getBonus(), 1));
                 break;
             case STRENGTH:
                 setStrength(Math.max(getStrength() - effect.getBonus(), 1));

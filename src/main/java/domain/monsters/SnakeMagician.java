@@ -41,6 +41,8 @@ public class SnakeMagician extends Enemy {
     private boolean moveDown = true;
     private static final double SLEEP_CHANCE = 0.2;
     private static final int SLEEP_DURATION = 1; // Количество ходов сна
+    private int zigZagCicle = 0; // Цикл зигзага
+
 
     public SnakeMagician(Position position) {
         super(position, 70, 70, 12, 30,
@@ -61,20 +63,35 @@ public class SnakeMagician extends Enemy {
         Position nextPosition = calculateNextZigZagPosition();
         if (!currentRoom.isPositionInRoom(nextPosition)) {
             moveRight = !moveRight;
+            moveDown = !moveDown;
+            zigZagCicle = 0;
             nextPosition = calculateNextZigZagPosition();
             if (!currentRoom.isPositionInRoom(nextPosition)) {
                 moveDown = !moveDown;
+                zigZagCicle = 0;
                 nextPosition = calculateNextZigZagPosition();
+                if (!currentRoom.isPositionInRoom(nextPosition)) {
+                    moveRight = !moveRight;
+                    moveDown = !moveDown;
+                    zigZagCicle = 0;
+                    nextPosition = calculateNextZigZagPosition();
+                }
             }
         }
         if (currentRoom.isPositionInRoom(nextPosition)) {
+            zigZagCicle++;
             position = nextPosition;
         }
     }
     private Position calculateNextZigZagPosition() {
-        int dx = moveRight ? 1 : -1;
         int dy = moveDown ? 1 : -1;
 
+        if (zigZagCicle >= 1){
+            //zigZagCicle++;
+            zigZagCicle = 0;
+            moveRight = !moveRight;
+        }
+        int dx = moveRight ? 1 : -1;
         return position.translate(dx, dy);
     }
 

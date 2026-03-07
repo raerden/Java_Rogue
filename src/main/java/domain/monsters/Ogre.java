@@ -11,7 +11,7 @@ import java.util.Random;
 public class Ogre extends Enemy {
     //Базовые статы
     private static final double BASE_HEALTH = 100;
-    private static final double BASE_STRENGTH = 20;
+    private static final double BASE_STRENGTH = 10;
     private static final double BASE_DEXTERITY = 3;
     //Прирост базовых стат за уровень коэффициент (будет округляться из-за int)
     private static final double HEALTH_GROWTH = 0.09;
