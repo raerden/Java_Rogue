@@ -18,13 +18,17 @@ import java.util.*;
  * <p>Реализовывать ли передвижение?</p>
  */
 public class Player extends Character implements Entity {
-    private final String name;
-    private final Backpack backpack;
+    private String name;
+    private Backpack backpack;
     private Weapon equippedWeapon;
     private int score; // собранные сокровища
     private List<TemporaryEffect> activeEffects;
 
     private int sleepTurns = 0;
+
+    public Player() {
+        super();
+    }
 
     //Конструктор
     public Player(String name, Position startPosition) {
@@ -74,11 +78,6 @@ public class Player extends Character implements Entity {
         Optional<Backpackable> usedItem = backpack.useItem(type, internalSlot, this);
     }
 
-
-    public Weapon getEquippedWeapon() {
-        return equippedWeapon;
-    }
-
     public Weapon equipWeapon(Weapon newWeapon) {
         Weapon oldWeapon = this.equippedWeapon;
         this.equippedWeapon = newWeapon;
@@ -101,25 +100,6 @@ public class Player extends Character implements Entity {
         return oldWeapon;
     }
 
-    public int getScore() {
-        return score;
-    }
-    public String getName() {
-        return name;
-    }
-
-    public Backpack getBackpack() {return backpack; }
-
-    public void setSleepTurns(int turns) {
-        if (turns > 0) {
-            this.sleepTurns = turns;
-        }
-    }
-
-    public int getSleepTurns() {
-        return sleepTurns;
-    }
-
     public void decrementSleepTurns() {
         if (sleepTurns > 0) {
             sleepTurns--;
@@ -130,9 +110,6 @@ public class Player extends Character implements Entity {
         return sleepTurns > 0;
     }
 
-    public void setScore(int score) {
-        this.score = score;
-    }
     /**
      * Обработка хода игрока
      * @return true если игрок может действовать, false если спит
@@ -222,10 +199,6 @@ public class Player extends Character implements Entity {
         return damage;
     }
 
-    public List<TemporaryEffect> getActiveEffects() {
-        return new ArrayList<>(activeEffects);
-    }
-
     @Override
     public char getDisplayChar() {
         return '@';
@@ -233,5 +206,55 @@ public class Player extends Character implements Entity {
     @Override
     public TextColor getDisplayColor() {
         return TextColor.ANSI.WHITE;
+    }
+
+
+    // Геттеры и сеттеры
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Backpack getBackpack() {
+        return backpack;
+    }
+
+    public void setBackpack(Backpack backpack) {
+        this.backpack = backpack;
+    }
+
+    public Weapon getEquippedWeapon() {
+        return equippedWeapon;
+    }
+
+    public void setEquippedWeapon(Weapon equippedWeapon) {
+        this.equippedWeapon = equippedWeapon;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public List<TemporaryEffect> getActiveEffects() {
+        return activeEffects;
+    }
+
+    public void setActiveEffects(List<TemporaryEffect> activeEffects) {
+        this.activeEffects = activeEffects;
+    }
+
+    public int getSleepTurns() {
+        return sleepTurns;
+    }
+
+    public void setSleepTurns(int sleepTurns) {
+        this.sleepTurns = sleepTurns;
     }
 }

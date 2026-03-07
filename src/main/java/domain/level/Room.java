@@ -11,9 +11,9 @@ import java.util.*;
 // Конструктор комнаты возвращает объект со случайным размером комнаты в заданном диапазоне координат углов
 public class Room {
     private final int MAX_DOORS = 4;
-    private final Position leftCorner;
-    private final Position rightCorner;
-    private final Door[] doors = new Door[MAX_DOORS];
+    private Position leftCorner;
+    private Position rightCorner;
+    private Door[] doors = new Door[MAX_DOORS];
     private boolean isFreePositions;
 
     //Координаты сущностей в комнате.
@@ -25,6 +25,8 @@ public class Room {
     // минимальные размеры комнаты
     private static final int minRoomWidth = 8;
     private static final int minRoomHeight = 6;
+
+    public Room() {}
 
     // Конструктор случайно генерирует оба угла комнаты в заданном квадрате
     public Room(Position roomBoundsMin, Position roomBoundsMax) {
@@ -74,26 +76,6 @@ public class Room {
         }
     }
 
-    public Door[] getDoors() {
-        return doors;
-    }
-
-    public Door getUpperDoor() {
-        return doors[0];
-    }
-
-    public Door getRigthDoor() {
-        return doors[1];
-    }
-
-    public Door getBottomDoor() {
-        return doors[2];
-    }
-
-    public Door getLeftDoor() {
-        return doors[3];
-    }
-
     public boolean putEntintyToRndPlace(Entity entity) {
         Position position = getRandomFreePosition();
         if (position == null) {
@@ -116,10 +98,10 @@ public class Room {
             occupied.add(pos.getX() + "," + pos.getY());
         }
 
-        int leftX = this.getLeftCorner().getX() + 1 + decreaseArea;
-        int leftY = this.getLeftCorner().getY() + 1 + decreaseArea;
-        int rightX = this.getRightCorner().getX() - decreaseArea;
-        int rightY = this.getRightCorner().getY() - decreaseArea;
+        int leftX = this.leftCorner.getX() + 1 + decreaseArea;
+        int leftY = this.leftCorner.getY() + 1 + decreaseArea;
+        int rightX = this.rightCorner.getX() - decreaseArea;
+        int rightY = this.rightCorner.getY() - decreaseArea;
 
         // Список свободных клеток
         List<Position> freePositions = new ArrayList<>();
@@ -141,15 +123,6 @@ public class Room {
 
     public Position getRandomFreePosition() {
        return getRandomFreePosition(0);
-    }
-
-    // Гетеры, сеттеры
-    public Position getLeftCorner() {
-        return leftCorner;
-    }
-
-    public Position getRightCorner() {
-        return rightCorner;
     }
 
     //Случайное число от и до включительно
@@ -228,5 +201,30 @@ public class Room {
         if (entity instanceof Enemy){
             enemies.remove(entity);
         }
+    }
+
+    // Геттеры и сеттеры
+    public Position getLeftCorner() { return leftCorner; }
+    public void setLeftCorner(Position leftCorner) { this.leftCorner = leftCorner; }
+
+    public Position getRightCorner() { return rightCorner; }
+    public void setRightCorner(Position rightCorner) { this.rightCorner = rightCorner; }
+
+    public Door[] getDoors() { return doors; }
+    public void setDoors(Door[] doors) { this.doors = doors; }
+
+    public boolean isFreePositions() { return isFreePositions; }
+    public void setFreePositions(boolean freePositions) { isFreePositions = freePositions; }
+    public Door getUpperDoor() {
+        return doors[0];
+    }
+    public Door getRigthDoor() {
+        return doors[1];
+    }
+    public Door getBottomDoor() {
+        return doors[2];
+    }
+    public Door getLeftDoor() {
+        return doors[3];
     }
 }

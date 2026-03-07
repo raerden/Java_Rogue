@@ -25,6 +25,10 @@ public class Zombie extends Enemy {
     private static final Random random = new Random();
     private static final double VARIATION = 0.1;
 
+    public Zombie() {
+        super(); // вызываем пустой конструктор родителя
+    }
+
     public Zombie(int enemyLevel, Position position){
         super(position, (int)(BASE_HEALTH * ((double) enemyLevel * HEALTH_GROWTH + 1.0) * (1 + random.nextDouble() * VARIATION - VARIATION/2)),
                 (int)(BASE_HEALTH * ((double) enemyLevel * HEALTH_GROWTH + 1.0) * (1 + random.nextDouble() * VARIATION - VARIATION/2)),

@@ -8,19 +8,27 @@ import java.util.Set;
 
 public class Exploration {
     private static final int SIGHT_RADIUS = 16;                  // Радиус обзора
-    private final Set<Integer> visitedRooms = new HashSet<>();         // Посещенные комнаты
-    private final Set<String> everVisitedCells = new HashSet<>();      // Все клетки, которые когда-либо видел игрок
-    private final Set<String> currentlyVisibleCells = new HashSet<>(); // Клетки, видимые в текущий момент
-    private final Level level;
-    private final Player player;
+    private Set<Integer> visitedRooms = new HashSet<>();         // Посещенные комнаты
+    private Set<String> everVisitedCells = new HashSet<>();      // Все клетки, которые когда-либо видел игрок
+    private Set<String> currentlyVisibleCells = new HashSet<>(); // Клетки, видимые в текущий момент
+    private Level level;
+    private Player player;
     private boolean showAllMap = true;
 
+    public Exploration() {
+        this.visitedRooms = new HashSet<>();
+        this.everVisitedCells = new HashSet<>();
+        this.currentlyVisibleCells = new HashSet<>();
+        //this.showAllMap = false;
+    }
+
     public Exploration(Level level, Player player) {
+        this.visitedRooms = new HashSet<>();
+        this.everVisitedCells = new HashSet<>();
+        this.currentlyVisibleCells = new HashSet<>();
         this.level = level;
         this.player = player;
-        if (player.getName().equals("IDDQD")) {
-            this.showAllMap = true;
-        }
+        //this.showAllMap = "IDDQD".equals(player.getName());
     }
 
     public void markRoomVisited(int roomIndex) {
@@ -370,5 +378,55 @@ public class Exploration {
         }
 
         return null;
+    }
+
+
+    // Геттеры и сеттеры для всех полей
+    public Set<Integer> getVisitedRooms() {
+        return visitedRooms;
+    }
+
+    public void setVisitedRooms(Set<Integer> visitedRooms) {
+        this.visitedRooms = visitedRooms != null ? visitedRooms : new HashSet<>();
+    }
+
+    public Set<String> getEverVisitedCells() {
+        return everVisitedCells;
+    }
+
+    public void setEverVisitedCells(Set<String> everVisitedCells) {
+        this.everVisitedCells = everVisitedCells != null ? everVisitedCells : new HashSet<>();
+    }
+
+    public Set<String> getCurrentlyVisibleCells() {
+        return currentlyVisibleCells;
+    }
+
+    public void setCurrentlyVisibleCells(Set<String> currentlyVisibleCells) {
+        this.currentlyVisibleCells = currentlyVisibleCells != null ? currentlyVisibleCells : new HashSet<>();
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public boolean isShowAllMap() {
+        return showAllMap;
+    }
+
+    public void setShowAllMap(boolean showAllMap) {
+        this.showAllMap = showAllMap;
     }
 }

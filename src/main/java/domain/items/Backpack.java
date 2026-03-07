@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class Backpack {
-    private final List<Backpackable> weapons;
-    private final List<Backpackable> potions; // эликсиры
-    private final List<Backpackable> scrolls; // свитки
-    private final List<Backpackable> foods;     // еда
+    private List<Backpackable> weapons;
+    private List<Backpackable> potions; // эликсиры
+    private List<Backpackable> scrolls; // свитки
+    private List<Backpackable> foods;     // еда
     private int totalTreasureValue; // сокровища хранятся суммарно
 
     private static final int MAX_ITEMS_PER_TYPE = 9;
@@ -80,26 +80,6 @@ public class Backpack {
         this.totalTreasureValue += value;
     }
 
-    public int getTotalTreasureValue() {
-        return totalTreasureValue;
-    }
-
-    public List<Backpackable> getWeapons() {
-        return new ArrayList<>(weapons);
-    }
-
-    public List<Backpackable> getPotions() {
-        return new ArrayList<>(potions);
-    }
-
-    public List<Backpackable> getScrolls() {
-        return new ArrayList<>(scrolls);
-    }
-
-    public List<Backpackable> getFoods() {
-        return new ArrayList<>(foods);
-    }
-
     public boolean hasSpaceFor(ItemType type) {
         if (type == null) return false;
 
@@ -137,5 +117,48 @@ public class Backpack {
         }
 
         return sb.toString();
+    }
+
+
+
+    // Геттеры и сеттеры
+    public List<Backpackable> getWeapons() {
+        return weapons;
+    }
+
+    public void setWeapons(List<Backpackable> weapons) {
+        this.weapons = weapons != null ? weapons : new ArrayList<>();
+    }
+
+    public List<Backpackable> getPotions() {
+        return potions;
+    }
+
+    public void setPotions(List<Backpackable> potions) {
+        this.potions = potions != null ? potions : new ArrayList<>();
+    }
+
+    public List<Backpackable> getScrolls() {
+        return scrolls;
+    }
+
+    public void setScrolls(List<Backpackable> scrolls) {
+        this.scrolls = scrolls != null ? scrolls : new ArrayList<>();
+    }
+
+    public List<Backpackable> getFoods() {
+        return foods;
+    }
+
+    public void setFoods(List<Backpackable> foods) {
+        this.foods = foods != null ? foods : new ArrayList<>();
+    }
+
+    public int getTotalTreasureValue() {
+        return totalTreasureValue;
+    }
+
+    public void setTotalTreasureValue(int totalTreasureValue) {
+        this.totalTreasureValue = totalTreasureValue;
     }
 }

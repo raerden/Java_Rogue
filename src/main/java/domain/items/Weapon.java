@@ -4,9 +4,13 @@ import domain.player.Player;
 import domain.Position;
 
 public class Weapon extends BaseItem{
-    private final int bonusStrength;
-    private final int bonusDexterity;
+    private int bonusStrength;
+    private int bonusDexterity;
     private boolean equipped;
+
+    public Weapon() {
+        super(); // вызывает пустой конструктор BaseItem
+    }
 
     public Weapon(String name, int bonusStrength, int bonusDexterity, Position position) {
         super(name, ItemType.WEAPON, position);
@@ -39,18 +43,6 @@ public class Weapon extends BaseItem{
         }
     }
 
-//    @Override
-//    public void setPosition(Position position) {
-//        throw new UnsupportedOperationException("Оружие нельзя переместить!");
-//    }
-
-    public int getBonusStrength() {
-        return bonusStrength;
-    }
-
-    public int getBonusDexterity() {
-        return bonusDexterity;
-    }
 
     @Override
     public String toString() {
@@ -61,5 +53,31 @@ public class Weapon extends BaseItem{
     @Override
     public char getDisplayChar() {
         return '/';
+    }
+
+
+    // Геттеры и сеттеры для всех полей
+    public int getBonusStrength() {
+        return bonusStrength;
+    }
+
+    public void setBonusStrength(int bonusStrength) {
+        this.bonusStrength = bonusStrength;
+    }
+
+    public int getBonusDexterity() {
+        return bonusDexterity;
+    }
+
+    public void setBonusDexterity(int bonusDexterity) {
+        this.bonusDexterity = bonusDexterity;
+    }
+
+    public boolean isEquipped() {
+        return equipped;
+    }
+
+    public void setEquipped(boolean equipped) {
+        this.equipped = equipped;
     }
 }

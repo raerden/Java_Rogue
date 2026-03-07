@@ -11,6 +11,7 @@ public abstract class Character implements Entity{
     protected int health;        // текущее здоровье
     protected Position position;        // текущая позиция
 
+    protected Character() {}
 
     protected Character(Position position, int health, int maxHealth, int strength, int dexterity) {
         this.position = position;
@@ -20,40 +21,6 @@ public abstract class Character implements Entity{
         this.dexterity = dexterity;
     }
 
-    // Геттеры
-    public int getStrength() {return strength;}
-
-    public int getDexterity() {return dexterity;}
-
-    public int getMaxHealth() {return maxHealth;}
-
-    public int getHealth() {return health;}
-
-    @Override
-    public Position getPosition() {return this.position;}
-
-    // Сеттеры
-
-    public void setMaxHealth(int value) {
-        this.maxHealth = value;
-        //Для чего это проверка?
-        if (this.health > this.maxHealth) {
-            this.health = this.maxHealth;
-        }
-    }
-
-    public void setHealth(int value) {
-        this.health = value;
-    }
-    public void setStrength(int value) {
-        this.strength = value;
-    }
-    public void setDexterity(int value) {
-        this.dexterity = value;
-    }
-
-    @Override
-    public void setPosition(Position position) {this.position = position;}
 
     @Override
     public String toString() {
@@ -84,26 +51,9 @@ public abstract class Character implements Entity{
         return Math.max(1, (int) (base + Math.random() * (varianceMax + 1)));
     }
 
-    //public void applySpecialAttackEffects(Character target, boolean targetDied){
-
-    //}
-
     public void heal(int amount) {
         this.health = Math.min(this.health + amount, maxHealth);
     }
-
-//    public boolean attack(Character target) {
-//        if (!target.isAlive() || !this.isAlive()){
-//            return false;
-//        }
-//        double hitChance = this.calculateHitChance(target.getDexterity());
-//        if (Math.random() >= hitChance) return false;
-//
-//        int damage = calculateHitDamage(target.getStrength());
-//        target.takeDamage(damage);
-//        //applySpecialAttackEffects(target, targetDied);
-//        return true;
-//    }
 
     public boolean isAlive(){
         return this.health > 0;
@@ -111,4 +61,51 @@ public abstract class Character implements Entity{
 
     public abstract char getDisplayChar();
     public abstract TextColor getDisplayColor();
+
+    // Геттеры и сеттеры
+    public int getStrength() {
+        return strength;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public int getDexterity() {
+        return dexterity;
+    }
+
+    public void setDexterity(int dexterity) {
+        this.dexterity = dexterity;
+    }
+
+    public int getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(int maxHealth) {
+        this.maxHealth = maxHealth;
+        if (this.health > this.maxHealth) {
+            this.health = this.maxHealth;
+        }
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    @Override
+    public Position getPosition() {
+        return position;
+    }
+
+    @Override
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
 }

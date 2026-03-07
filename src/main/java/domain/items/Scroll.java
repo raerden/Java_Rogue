@@ -5,8 +5,12 @@ import domain.player.Player;
 import domain.Position;
 
 public class Scroll extends BaseItem implements Entity, Backpackable {
-    private final ConsumableType effectType;          // Тип свитка (enum)
-    private final int bonus;         // На сколько повышает характеристику
+    private ConsumableType effectType;          // Тип свитка (enum)
+    private int bonus;         // На сколько повышает характеристику
+
+    public Scroll() {
+        super();
+    }
 
     public Scroll(String name, int bonus, ConsumableType effectType, Position position) {
         super(name, ItemType.SCROLL, position);
@@ -17,7 +21,6 @@ public class Scroll extends BaseItem implements Entity, Backpackable {
     public void apply(Player player) {
         switch (effectType) {
             case HEALTH:
-                //todo здесь потом заменить вывод сообщения под статусную строку
                 System.out.printf("%s зачитал %s и увеличил максимальное здоровье до %d\n",
                         player.getName(), name, player.getMaxHealth() + bonus
                 );
@@ -38,10 +41,6 @@ public class Scroll extends BaseItem implements Entity, Backpackable {
         return effectType;
     }
 
-    public int getBonus() {
-        return bonus;
-    }
-
     @Override
     public String toString() {
         return String.format("'%s' (%s +%d)",
@@ -53,4 +52,21 @@ public class Scroll extends BaseItem implements Entity, Backpackable {
         return '~';
     }
 
+    // Геттеры
+    public ConsumableType getEffectType() {
+        return effectType;
+    }
+
+    public int getBonus() {
+        return bonus;
+    }
+
+    // Сеттеры
+    public void setEffectType(ConsumableType effectType) {
+        this.effectType = effectType;
+    }
+
+    public void setBonus(int bonus) {
+        this.bonus = bonus;
+    }
 }

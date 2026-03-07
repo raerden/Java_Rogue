@@ -23,6 +23,11 @@ public class Vampire extends Enemy {
     private static final Random random = new Random();
     private static final double VARIATION = 0.1;
 
+    public Vampire() {
+        super(); // вызываем пустой конструктор родителя
+        this.firstAttack = true;
+    }
+
     public Vampire(int enemyLevel, Position position){
         super(position, (int)(BASE_HEALTH * ((double) enemyLevel * HEALTH_GROWTH + 1.0) * (1 + random.nextDouble() * VARIATION - VARIATION/2)),
                 (int)(BASE_HEALTH * ((double) enemyLevel * HEALTH_GROWTH + 1.0) * (1 + random.nextDouble() * VARIATION - VARIATION/2)),
@@ -167,5 +172,13 @@ public class Vampire extends Enemy {
     @Override
     public TextColor getDisplayColor() {
         return TextColor.ANSI.RED;
+    }
+
+    public boolean isFirstAttack() {
+        return firstAttack;
+    }
+
+    public void setFirstAttack(boolean firstAttack) {
+        this.firstAttack = firstAttack;
     }
 }

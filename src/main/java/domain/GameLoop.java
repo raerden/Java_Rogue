@@ -2,6 +2,7 @@ package domain;
 
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
+import datalayer.LoadSaveData;
 import domain.items.ItemType;
 import presentation.Presentation;
 
@@ -247,12 +248,18 @@ public class GameLoop {
 
     // Вспомогательные методы
     private void loadGame() {
-        // Логика загрузки игры
-        System.out.println("Загрузка игры...");
+        Game loadedGame = LoadSaveData.quickLoad();
+        if (loadedGame != null) {
+
+            currentGame = new Game();
+            currentGame.generateLevel(1);
+
+            currentGame = loadedGame;
+        }
     }
 
     private void saveGame() {
-        // Логика сохранения
+        LoadSaveData.quickSave(currentGame);
         System.out.println("Игра сохранена");
     }
 

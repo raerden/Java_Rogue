@@ -4,7 +4,9 @@ import domain.Entity;
 import domain.Position;
 
 public class Door implements Entity {
-    private final Position position;
+    private Position position;
+
+    public Door() {}
 
     public Door(Position position) {
         this.position = position;
@@ -17,6 +19,6 @@ public class Door implements Entity {
 
     @Override
     public void setPosition(Position position) {
-        //Дверь нельзя передвинуть
+        this.position = position;
     }
 }

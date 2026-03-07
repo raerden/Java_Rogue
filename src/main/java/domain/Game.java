@@ -1,5 +1,7 @@
 package domain;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import datalayer.GameStats;
 import domain.items.*;
 import domain.level.*;
@@ -13,16 +15,32 @@ import java.util.Random;
 public class Game {
     private Level level;
     private Player player;
-    private Generation generator = new Generation();
-    private int currentRoom = -1;//-1 если игрок не в комнате
+    private Generation generator;
+    private int currentRoom;
     private String gameLog;
-    private ItemType backpackCurrentItems; // Текущая вкладка рюкзака
+    private ItemType backpackCurrentItems;
     private static final Random RANDOM = new Random();
     private Exploration exploration;
     private GameStats gameStats;
 
+//    private static final Gson gson = new GsonBuilder()
+//            .setPrettyPrinting()
+//            .create();
+
+    private static final Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .registerTypeAdapter(Entity.class, new EntityAdapter())
+            .create();
+
+    public Game() {
+        this.generator = new Generation();
+        this.currentRoom = -1;
+    }
+
     public Game(String name) {
+        this(); // вызываем пустой конструктор
         this.player = new Player(name, null);
+        this.gameStats = new GameStats(name);
 
         // генерируем первый уровень
         generateLevel(1);
@@ -125,26 +143,15 @@ public class Game {
             } else {
                 generateLevel(level.getLevelNumber() + 1);
                 gameStats.addLevel();
+
+    // todo После прохождения каждого уровня необходимо сохранять полученную статистику и номер пройденного уровня.
+
             }
         }
     }
     
     public void updateVisible() {
         exploration.updateVisibility();
-    }
-
-    public Exploration getExploration() {
-        return exploration;
-    }
-
-
-
-    public Level getLevel() {
-        return level;
-    }
-
-    public Player getPlayer() {
-        return  player;
     }
 
     private void moveAllEnemies() {
@@ -262,21 +269,77 @@ public class Game {
         return randomPos;
     }
 
+    // Геттеры и сеттеры для ВСЕХ полей (нужны Gson)
+    public Level getLevel() {
+        return level;
+    }
 
-    public void setGameLog(String str) {
-        gameLog = str;
+    public void setLevel(Level level) {
+        this.level = level;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public Generation getGenerator() {
+        return generator;
+    }
+
+    public void setGenerator(Generation generator) {
+        this.generator = generator;
+    }
+
+    public int getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public void setCurrentRoom(int currentRoom) {
+        this.currentRoom = currentRoom;
     }
 
     public String getGameLog() {
         return gameLog;
     }
 
-    public void setBackpackCurrentItems(ItemType itemType) {
-        backpackCurrentItems = itemType;
+    public void setGameLog(String gameLog) {
+        this.gameLog = gameLog;
     }
 
     public ItemType getBackpackCurrentItems() {
         return backpackCurrentItems;
     }
 
+    public void setBackpackCurrentItems(ItemType backpackCurrentItems) {
+        this.backpackCurrentItems = backpackCurrentItems;
+    }
+
+    public Exploration getExploration() {
+        return exploration;
+    }
+
+    public void setExploration(Exploration exploration) {
+        this.exploration = exploration;
+    }
+
+    public GameStats getGameStats() {
+        return gameStats;
+    }
+
+    public void setGameStats(GameStats gameStats) {
+        this.gameStats = gameStats;
+    }
+
+    // МЕТОДЫ СЕРИАЛИЗАЦИИ
+    public String toJson() {
+        return gson.toJson(this);
+    }
+
+    public static Game fromJson(String jsonString) {
+        return gson.fromJson(jsonString, Game.class);
+    }
 }

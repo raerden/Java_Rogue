@@ -8,13 +8,15 @@ import domain.monsters.Enemy;
 import java.util.*;
 
 public class Level {
-    private final int levelNumber;
-    private final Room[] rooms;
-    private final List<Corridor> corridors;
-    private final LevelUnits units;
+    private int levelNumber;
+    private Room[] rooms;
+    private List<Corridor> corridors;
+    private LevelUnits units;
     private int startRoom;
     private int endRoom;
     private Position stairsDown; // лестница вниз
+
+    public Level() {}
 
     public Level(int levelNumber, Room[] rooms, List<Corridor> corridors /*, List<Corridor> corridors */) {
         this.levelNumber = levelNumber;
@@ -23,21 +25,6 @@ public class Level {
         this.units = new LevelUnits();
     }
 
-    public Room[] getRooms() {
-        return rooms;
-    }
-
-    public Room getRoom(int roomNumber) {
-        return rooms[roomNumber];
-    }
-
-    public List<Corridor> getCorridors() {
-        return corridors;
-    }
-
-    public int getLevelNumber() {
-        return levelNumber;
-    }
 
     public void setStartRoom(int startRoom) {
         this.startRoom = startRoom;
@@ -209,6 +196,20 @@ public class Level {
             return entity;
         }
         return null;
+    }
+
+    // Геттеры и сеттеры
+    public int getLevelNumber() { return levelNumber; }
+    public void setLevelNumber(int levelNumber) { this.levelNumber = levelNumber; }
+
+    public Room[] getRooms() { return rooms; }
+    public void setRooms(Room[] rooms) { this.rooms = rooms; }
+
+    public List<Corridor> getCorridors() { return corridors; }
+    public void setCorridors(List<Corridor> corridors) { this.corridors = corridors; }
+
+    public Room getRoom(int roomNumber) {
+        return rooms[roomNumber];
     }
 
 }

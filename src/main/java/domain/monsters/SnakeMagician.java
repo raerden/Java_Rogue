@@ -23,6 +23,12 @@ public class SnakeMagician extends Enemy {
     private static final Random random = new Random();
     private static final double VARIATION = 0.1;
 
+    public SnakeMagician() {
+        super(); // вызываем пустой конструктор родителя
+        this.moveRight = true;
+        this.moveDown = true;
+    }
+
     public SnakeMagician(int enemyLevel, Position position){
         super(position, (int)(BASE_HEALTH * ((double) enemyLevel * HEALTH_GROWTH + 1.0) * (1 + random.nextDouble() * VARIATION - VARIATION/2)),
                 (int)(BASE_HEALTH * ((double) enemyLevel * HEALTH_GROWTH + 1.0) * (1 + random.nextDouble() * VARIATION - VARIATION/2)),
@@ -106,5 +112,21 @@ public class SnakeMagician extends Enemy {
     @Override
     public TextColor getDisplayColor() {
         return TextColor.ANSI.WHITE;
+    }
+
+    public boolean isMoveRight() {
+        return moveRight;
+    }
+
+    public void setMoveRight(boolean moveRight) {
+        this.moveRight = moveRight;
+    }
+
+    public boolean isMoveDown() {
+        return moveDown;
+    }
+
+    public void setMoveDown(boolean moveDown) {
+        this.moveDown = moveDown;
     }
 }

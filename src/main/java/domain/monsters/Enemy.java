@@ -14,6 +14,10 @@ public abstract class Enemy extends Character {
     protected int treasureValue;
     protected int hostility;
 
+    protected Enemy() {
+        super();
+    }
+
     public Enemy(Position position, int health, int maxHealth, int strength, int dexterity,
                  EnemyType type, int hostility, int treasureValue) {
         super(position, health, maxHealth, strength, dexterity);

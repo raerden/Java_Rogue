@@ -9,11 +9,25 @@ public abstract class BaseItem implements Backpackable, Entity {
     protected ItemType type;
     protected Position position;
 
+    public BaseItem() {}
+
     public BaseItem(String name, ItemType type, Position position) {
         this.name = name;
         this.type = type;
         this.position = position;
     }
+
+    @Override
+    public abstract void apply(Player player);
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    public abstract char getDisplayChar();
+
+
     @Override
     public Position getPosition() {
         return position;
@@ -29,18 +43,18 @@ public abstract class BaseItem implements Backpackable, Entity {
         return type;
     }
 
+    // Добавляем сеттер для type (нужен Gson)
+    public void setType(ItemType type) {
+        this.type = type;
+    }
+
     @Override
     public String getName() {
         return name;
     }
 
-    @Override
-    public abstract void apply(Player player);
-
-    @Override
-    public String toString() {
-        return name;
+    // Добавляем сеттер для name (нужен Gson)
+    public void setName(String name) {
+        this.name = name;
     }
-
-    public abstract char getDisplayChar();
 }

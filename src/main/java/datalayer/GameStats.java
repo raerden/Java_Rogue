@@ -2,24 +2,53 @@ package datalayer;
 
 public class GameStats {
     private String playerName;
-    private int score = 0;
-    private int level = 1;
-    private int consumedFoods = 0;
-    private int consumedElixirs = 0;
-    private int readedScrolls = 0;
-    private int kills = 0;
-    private long attacks = 0;
-    private long missed = 0;
-    private long steps = 0;
+    private int score;
+    private int level;
+    private int consumedFoods;
+    private int consumedElixirs;
+    private int readedScrolls;
+    private int kills;
+    private long attacks;
+    private long missed;
+    private long steps;
+
+    // Пустой конструктор для Gson
+    public GameStats() {
+        this.score = 0;
+        this.level = 1;
+        this.consumedFoods = 0;
+        this.consumedElixirs = 0;
+        this.readedScrolls = 0;
+        this.kills = 0;
+        this.attacks = 0;
+        this.missed = 0;
+        this.steps = 0;
+    }
 
     public GameStats(String name) {
+        this();
         this.playerName = name;
     }
 
-    public GameStats() {
+    public void reset() {
+        this.score = 0;
+        this.level = 1;
+        this.consumedFoods = 0;
+        this.consumedElixirs = 0;
+        this.readedScrolls = 0;
+        this.kills = 0;
+        this.attacks = 0;
+        this.missed = 0;
+        this.steps = 0;
     }
 
-    // 1. Геттеры для всех полей
+    @Override
+    public String toString() {
+        return String.format("GameStats{player='%s', score=%d, level=%d, kills=%d, steps=%d}",
+                playerName, score, level, kills, steps);
+    }
+
+    // Геттеры для всех полей
     public String getPlayerName() {
         return playerName;
     }
@@ -40,7 +69,7 @@ public class GameStats {
         return consumedElixirs;
     }
 
-    public int getReadedScrools() {
+    public int getReadedScrolls() {  // оставляем с опечаткой для совместимости
         return readedScrolls;
     }
 
@@ -60,7 +89,48 @@ public class GameStats {
         return steps;
     }
 
-    // 2. Инкременторы (обратите внимание на исправление опечатки readedScrools -> readedScrolls)
+    // Сеттеры для всех полей (нужны Gson)
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setConsumedFoods(int consumedFoods) {
+        this.consumedFoods = consumedFoods;
+    }
+
+    public void setConsumedElixirs(int consumedElixirs) {
+        this.consumedElixirs = consumedElixirs;
+    }
+
+    public void setReadedScrolls(int readedScrolls) {
+        this.readedScrolls = readedScrolls;
+    }
+
+    public void setKills(int kills) {
+        this.kills = kills;
+    }
+
+    public void setAttacks(long attacks) {
+        this.attacks = attacks;
+    }
+
+    public void setMissed(long missed) {
+        this.missed = missed;
+    }
+
+    public void setSteps(long steps) {
+        this.steps = steps;
+    }
+
+    // Инкременторы
     public void addStep() {
         steps++;
     }
@@ -96,70 +166,4 @@ public class GameStats {
     public void addLevel() {
         level++;
     }
-
-    // 3. GameStatToString() - пакует поля в строку для JSON
-    public String GameStatToString() {
-        return String.format("{%n" +
-                        "  \"playerName\": \"%s\",%n" +
-                        "  \"score\": %d,%n" +
-                        "  \"level\": %d,%n" +
-                        "  \"consumedFoods\": %d,%n" +
-                        "  \"consumedElixirs\": %d,%n" +
-                        "  \"readedScrolls\": %d,%n" +
-                        "  \"kills\": %d,%n" +
-                        "  \"attacks\": %d,%n" +
-                        "  \"missed\": %d,%n" +
-                        "  \"steps\": %d%n" +
-                        "}",
-                playerName, score, level, consumedFoods, consumedElixirs,
-                readedScrolls, kills, attacks, missed, steps);
-    }
-
-    // 4. GameStatFromString() - распаковывает строку в поля
-    public void GameStatFromString(String data) {
-        // Простой парсинг JSON-подобной строки
-        String[] lines = data.split("\n");
-        for (String line : lines) {
-            line = line.trim();
-            if (line.contains(":")) {
-                String[] parts = line.split(":", 2);
-                String key = parts[0].trim().replace("\"", "");
-                String value = parts[1].trim().replace(",", "").replace("\"", "");
-
-                switch (key) {
-                    case "playerName":
-                        playerName = value;
-                        break;
-                    case "score":
-                        score = Integer.parseInt(value);
-                        break;
-                    case "level":
-                        level = Integer.parseInt(value);
-                        break;
-                    case "consumedFoods":
-                        consumedFoods = Integer.parseInt(value);
-                        break;
-                    case "consumedElixirs":
-                        consumedElixirs = Integer.parseInt(value);
-                        break;
-                    case "readedScrolls":
-                        readedScrolls = Integer.parseInt(value);
-                        break;
-                    case "kills":
-                        kills = Integer.parseInt(value);
-                        break;
-                    case "attacks":
-                        attacks = Long.parseLong(value);
-                        break;
-                    case "missed":
-                        missed = Long.parseLong(value);
-                        break;
-                    case "steps":
-                        steps = Long.parseLong(value);
-                        break;
-                }
-            }
-        }
-    }
-
 }

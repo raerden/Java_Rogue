@@ -24,6 +24,12 @@ public class Ogre extends Enemy {
     private static final Random random = new Random();
     private static final double VARIATION = 0.1;
 
+    public Ogre() {
+        super(); // вызываем пустой конструктор родителя
+        this.resting = false;
+        this.moveCounter = 0;
+    }
+
     public Ogre(int enemyLevel, Position position){
         super(position, (int)(BASE_HEALTH * ((double) enemyLevel * HEALTH_GROWTH + 1.0) * (1 + random.nextDouble() * VARIATION - VARIATION/2)),
                 (int)(BASE_HEALTH * ((double) enemyLevel * HEALTH_GROWTH + 1.0) * (1 + random.nextDouble() * VARIATION - VARIATION/2)),
@@ -162,5 +168,21 @@ public class Ogre extends Enemy {
     @Override
     public TextColor getDisplayColor() {
         return TextColor.ANSI.YELLOW_BRIGHT;
+    }
+
+    public boolean isResting() {
+        return resting;
+    }
+
+    public void setResting(boolean resting) {
+        this.resting = resting;
+    }
+
+    public int getMoveCounter() {
+        return moveCounter;
+    }
+
+    public void setMoveCounter(int moveCounter) {
+        this.moveCounter = moveCounter;
     }
 }

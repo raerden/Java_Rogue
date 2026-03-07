@@ -7,7 +7,11 @@ import domain.monsters.Enemy;
 
 import java.util.*;
 public class LevelUnits {
-    private final Set<Entity> entities = new HashSet<>();
+    private Set<Entity> entities = new HashSet<>();
+
+    public LevelUnits() {
+        this.entities = new HashSet<>();
+    }
 
     public boolean addEntity(Entity entity) {
         // Проверяем, не занята ли позиция
@@ -69,5 +73,14 @@ public class LevelUnits {
     }
     public Set<Entity> getAllEntities() {
         return new HashSet<>(entities);
+    }
+
+    // Геттер и сеттер
+    public Set<Entity> getEntities() {
+        return entities;
+    }
+
+    public void setEntities(Set<Entity> entities) {
+        this.entities = entities != null ? entities : new HashSet<>();
     }
 }

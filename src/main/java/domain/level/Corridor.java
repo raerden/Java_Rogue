@@ -3,20 +3,14 @@ package domain.level;
 import domain.Position;
 
 public class Corridor {
-    private final Position leftCorner;
-    private final Position rightCorner;
+    private Position leftCorner;
+    private Position rightCorner;
+
+    public Corridor() {}
 
     public Corridor(Position leftCorner, Position rightCorner) {
         this.leftCorner = leftCorner;
         this.rightCorner = rightCorner;
-    }
-
-    public Position getLeftCorner() {
-        return leftCorner;
-    }
-
-    public Position getRightCorner() {
-        return rightCorner;
     }
 
     public boolean positionInCorridor(Position position) {
@@ -26,11 +20,10 @@ public class Corridor {
                 position.getY() <= rightCorner.getY();
     }
 
-    public boolean isHorizontal() {
-        return leftCorner.getY() == rightCorner.getY();
-    }
+    // Геттеры и сеттеры
+    public Position getLeftCorner() { return leftCorner; }
+    public void setLeftCorner(Position leftCorner) { this.leftCorner = leftCorner; }
 
-    public boolean isVertical() {
-        return leftCorner.getX() == rightCorner.getX();
-    }
+    public Position getRightCorner() { return rightCorner; }
+    public void setRightCorner(Position rightCorner) { this.rightCorner = rightCorner; }
 }

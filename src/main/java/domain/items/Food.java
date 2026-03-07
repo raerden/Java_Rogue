@@ -4,8 +4,12 @@ import domain.player.Player;
 import domain.Position;
 
 public class Food extends BaseItem{
-    private final ConsumableType effectType;          // Тип эффекта (enum)
-    private final int bonus;         // На сколько повышает характеристику
+    private ConsumableType effectType;          // Тип эффекта (enum)
+    private int bonus;         // На сколько повышает характеристику
+
+    public Food() {
+        super();
+    }
 
     public Food(String name, int bonus, Position position) {
         super(name, ItemType.FOOD, position);
@@ -25,10 +29,6 @@ public class Food extends BaseItem{
         return effectType;
     }
 
-    public int getBonus() {
-        return bonus;
-    }
-
     @Override
     public String toString() {
         return String.format("Еда '%s' (%s +%d)",
@@ -38,5 +38,22 @@ public class Food extends BaseItem{
     @Override
     public char getDisplayChar() {
         return '%';
+    }
+
+    public ConsumableType getEffectType() {
+        return effectType;
+    }
+
+    public int getBonus() {
+        return bonus;
+    }
+
+    // Сеттеры (нужны для Gson)
+    public void setEffectType(ConsumableType effectType) {
+        this.effectType = effectType;
+    }
+
+    public void setBonus(int bonus) {
+        this.bonus = bonus;
     }
 }
