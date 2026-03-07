@@ -97,7 +97,7 @@ public class Generation {
             if (roomNum == startRoom) continue;
 
             // Получаем все свободные позиции в комнате через метод Level
-            List<Position> freePositions = level.getFreePositionsInRoom(roomNum);
+            List<Position> freePositions = level.getRoom(roomNum).getFreePositions(0);
 
             // Если нет свободных позиций, пропускаем комнату
             if (freePositions.isEmpty()) continue;
@@ -121,7 +121,7 @@ public class Generation {
                 enemy.setPosition(freePositions.get(positionIndex));
 
                 // Добавляем через Level, который синхронизирует с Room и units
-                if (level.addEntity(enemy, roomNum)) {
+                if (level.addEnemy(enemy, roomNum)) {
                     positionIndex++;
                 }
             }
@@ -133,7 +133,7 @@ public class Generation {
                 item.setPosition(freePositions.get(positionIndex));
 
                 // Добавляем через Level
-                if (level.addEntity(item, roomNum)) {
+                if (level.addItem(item, roomNum)) {
                     positionIndex++;
                 }
             }

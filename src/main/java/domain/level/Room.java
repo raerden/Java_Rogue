@@ -16,8 +16,6 @@ public class Room {
     private Door[] doors = new Door[MAX_DOORS];
     private boolean isFreePositions;
 
-    //Координаты сущностей в комнате.
-    private List<Entity> entities = new ArrayList<>();
     // Разделяем сущности по типам для их подсчета в комнате
     private List<Enemy> enemies = new ArrayList<>();
     private List<BaseItem> items = new ArrayList<>();
@@ -76,25 +74,31 @@ public class Room {
         }
     }
 
-    public boolean putEntintyToRndPlace(Entity entity) {
-        Position position = getRandomFreePosition();
-        if (position == null) {
-            return false;
-        }
-        System.out.printf("rnd pos: %d %d", position.getX(), position.getY());
-        entity.setPosition(position);
-        entities.add(entity);
-        return true;
-    }
-
 
     public Position getRandomFreePosition(int decreaseArea) {
         if (!isFreePositions) return null;
 
+        // Список свободных клеток
+        List<Position> freePositions = getFreePositions(decreaseArea);
+
+        if (freePositions.isEmpty()) {
+            this.isFreePositions = false;
+            return null;
+        }
+
+        return freePositions.get(rndBetween(0,freePositions.size() - 1));
+    }
+
+    public List<Position> getFreePositions(int decreaseArea) {
         //Собрать координаты занятых позиций в виде Set String "x,y"
         Set<String> occupied = new HashSet<>();
-        for (Entity entity : entities) {
-            Position pos = entity.getPosition();
+
+        for (Enemy enemy : enemies) {
+            Position pos = enemy.getPosition();
+            occupied.add(pos.getX() + "," + pos.getY());
+        }
+        for (BaseItem item : items) {
+            Position pos = item.getPosition();
             occupied.add(pos.getX() + "," + pos.getY());
         }
 
@@ -113,12 +117,7 @@ public class Room {
             }
         }
 
-        if (freePositions.isEmpty()) {
-            this.isFreePositions = false;
-            return null;
-        }
-
-        return freePositions.get(rndBetween(0,freePositions.size() - 1));
+        return freePositions;
     }
 
     public Position getRandomFreePosition() {
@@ -149,34 +148,53 @@ public class Room {
 
     //Проверить что позиция не занята
     public boolean isPositionFree(Position position) {
-        for (Entity entity : entities) {
-            if (position.equal(entity.getPosition())) {
+        for (Enemy enemy : enemies) {
+            if (position.equal(enemy.getPosition())) {
+                return false;
+            }
+        }
+        for (BaseItem item : items) {
+            if (position.equal(item.getPosition())) {
                 return false;
             }
         }
         return true;
     }
 
-    public boolean addEntity(Entity entity) {
+    public void removeEnemy(Enemy enemy) {
+        enemies.remove(enemy);
+    }
+
+    public boolean addEnemy(Enemy enemy) {
         if (isFreePositions &&
-                isPositionInRoom(entity.getPosition()) &&
-                isPositionFree(entity.getPosition())) {
-            if (entity instanceof BaseItem && canAddItem()){
-                items.add((BaseItem) entity);
-                entities.add(entity);
-            }
-            else if (entity instanceof Enemy && canAddEnemy()){
-                enemies.add((Enemy) entity);
-                entities.add(entity);
-            }
-            else {
-                entities.add(entity);
-            }
+                canAddEnemy() &&
+                isPositionInRoom(enemy.getPosition()) &&
+                isPositionFree(enemy.getPosition())) {
+
+            enemies.add(enemy);
 
             return true;
         }
         return false;
     }
+
+    public void removeItem(BaseItem item) {
+        items.remove(item);
+    }
+
+    public boolean addItem(BaseItem item) {
+        if (isFreePositions &&
+                canAddItem() &&
+                isPositionInRoom(item.getPosition()) &&
+                isPositionFree(item.getPosition())) {
+
+            items.add(item);
+
+            return true;
+        }
+        return false;
+    }
+
 
 
 //    // Метод для получения всех свободных позиций
@@ -191,16 +209,6 @@ public class Room {
 
     public boolean canAddItem() {
         return items.size() < 3; // максимум 3 предмета
-    }
-
-    public void deleteEntity(Entity entity) {
-        entities.remove(entity);
-        if (entity instanceof BaseItem){
-            items.remove(entity);
-        }
-        if (entity instanceof Enemy){
-            enemies.remove(entity);
-        }
     }
 
     // Геттеры и сеттеры

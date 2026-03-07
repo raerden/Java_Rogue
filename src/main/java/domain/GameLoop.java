@@ -250,11 +250,8 @@ public class GameLoop {
     private void loadGame() {
         Game loadedGame = LoadSaveData.quickLoad();
         if (loadedGame != null) {
-
-            currentGame = new Game();
-            currentGame.generateLevel(1);
-
             currentGame = loadedGame;
+            state = FSM_State.GAME;
         }
     }
 

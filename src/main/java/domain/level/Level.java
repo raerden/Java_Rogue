@@ -47,7 +47,15 @@ public class Level {
         return stairsDown;
     }
 
-    public boolean addEntity(Entity entity, int roomNumber) {
+    public void removeEnemy(Enemy enemy) {
+        units.removeEnemy(enemy);
+        for (Room room : rooms) {
+            room.removeEnemy(enemy);
+        }
+    }
+
+    // Вместо addEntity используем конкретные методы
+    public boolean addEnemy(Enemy enemy, int roomNumber) {
         if (roomNumber < 0 || roomNumber >= rooms.length) {
             return false;
         }
@@ -55,29 +63,29 @@ public class Level {
         Room room = rooms[roomNumber];
 
         // Проверяем, что позиция сущности установлена
-        if (entity.getPosition() == null) {
+        if (enemy.getPosition() == null) {
             return false;
         }
 
         // Проверяем, что позиция находится внутри указанной комнаты
-        if (!room.isPositionInRoom(entity.getPosition())) {
+        if (!room.isPositionInRoom(enemy.getPosition())) {
             return false;
         }
 
         // Проверяем, свободна ли позиция в комнате
-        if (!room.isPositionFree(entity.getPosition())) {
-            System.out.println("Позиция занята: " + entity.getPosition());
+        if (!room.isPositionFree(enemy.getPosition())) {
+            System.out.println("Позиция занята: " + enemy.getPosition());
             return false;
         }
 
         // Пытаемся добавить сущность в общую коллекцию уровня
-        if (units.addEntity(entity)) {
+        if (units.addEnemy(enemy)) {
             // Если успешно добавили в уровень, добавляем и в комнату
-            if (room.addEntity(entity)) {
+            if (room.addEnemy(enemy)) {
                 return true;
             } else {
                 // Если не удалось добавить в комнату, то удаляем и с уровня
-                units.deleteEntity(entity);
+                units.removeEnemy(enemy);
                 return false;
             }
         }
@@ -85,37 +93,50 @@ public class Level {
         return false;
     }
 
-    public void deleteEntity(Entity entity) {
-        units.deleteEntity(entity);
+    public void removeItem(BaseItem item) {
+        units.removeItem(item);
+        for (Room room : rooms) {
+            room.removeItem(item);
+        }
     }
 
-    public List<Position> getFreePositionsInRoom(int roomNumber) {
-        // Проверяем корректность номера комнаты
+    public boolean addItem(BaseItem item, int roomNumber) {
         if (roomNumber < 0 || roomNumber >= rooms.length) {
-            return Collections.emptyList();
+            return false;
         }
 
         Room room = rooms[roomNumber];
-        Position leftCorner = room.getLeftCorner();
-        Position rightCorner = room.getRightCorner();
 
-        List<Position> freePositions = new ArrayList<>();
+        // Проверяем, что позиция сущности установлена
+        if (item.getPosition() == null) {
+            return false;
+        }
 
-        // Проходим по всем клеткам внутри комнаты (исключая стены)
-        for (int x = leftCorner.getX() + 1; x < rightCorner.getX(); x++) {
-            for (int y = leftCorner.getY() + 1; y < rightCorner.getY(); y++) {
-                Position pos = new Position(x, y);
+        // Проверяем, что позиция находится внутри указанной комнаты
+        if (!room.isPositionInRoom(item.getPosition())) {
+            return false;
+        }
 
-                // Проверяем, не занята ли позиция какой-либо сущностью
-                if (units.getEntityAt(pos) == null) {
-                    freePositions.add(pos);
-                }
+        // Проверяем, свободна ли позиция в комнате
+        if (!room.isPositionFree(item.getPosition())) {
+            System.out.println("Позиция занята: " + item.getPosition());
+            return false;
+        }
+
+        // Пытаемся добавить сущность в общую коллекцию уровня
+        if (units.addItem(item)) {
+            // Если успешно добавили в уровень, добавляем и в комнату
+            if (room.addItem(item)) {
+                return true;
+            } else {
+                // Если не удалось добавить в комнату, то удаляем и с уровня
+                units.removeItem(item);
+                return false;
             }
         }
 
-        return freePositions;
+        return false;
     }
-
 
  //Получить список свободных позиций в комнате вокруг указанной точки
      public List<Position> getFreeNearPositions(Position current) {

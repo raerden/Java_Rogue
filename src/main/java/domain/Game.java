@@ -4,7 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import datalayer.GameStats;
 import domain.items.*;
+import domain.items.BackpackableAdapter;
+import domain.items.BaseItemAdapter;
 import domain.level.*;
+import domain.monsters.EnemyAdapter;
 import domain.player.Player;
 import domain.monsters.*;
 
@@ -23,14 +26,16 @@ public class Game {
     private Exploration exploration;
     private GameStats gameStats;
 
-//    private static final Gson gson = new GsonBuilder()
-//            .setPrettyPrinting()
-//            .create();
+    private static final Gson gson = createGson();
 
-    private static final Gson gson = new GsonBuilder()
-            .setPrettyPrinting()
-            .registerTypeAdapter(Entity.class, new EntityAdapter())
-            .create();
+    private static Gson createGson() {
+        return new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(Enemy.class, new EnemyAdapter())  // Специально для Enemy
+                .registerTypeAdapter(BaseItem.class, new BaseItemAdapter())
+                .registerTypeAdapter(Backpackable.class, new BackpackableAdapter())
+                .create();
+    }
 
     public Game() {
         this.generator = new Generation();
@@ -86,7 +91,7 @@ public class Game {
                 player.setScore(enemy.getTreasureValue());
                 gameStats.addScore(enemy.getTreasureValue());
                 gameStats.addKill();
-                level.deleteEntity(enemy);      //Удалить животное
+                level.removeEnemy(enemy);      //Удалить животное
             }
         } else if (!player.isAsleep() && checkBounds(newPosition)) { //Проверка границ комнат и, коридоров
             player.setPosition(newPosition);
@@ -99,7 +104,7 @@ public class Game {
         // 1. предмет,
         if (baseItem != null) {
             if (player.pickUpItem((Backpackable) baseItem) ) {
-                level.deleteEntity(baseItem);
+                level.removeItem((BaseItem) baseItem);
                 setGameLog("Игрок поднял " + baseItem.toString());
             } else {
                 //Рюкзак полон. Просто печатаем название предмета под ногами
@@ -157,8 +162,7 @@ public class Game {
     private void moveAllEnemies() {
         // Получаем всех врагов с уровня
         for (Entity entity : level.getAllEntities()) {
-            if (entity instanceof Enemy) {
-                Enemy enemy = (Enemy) entity;
+            if (entity instanceof Enemy enemy) {
 
                 // Определяем текущую комнату врага
                 int enemyRoom = level.findRoomByPosition(enemy.getPosition());
@@ -251,7 +255,7 @@ public class Game {
         if (freePosToDrop != null) {
             //добавить currentWeapon в предметы на карте в указанную позицию
             currentWeapon.setPosition(freePosToDrop);
-            level.addEntity(currentWeapon, currentRoom);
+            level.addItem(currentWeapon, currentRoom);
             player.equipWeapon(null);
             return true;
         }
