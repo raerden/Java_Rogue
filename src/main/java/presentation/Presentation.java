@@ -47,11 +47,8 @@ public class Presentation {
     private static final String RIGHTBOTBOUND = "╝";
     private static final String VERTBOUND = "║";
     private static final String HORIZBOUND = "═";
-    private static final String HORIZDOOR = "━";
-    private static final String VERTDOOR = "┃";
     private static final String PASSAGE = "░";
     private static final String ROOMFLOOR = ".";
-    private static final String PLAYER = "@";
     private static final String STAIRSDOWN = "#";
 
     private final int MENU_WIDTH = 20;

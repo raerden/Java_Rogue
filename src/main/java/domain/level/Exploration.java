@@ -31,6 +31,11 @@ public class Exploration {
         this.showAllMap = "IDDQD".equals(player.getName());
     }
 
+    public void sync(Level level, Player player) {
+        this.level = level;
+        this.player = player;
+    }
+
     public void markRoomVisited(int roomIndex) {
         visitedRooms.add(roomIndex);
     }

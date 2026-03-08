@@ -32,7 +32,11 @@ public class Player extends Character implements Entity {
 
     //Конструктор
     public Player(String name, Position startPosition) {
-        super(startPosition, 200, 200, 10, 10);
+        super(startPosition,
+                name.equals("IDDQD") ? 9999 : 200,           // health
+                name.equals("IDDQD") ? 9999 : 200,           // maxHealth
+                name.equals("IDDQD") ? 9999 : 10,            // strength
+                name.equals("IDDQD") ? 9999 : 10);           // dexterity
         this.name = name;
         this.backpack = new Backpack();
         this.equippedWeapon = null;

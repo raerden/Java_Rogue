@@ -42,8 +42,8 @@ public class GameLoop {
                 currentGame = null;
                 state = FSM_State.START;
             }
-            else if (currentGame != null && currentGame.getLevel() != null &&(currentGame.getLevel().getLevelNumber() > 20 ||
-                    (currentGame.getLevel().getLevelNumber() == 20 &&
+            else if (currentGame != null && currentGame.getLevel() != null &&(currentGame.getLevel().getLevelNumber() > 21 ||
+                    (currentGame.getLevel().getLevelNumber() == 22 &&
                             currentGame.getPlayer().getPosition().equal(currentGame.getLevel().getStairsDown())))) {
                 // Статистика уже сохранена в checkStairsDown, но можно добавить доп. обработку
                 presentation.showVictoryMessage(currentGame.getPlayer().getName());

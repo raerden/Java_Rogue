@@ -108,7 +108,7 @@ public class Mimic extends Enemy  {
 
     @Override
     protected void applySpecialAttackEffects(Player player) {
-        // Можно добавить спецэффект, например, испуг игрока
+
     }
 
     @Override
