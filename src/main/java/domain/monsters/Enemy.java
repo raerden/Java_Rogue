@@ -13,6 +13,7 @@ public abstract class Enemy extends Character {
     protected EnemyType type;
     protected int treasureValue;
     protected int hostility;
+    protected boolean wasAttacked;
 
     protected Enemy() {
         super();
@@ -25,6 +26,7 @@ public abstract class Enemy extends Character {
         this.type = type;
         this.hostility = hostility;
         this.treasureValue = treasureValue;
+        this.wasAttacked = false;
     }
     //Геттеры
     public EnemyType getType() {
@@ -81,19 +83,26 @@ public abstract class Enemy extends Character {
 
     protected abstract void applySpecialAttackEffects(Player player);
 
-    public boolean attack(Player player) {
+    public int attack(Player player) {
         if (player == null || !player.isAlive() || !this.isAlive()){
-            return false;
+            return -1;
         }
-        boolean wasAttacked = false;
         double hitChance = this.calculateHitChance(player.getDexterity());
+        int damage = 0;
         if (Math.random() < hitChance) {
-            int damage = calculateHitDamage();
+            damage = calculateHitDamage();
             player.takeDamage(damage, this);
             applySpecialAttackEffects(player);
-            wasAttacked = true;
         }
+        return damage;
+    }
+
+    public boolean isWasAttacked() {
         return wasAttacked;
+    }
+
+    public void setWasAttacked(boolean wasAttacked) {
+        this.wasAttacked = wasAttacked;
     }
 
 }

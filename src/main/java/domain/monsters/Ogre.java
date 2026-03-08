@@ -175,15 +175,14 @@ public class Ogre extends Enemy {
     }
 
     @Override
-    public boolean attack(Player player) {
+    public int attack(Player player) {
         if (resting) {
             resting = false;
-            return false;
+            return -1;
         }
 
-        super.attack(player);
         resting = true; // Отдыхает после атаки
-        return true;
+        return super.attack(player);
     }
 
     @Override

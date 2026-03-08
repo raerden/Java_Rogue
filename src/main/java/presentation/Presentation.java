@@ -71,8 +71,7 @@ public class Presentation {
         try {
             terminal = factory.createTerminal();
             // Проверяем, является ли терминал SwingTerminalFrame
-            if (terminal instanceof SwingTerminalFrame) {
-                SwingTerminalFrame swingTerminal = (SwingTerminalFrame) terminal;
+            if (terminal instanceof SwingTerminalFrame swingTerminal) {
                 // Центрируем окно на экране
                 swingTerminal.setLocationRelativeTo(null); // null = относительно центра экрана
             }
@@ -285,9 +284,9 @@ public class Presentation {
         List<Backpackable> backpackList =  game.getPlayer().getBackpack().getListByType(game.getBackpackCurrentItems());
 
         //Определить ширину рюкзака по самой длиной строке содержимого
-        for (int i = 0; i < backpackList.size(); i++) {
-            if (backpackList.get(i).toString().length() > backpackWidth)
-                backpackWidth = backpackList.get(i).toString().length();
+        for (Backpackable backpackable : backpackList) {
+            if (backpackable.toString().length() > backpackWidth)
+                backpackWidth = backpackable.toString().length();
         }
 
         if (game.getBackpackCurrentItems() == ItemType.WEAPON &&
@@ -392,36 +391,49 @@ public class Presentation {
 
     private char getDoorChar(int doorIndex) {
         // Определяем символ двери по направлению
-        switch (doorIndex) {
-            case 0: return '─'; // Северная дверь (горизонтальная)
-            case 1: return '│'; // Восточная дверь (вертикальная)
-            case 2: return '─'; // Южная дверь (горизонтальная)
-            case 3: return '│'; // Западная дверь (вертикальная)
-            default: return '+';
-        }
+        return switch (doorIndex) {
+            case 0 -> '─'; // Северная дверь (горизонтальная)
+            case 1 -> '│'; // Восточная дверь (вертикальная)
+            case 2 -> '─'; // Южная дверь (горизонтальная)
+            case 3 -> '│'; // Западная дверь (вертикальная)
+            default -> '+';
+        };
     }
 
     private void printVisibleEntities(Level level, Exploration exploration) throws IOException {
         Set<Entity> allEntities = level.getAllEntities();
 
+        // Сначала рисуем все предметы
         for (Entity entity : allEntities) {
-            // Пропускаем игрока (его отображаем отдельно)
-            if (entity instanceof Player) continue;
+            // Пропускаем игрока и монстров
+            if (entity instanceof Player || entity instanceof Enemy) continue;
 
             Position pos = entity.getPosition();
             if (pos == null) continue;
 
-            // Рисуем сущность только если она видима
+            // Рисуем предмет только если он видим
             if (exploration.isCellVisible(pos)) {
                 if (entity instanceof BaseItem item) {
                     putCh(item.getDisplayChar(), pos.getX(), pos.getY(),
                             COLORITEM, COLORBGROUND);
-                } else if (entity instanceof Enemy enemy) {
-                    if (enemy instanceof Ghost ghost) {
-                        // Приводим к Ghost
-                        if (ghost.isInvisible()) {
-                            continue;
-                        }
+                }
+            }
+        }
+
+        // Затем рисуем всех монстров (они будут поверх предметов)
+        for (Entity entity : allEntities) {
+            // Пропускаем игрока и предметы
+            if (entity instanceof Player || entity instanceof BaseItem) continue;
+
+            Position pos = entity.getPosition();
+            if (pos == null) continue;
+
+            // Рисуем монстра только если он видим
+            if (exploration.isCellVisible(pos)) {
+                if (entity instanceof Enemy enemy) {
+                    // Проверка на невидимость для Ghost
+                    if (enemy instanceof Ghost ghost && ghost.isInvisible()) {
+                        continue;
                     }
 
                     putCh(enemy.getDisplayChar(), pos.getX(), pos.getY(),

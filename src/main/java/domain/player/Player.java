@@ -190,6 +190,7 @@ public class Player extends Character implements Entity {
         if (enemy == null || !enemy.isAlive() || !this.isAlive()){
             return -1;
         }
+        enemy.setWasAttacked(true);
         int damage = 0;
         double hitChance = this.calculateHitChance(enemy.getDexterity());
         if (Math.random() < hitChance) {

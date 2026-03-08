@@ -29,6 +29,8 @@ public class EntityGenerator {
                 return new Vampire(levelNumber, null);
             case SNAKE_MAGICIAN:
                 return new SnakeMagician(levelNumber, null);
+            case MIMIC:
+                return new Mimic(levelNumber, null);
             default:
                 return new Zombie(levelNumber, null);
         }

@@ -2,7 +2,6 @@ package domain.monsters;
 
 import com.googlecode.lanterna.TextColor;
 import domain.Position;
-import domain.items.BaseItem;
 import domain.level.Room;
 import domain.player.Player;
 

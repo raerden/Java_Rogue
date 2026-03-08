@@ -9,7 +9,8 @@ public enum EnemyType {
         GHOST("призрак", 2),
         OGRE("огр", 3),
         VAMPIRE("вампир", 4),
-        SNAKE_MAGICIAN("змей-маг", 5);
+        SNAKE_MAGICIAN("змей-маг", 5),
+        MIMIC("Мимик", 2);
 
 
         private final String displayName;
