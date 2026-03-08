@@ -15,6 +15,7 @@ public class Room {
     private Position rightCorner;
     private Door[] doors = new Door[MAX_DOORS];
     private boolean isFreePositions;
+    private boolean limitItemsAdd;
 
     // Разделяем сущности по типам для их подсчета в комнате
     private List<Enemy> enemies = new ArrayList<>();
@@ -43,6 +44,7 @@ public class Room {
                 roomBoundsMax.getY()
         );
 
+        this.limitItemsAdd = true;
         this.isFreePositions = true;
         this.leftCorner = new Position(leftX, leftY);
         this.rightCorner = new Position(rightX, rightY);
@@ -195,20 +197,18 @@ public class Room {
         return false;
     }
 
-
-
-//    // Метод для получения всех свободных позиций
-//    public List<Position> getFreePositions() {
-//        // возвращает все свободные клетки в комнате
-//    }
-
     // Проверка лимитов на типы сущностей
     public boolean canAddEnemy() {
         return enemies.size() < 1; // максимум 1 враг
     }
 
     public boolean canAddItem() {
-        return items.size() < 3; // максимум 3 предмета
+        return limitItemsAdd ? items.size() < 3 : true; // максимум 3 предмета
+    }
+
+    @Override
+    public String toString(){
+        return String.format("%s, %s", leftCorner, rightCorner);
     }
 
     // Геттеры и сеттеры
@@ -234,5 +234,13 @@ public class Room {
     }
     public Door getLeftDoor() {
         return doors[3];
+    }
+
+    public void setLimitItemsAdd(boolean limitItemsAdd) {
+        this.limitItemsAdd = limitItemsAdd;
+    }
+
+    public boolean isLimitItemsAdd() {
+        return limitItemsAdd;
     }
 }

@@ -1,6 +1,8 @@
-package domain.items;
+package datalayer;
 
 import com.google.gson.*;
+import domain.items.Backpackable;
+
 import java.lang.reflect.Type;
 
 public class BackpackableAdapter implements JsonSerializer<Backpackable>, JsonDeserializer<Backpackable> {
@@ -24,7 +26,6 @@ public class BackpackableAdapter implements JsonSerializer<Backpackable>, JsonDe
         }
 
         String className = classElement.getAsString();
-        System.out.println("Загружаем предмет из рюкзака: " + className);
 
         try {
             Class<?> clazz = Class.forName(className);

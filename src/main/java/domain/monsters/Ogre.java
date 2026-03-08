@@ -102,19 +102,67 @@ public class Ogre extends Enemy {
             return;
         }
 
-        int dXOne = Integer.signum(player.getPosition().getX() - this.position.getX());
-        int dYOne = Integer.signum(player.getPosition().getY() - this.position.getY());
-
         int dx = player.getPosition().getX() - this.position.getX();
         int dy = player.getPosition().getY() - this.position.getY();
-        // Пытаемся двигаться сначала по горизонтали, потом по вертикали
-        //boolean wasAttackInStep = false;
-        while (moveCounter < MOVE_STEP){
-            if (Math.abs(dx) <= 1 && Math.abs(dy) <= 1) {
+        int distance = Math.abs(dx) + Math.abs(dy); // Манхэттенское расстояние
+
+        // Проверяем, может ли огр атаковать с текущей позиции
+        // Огр атакует, если игрок на соседней клетке (дистанция 1)
+        if (Math.abs(dx) <= 1 && Math.abs(dy) <= 1 && !(dx == 0 && dy == 0)) {
+            if (!resting) attack(player);
+            resting = !resting;
+            return;
+        }
+
+        // Если игрок на расстоянии 2 клеток, нужно встать рядом, а не на голову
+        if (distance == 2) {
+            // Определяем направление к игроку
+            int stepX = Integer.signum(dx);
+            int stepY = Integer.signum(dy);
+
+            // Если движение только по одной оси
+            if (dx == 0 || dy == 0) {
+                // Двигаемся на 1 клетку к игроку, чтобы оказаться рядом
+                if (dx != 0) {
+                    this.position = this.position.translate(stepX, 0);
+                } else {
+                    this.position = this.position.translate(0, stepY);
+                }
+            } else {
+                // Если игрок по диагонали на расстоянии 2
+                // Выбираем движение по оси с большим расстоянием
+                if (Math.abs(dx) > Math.abs(dy)) {
+                    this.position = this.position.translate(stepX, 0);
+                } else {
+                    this.position = this.position.translate(0, stepY);
+                }
+            }
+
+            // После движения проверяем, можем ли атаковать
+            int newDx = player.getPosition().getX() - this.position.getX();
+            int newDy = player.getPosition().getY() - this.position.getY();
+            if (Math.abs(newDx) <= 1 && Math.abs(newDy) <= 1 && !(newDx == 0 && newDy == 0)) {
+                if (!resting) attack(player);
+                resting = !resting;
+            }
+            return;
+        }
+
+        // Обычное движение с шагом 2 клетки
+        int dXOne = Integer.signum(dx);
+        int dYOne = Integer.signum(dy);
+
+        while (moveCounter < MOVE_STEP) {
+            // Проверяем, не приблизились ли мы к игроку на расстояние атаки
+            int currentDx = player.getPosition().getX() - this.position.getX();
+            int currentDy = player.getPosition().getY() - this.position.getY();
+
+            if (Math.abs(currentDx) <= 1 && Math.abs(currentDy) <= 1 && !(currentDx == 0 && currentDy == 0)) {
                 if (!resting) attack(player);
                 resting = !resting;
                 moveCounter += 2;
-            } else if (Math.abs(dx) > Math.abs(dy)) {
+                break;
+            } else if (Math.abs(currentDx) > Math.abs(currentDy)) {
                 this.position = this.position.translate(dXOne, 0);
                 moveCounter++;
             } else {
@@ -122,6 +170,7 @@ public class Ogre extends Enemy {
                 moveCounter++;
             }
         }
+
         moveCounter = 0;
     }
 

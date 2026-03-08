@@ -233,4 +233,10 @@ public class Level {
         return rooms[roomNumber];
     }
 
+    public void setUnlimitedItemsAdd() {
+        for (Room room : rooms) {
+            room.setLimitItemsAdd(false);
+        }
+    }
+
 }

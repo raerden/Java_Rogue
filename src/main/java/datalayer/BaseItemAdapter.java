@@ -1,6 +1,8 @@
-package domain.items;
+package datalayer;
 
 import com.google.gson.*;
+import domain.items.BaseItem;
+
 import java.lang.reflect.Type;
 
 public class BaseItemAdapter implements JsonSerializer<BaseItem>, JsonDeserializer<BaseItem> {
@@ -25,7 +27,6 @@ public class BaseItemAdapter implements JsonSerializer<BaseItem>, JsonDeserializ
         }
 
         String className = classElement.getAsString();
-        System.out.println("Загружаем предмет: " + className);
 
         try {
             Class<?> clazz = Class.forName(className);
