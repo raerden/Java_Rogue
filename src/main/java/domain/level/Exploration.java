@@ -13,13 +13,13 @@ public class Exploration {
     private Set<String> currentlyVisibleCells = new HashSet<>(); // Клетки, видимые в текущий момент
     private Level level;
     private Player player;
-    private boolean showAllMap = true;
+    private boolean showAllMap;
 
     public Exploration() {
         this.visitedRooms = new HashSet<>();
         this.everVisitedCells = new HashSet<>();
         this.currentlyVisibleCells = new HashSet<>();
-        //this.showAllMap = false;
+        this.showAllMap = false;
     }
 
     public Exploration(Level level, Player player) {
@@ -28,7 +28,7 @@ public class Exploration {
         this.currentlyVisibleCells = new HashSet<>();
         this.level = level;
         this.player = player;
-        //this.showAllMap = "IDDQD".equals(player.getName());
+        this.showAllMap = "IDDQD".equals(player.getName());
     }
 
     public void markRoomVisited(int roomIndex) {
@@ -340,8 +340,8 @@ public class Exploration {
         Position direction = getDirectionIntoRoom(doorPos, room);
         if (direction == null) return;
 
-        // Заглядываем на 3 клетки внутрь комнаты, проверяя лучами
-        for (int step = 1; step <= 3; step++) {
+        // Заглядываем внутрь комнаты, проверяя лучами
+        for (int step = 1; step <= SIGHT_RADIUS / 2; step++) {
             Position lookPos = new Position(
                     doorPos.getX() + direction.getX() * step,
                     doorPos.getY() + direction.getY() * step

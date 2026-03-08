@@ -128,7 +128,16 @@ public class Vampire extends Enemy {
         // Пытаемся двигаться сначала по горизонтали, потом по вертикали
         if ((Math.abs(dx) == 1 && Math.abs(dy) == 0) || (Math.abs(dx) == 0 && Math.abs(dy) == 1)) {
             attack(player);
-        } else {
+        }
+        else if ((Math.abs(dx) == 1 && Math.abs(dy) == 1)) {
+            if (currentRoom.isPositionInRoom(position.translate(dXOne, 0))) {
+                this.position = this.position.translate(dXOne, 0);
+            }
+            else if (currentRoom.isPositionInRoom(position.translate(0, dYOne))) {
+                this.position = this.position.translate(0, dYOne);
+            }
+
+        }else {
             this.position = this.position.translate(dXOne, dYOne);
         }
     }

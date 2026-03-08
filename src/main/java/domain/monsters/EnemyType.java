@@ -1,7 +1,5 @@
 package domain.monsters;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public enum EnemyType {
@@ -33,18 +31,4 @@ public enum EnemyType {
             EnemyType[] types = values();
             return types[new Random().nextInt(types.length)];
         }
-
-//    public static EnemyType getRandomForLevel(int levelNumber) {
-//            // На первых уровнях не появляются сильные монстры
-//            List<EnemyType> available = new ArrayList<>();
-//
-//            for (EnemyType type : values()) {
-//                if (type.difficulty <= levelNumber / 2 + 1) {
-//                    available.add(type);
-//                }
-//            }
-//
-//            return available.get(new Random().nextInt(available.size()));
-//        }
-
 }

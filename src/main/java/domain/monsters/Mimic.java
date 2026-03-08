@@ -8,9 +8,9 @@ import domain.player.Player;
 import java.util.Random;
 
 public class Mimic extends Enemy  {
-    private static final double BASE_HEALTH = 100;
-    private static final double BASE_STRENGTH = 3;
-    private static final double BASE_DEXTERITY = 30;
+    private static final double BASE_HEALTH = 80;
+    private static final double BASE_STRENGTH = 5;
+    private static final double BASE_DEXTERITY = 20;
     private static final double HEALTH_GROWTH = 0.03;
     private static final double STRENGTH_GROWTH = 0.03;
     private static final double DEXTERITY_GROWTH = 0.01;
@@ -118,7 +118,7 @@ public class Mimic extends Enemy  {
 
     @Override
     public TextColor getDisplayColor() {
-        return wasAttacked ? TextColor.ANSI.WHITE : TextColor.ANSI.RED;
+        return wasAttacked ? TextColor.ANSI.WHITE : TextColor.ANSI.GREEN;
     }
 
     public char getFakeChar() {

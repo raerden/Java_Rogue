@@ -52,7 +52,6 @@ public class Scroll extends BaseItem implements Entity, Backpackable {
         return '~';
     }
 
-    // Геттеры
     public ConsumableType getEffectType() {
         return effectType;
     }
@@ -61,7 +60,6 @@ public class Scroll extends BaseItem implements Entity, Backpackable {
         return bonus;
     }
 
-    // Сеттеры
     public void setEffectType(ConsumableType effectType) {
         this.effectType = effectType;
     }

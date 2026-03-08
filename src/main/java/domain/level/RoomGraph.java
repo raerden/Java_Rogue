@@ -206,21 +206,4 @@ public class RoomGraph {
             System.out.println();
         }
     }
-/*
-        RoomGraph graph = new RoomGraph();
-
-        System.out.println("Source full grid:");
-        graph.printGraph();
-
-        // Удаляем несколько ребер
-        System.out.println("Remove 3 random edges:");
-        graph.removeRandomEdges(4);
-
-        graph.printGraph();
-        graph.printMatrix();
-
-        // Проверим связность финального графа
-        System.out.println("Graph is connected? " + graph.isConnected());
-
- */
 }

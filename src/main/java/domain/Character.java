@@ -2,8 +2,6 @@ package domain;
 
 import com.googlecode.lanterna.TextColor;
 
-import java.util.List;
-
 public abstract class Character implements Entity{
     protected int strength;             // сила
     protected int dexterity;            // ловкость

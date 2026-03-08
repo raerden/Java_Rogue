@@ -65,8 +65,6 @@ public class Potion extends BaseItem {
         return '^';
     }
 
-
-    // Геттеры
     public boolean isUsed() {
         return isUsed;
     }
@@ -83,7 +81,6 @@ public class Potion extends BaseItem {
         return effectType;
     }
 
-    // Сеттеры
     public void setBonus(int bonus) {
         this.bonus = bonus;
     }

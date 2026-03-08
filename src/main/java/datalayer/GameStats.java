@@ -11,6 +11,7 @@ public class GameStats {
     private long attacks;
     private long missed;
     private long steps;
+    private String result; // "death", "completed", "quit"
 
     // Пустой конструктор для Gson
     public GameStats() {
@@ -23,6 +24,7 @@ public class GameStats {
         this.attacks = 0;
         this.missed = 0;
         this.steps = 0;
+        this.result = "unknown";
     }
 
     public GameStats(String name) {
@@ -40,56 +42,25 @@ public class GameStats {
         this.attacks = 0;
         this.missed = 0;
         this.steps = 0;
+        this.result = "unknown";
     }
 
     @Override
     public String toString() {
-        return String.format("GameStats{player='%s', score=%d, level=%d, kills=%d, steps=%d}",
-                playerName, score, level, kills, steps);
+        return String.format("%-10s | Score: %-5d | Level: %-3d | Kills: %-3d | Steps: %-5d | Result: %s",
+                playerName, score, level, kills, steps, result);
     }
 
-    // Геттеры для всех полей
-    public String getPlayerName() {
-        return playerName;
-    }
+    // Геттеры и сеттеры...
+    public String getPlayerName() { return playerName; }
 
-    public int getScore() {
-        return score;
-    }
+    public int getScore() { return score; }
 
-    public int getLevel() {
-        return level;
-    }
+    public int getLevel() { return level; }
 
-    public int getConsumedFoods() {
-        return consumedFoods;
-    }
+    public int getConsumedFoods() { return consumedFoods; }
 
-    public int getConsumedElixirs() {
-        return consumedElixirs;
-    }
 
-    public int getReadedScrolls() {  // оставляем с опечаткой для совместимости
-        return readedScrolls;
-    }
-
-    public int getKills() {
-        return kills;
-    }
-
-    public long getAttacks() {
-        return attacks;
-    }
-
-    public long getMissed() {
-        return missed;
-    }
-
-    public long getSteps() {
-        return steps;
-    }
-
-    // Сеттеры для всех полей (нужны Gson)
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
@@ -105,32 +76,27 @@ public class GameStats {
     public void setConsumedFoods(int consumedFoods) {
         this.consumedFoods = consumedFoods;
     }
+    public int getConsumedElixirs() { return consumedElixirs; }
+    public void setConsumedElixirs(int consumedElixirs) { this.consumedElixirs = consumedElixirs; }
 
-    public void setConsumedElixirs(int consumedElixirs) {
-        this.consumedElixirs = consumedElixirs;
-    }
+    public int getReadedScrolls() { return readedScrolls; }
+    public void setReadedScrolls(int readedScrolls) { this.readedScrolls = readedScrolls; }
 
-    public void setReadedScrolls(int readedScrolls) {
-        this.readedScrolls = readedScrolls;
-    }
+    public int getKills() { return kills; }
+    public void setKills(int kills) { this.kills = kills; }
 
-    public void setKills(int kills) {
-        this.kills = kills;
-    }
+    public long getAttacks() { return attacks; }
+    public void setAttacks(long attacks) { this.attacks = attacks; }
 
-    public void setAttacks(long attacks) {
-        this.attacks = attacks;
-    }
+    public long getMissed() { return missed; }
+    public void setMissed(long missed) { this.missed = missed; }
 
-    public void setMissed(long missed) {
-        this.missed = missed;
-    }
+    public long getSteps() { return steps; }
+    public void setSteps(long steps) { this.steps = steps; }
 
-    public void setSteps(long steps) {
-        this.steps = steps;
-    }
+    public String getResult() { return result; }
+    public void setResult(String result) { this.result = result; }
 
-    // Инкременторы
     public void addStep() {
         steps++;
     }

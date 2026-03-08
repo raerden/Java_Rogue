@@ -55,8 +55,6 @@ public class Weapon extends BaseItem{
         return '/';
     }
 
-
-    // Геттеры и сеттеры для всех полей
     public int getBonusStrength() {
         return bonusStrength;
     }

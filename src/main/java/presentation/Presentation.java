@@ -10,6 +10,7 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFontConfiguration;
 import com.googlecode.lanterna.terminal.swing.SwingTerminalFrame;
+import datalayer.GameStats;
 import domain.Entity;
 import domain.Game;
 import domain.Position;
@@ -275,8 +276,132 @@ public class Presentation {
         return enterName.show();
     }
 
-    public void displayLeaderboard() {
+    // Добавить в класс Presentation:
 
+    public void showDeathMessage(String playerName) throws IOException {
+        int centerX = WINDOW_WIDTH / 2;
+        int centerY = WINDOW_HEIGHT / 2;
+
+        clear();
+        String message = playerName + " HAS DIED!";
+        String subMessage = "Press any key to continue...";
+
+        putString(message, centerX - message.length()/2, centerY,
+                TextColor.ANSI.RED_BRIGHT, COLORBGROUND);
+        putString(subMessage, centerX - subMessage.length()/2, centerY + 2,
+                TextColor.ANSI.WHITE, COLORBGROUND);
+
+        refresh();
+
+        // Ждем нажатия клавиши
+        screen.readInput();
+        clear();
+    }
+
+    public void showVictoryMessage(String playerName) throws IOException {
+        int centerX = WINDOW_WIDTH / 2;
+        int centerY = WINDOW_HEIGHT / 2;
+
+        String message = playerName + " HAS WON THE GAME!";
+        String subMessage = "Congratulations! Press any key to continue...";
+
+        putString(message, centerX - message.length()/2, centerY,
+                TextColor.ANSI.GREEN_BRIGHT, COLORBGROUND);
+        putString(subMessage, centerX - subMessage.length()/2, centerY + 2,
+                TextColor.ANSI.WHITE, COLORBGROUND);
+
+        refresh();
+
+        // Ждем нажатия клавиши
+        screen.readInput();
+    }
+
+    public void displayLeaderboard(List<GameStats> statsList) throws IOException {
+        clear();
+
+        int leftX = WINDOW_WIDTH / 2 - 50;
+        int leftY = 5;
+        int rightX = WINDOW_WIDTH / 2 + 49;
+        int rightY = leftY + statsList.size() + 8;
+
+        // Рамка
+        printRoomBox(new Position(leftX, leftY), new Position(rightX, rightY),
+                MENUBORDER, MENUBGROUND);
+
+        clearBox(new Position(leftX+1, leftY+1), new Position(rightX-1, rightY-1), MENUBORDER, MENUBGROUND);
+        // Заголовок
+        String title = "=== LEADERBOARD (TOP 5) ===";
+        putString(title, WINDOW_WIDTH/2 - title.length()/2, leftY,
+                MENUBORDER, MENUBGROUND);
+
+        if (statsList.isEmpty()) {
+            String emptyMsg = "No records yet!";
+            putString(emptyMsg, WINDOW_WIDTH/2 - emptyMsg.length()/2, leftY + 3,
+                    TextColor.ANSI.WHITE, MENUBGROUND);
+        } else {
+            // Заголовки колонок
+            String header = String.format("%-1s %-12s %-5s %-5s %-6s %-8s %-8s %-7s %-6s %-5s %-8s %-8s",
+                    "#", "Name", "Score", "Level","CFoods", "CElixirs", "RScrolls", "Attacks", "Missed", "Kills", "Steps", "Result");
+            putString(header, leftX + 5, leftY + 2, MENUBORDER, MENUBGROUND);
+
+            // Разделитель
+            String separator = "-".repeat(90);
+            putString(separator, leftX + 5, leftY + 3, MENUBORDER, MENUBGROUND);
+
+
+
+            // Данные
+            for (int i = 0; i < statsList.size(); i++) {
+                GameStats stats = statsList.get(i);
+                String result = stats.getResult();
+                TextColor resultColor = getResultColor(result);
+
+                String line = String.format("%-1d %-12s %-5d %-5d %-6d %-8d %-8d %-7d %-6d %-5d %-9d",
+                        i + 1,
+                        truncate(stats.getPlayerName(), 12),
+                        stats.getScore(),
+                        stats.getLevel(),
+                        stats.getConsumedFoods(),
+                        stats.getConsumedElixirs(),
+                        stats.getReadedScrolls(),
+                        stats.getAttacks(),
+                        stats.getMissed(),
+                        stats.getKills(),
+                        stats.getSteps()
+                );
+
+                putString(line, leftX + 5, leftY + 4 + i,
+                        TextColor.ANSI.WHITE, MENUBGROUND);
+
+                // Выводим результат с цветом
+
+                String res = String.format("%-8s", result);
+                putString(res, leftX + 5 + 82, leftY + 4 + i,
+                        resultColor, MENUBGROUND);
+            }
+        }
+
+        // Инструкция
+        String instruction = "Press ESC to return";
+        putString(instruction, WINDOW_WIDTH/2 - instruction.length()/2, rightY - 1,
+                MENUBORDER, MENUBGROUND);
+
+        refresh();
+    }
+
+    private TextColor getResultColor(String result) {
+        switch (result) {
+            case "completed": return TextColor.ANSI.GREEN;
+            case "death": return TextColor.ANSI.RED;
+            case "quit": return TextColor.ANSI.YELLOW;
+            default: return TextColor.ANSI.WHITE;
+        }
+    }
+
+    private String truncate(String str, int length) {
+        if (str == null) return "";
+        if (str.length() <= length) return str;
+        return str.substring(0, length - 3) + "...";
     }
 
     public void displayBackpack(Game game) throws IOException {

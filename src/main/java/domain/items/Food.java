@@ -48,7 +48,6 @@ public class Food extends BaseItem{
         return bonus;
     }
 
-    // Сеттеры (нужны для Gson)
     public void setEffectType(ConsumableType effectType) {
         this.effectType = effectType;
     }

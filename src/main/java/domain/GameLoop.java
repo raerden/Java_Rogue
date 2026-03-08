@@ -2,6 +2,7 @@ package domain;
 
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
+import datalayer.GameStats;
 import datalayer.LoadSaveData;
 import domain.items.ItemType;
 import presentation.Presentation;
@@ -14,6 +15,7 @@ public class GameLoop {
     private FSM_State state = FSM_State.START;
     private Game currentGame;
     private boolean running = true;
+    private FSM_State prev_state;
 
     public GameLoop(Presentation presentation) {
         this.presentation = presentation;
@@ -32,8 +34,24 @@ public class GameLoop {
 
         while (running) {
             if (currentGame != null && currentGame.getPlayer().getHealth() == 0) {
+                // Сохраняем статистику при смерти
+                saveGameStatistics("death");
+                // Показываем сообщение о смерти
+                presentation.showDeathMessage(currentGame.getPlayer().getName());
+                // Очищаем текущую игру
+                currentGame = null;
                 state = FSM_State.START;
             }
+            else if (currentGame != null && currentGame.getLevel() != null &&(currentGame.getLevel().getLevelNumber() > 20 ||
+                    (currentGame.getLevel().getLevelNumber() == 20 &&
+                            currentGame.getPlayer().getPosition().equal(currentGame.getLevel().getStairsDown())))) {
+                // Статистика уже сохранена в checkStairsDown, но можно добавить доп. обработку
+                presentation.showVictoryMessage(currentGame.getPlayer().getName());
+                currentGame = null;
+
+                state = FSM_State.START;
+            }
+
             render();
             presentation.refresh();
 
@@ -49,19 +67,22 @@ public class GameLoop {
     private void render() throws IOException {
         switch (state) {
             case START:
+                presentation.clear();
                 presentation.displayStartMenu();
                 break;
             case PAUSE:
                 presentation.displayPauseMenu();
                 break;
             case GAME:
+                presentation.clear();
                 presentation.displayGame(currentGame);
                 break;
             case BACKPACK:
                 presentation.displayBackpack(currentGame);
                 break;
             case LEADERS:
-                presentation.displayLeaderboard();
+                presentation.clear();
+                presentation.displayLeaderboard(LoadSaveData.getTopStats());
                 break;
         }
     }
@@ -89,6 +110,15 @@ public class GameLoop {
         }
     }
 
+    private void saveGameStatistics(String result) {
+        if (currentGame != null && currentGame.getGameStats() != null) {
+            GameStats stats = currentGame.getGameStats();
+            stats.setResult(result);
+            stats.setLevel(currentGame.getLevel().getLevelNumber());
+            LoadSaveData.saveStatistics(stats);
+        }
+    }
+
     private void handleStartInput(KeyStroke key) throws IOException {
         if (key.getKeyType() == KeyType.Escape) {
             running = false;
@@ -99,7 +129,6 @@ public class GameLoop {
             char c = key.getCharacter();
             switch (c) {
                 case '1':
-                    // Ввод имени
                     String name = presentation.displayEnterNameDialog();
                     if (name != null && !name.isEmpty()) {
                         currentGame = new Game(name);
@@ -108,11 +137,10 @@ public class GameLoop {
                     }
                     break;
                 case '2':
-                    // Загрузка игры
                     loadGame();
                     break;
                 case '3':
-                    // Таблица лидеров
+                    prev_state = FSM_State.START;
                     state = FSM_State.LEADERS;
                     break;
             }
@@ -121,6 +149,8 @@ public class GameLoop {
 
     private void handlePauseInput(KeyStroke key) throws IOException {
         if (key.getKeyType() == KeyType.Escape) {
+            // Сохраняем статистику при выходе
+            saveGameStatistics("quit");
             running = false;
             return;
         }
@@ -128,10 +158,10 @@ public class GameLoop {
         if (key.getKeyType() == KeyType.Character) {
             char c = key.getCharacter();
             switch (c) {
-                case '1': // Resume
+                case '1':
                     state = FSM_State.GAME;
                     break;
-                case '2': // New game
+                case '2':
                     String name = presentation.displayEnterNameDialog();
                     if (name != null && !name.isEmpty()) {
                         currentGame = null;
@@ -140,13 +170,14 @@ public class GameLoop {
                         state = FSM_State.GAME;
                     }
                     break;
-                case '3': // Save game
+                case '3':
                     saveGame();
                     break;
-                case '4': // Load game
+                case '4':
                     loadGame();
                     break;
-                case '5': // Leaders
+                case '5':
+                    prev_state = FSM_State.GAME;
                     state = FSM_State.LEADERS;
                     break;
             }
@@ -159,7 +190,6 @@ public class GameLoop {
             return;
         }
 
-        // Обработка символов
         if (key.getKeyType() == KeyType.Character) {
             char c = Character.toLowerCase(key.getCharacter());
             switch (c) {
@@ -195,7 +225,6 @@ public class GameLoop {
                     state = FSM_State.BACKPACK;
             }
         }
-
     }
 
     private void handleBackpackInput(KeyStroke key) {
@@ -208,7 +237,6 @@ public class GameLoop {
             char c = Character.toLowerCase(key.getCharacter());
 
             if (c >= '0' && c <= '9') {
-                // Выбор предмета по номеру (0-9)
                 int itemIndex = c - '0';
                 currentGame.selectBackpackItem(itemIndex);
             }
@@ -235,18 +263,14 @@ public class GameLoop {
 
     private void handleLeadersInput(KeyStroke key) {
         if (key.getKeyType() == KeyType.Escape) {
-            // Возвращаемся в предыдущее состояние
-            // В данном случае просто в START, но можно сохранять предыдущее состояние
-            state = FSM_State.START;
+            state = prev_state;
         }
     }
 
     private void handleDefaultInput(KeyStroke key) {
-        // Обработка по умолчанию (можно ничего не делать)
         System.out.println("Необработанная клавиша: " + key);
     }
 
-    // Вспомогательные методы
     private void loadGame() {
         Game loadedGame = LoadSaveData.quickLoad();
         if (loadedGame != null) {
@@ -258,10 +282,5 @@ public class GameLoop {
     private void saveGame() {
         LoadSaveData.quickSave(currentGame);
         System.out.println("Игра сохранена");
-    }
-
-    private void saveAndExit() {
-        saveGame();
-        running = false;
     }
 }

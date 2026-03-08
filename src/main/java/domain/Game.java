@@ -6,6 +6,7 @@ import datalayer.BackpackableAdapter;
 import datalayer.BaseItemAdapter;
 import datalayer.EnemyAdapter;
 import datalayer.GameStats;
+import datalayer.LoadSaveData;
 import domain.items.*;
 import domain.level.*;
 import domain.player.Player;
@@ -50,25 +51,6 @@ public class Game {
         // генерируем первый уровень
         generateLevel(1);
 
-        // Создаем объект для статистики игры
-        this.gameStats = new GameStats(name);
-
-        for (int i = 0; i < 9; i++) {
-            player.getBackpack().addItem(EntityGenerator.generateRandomFood());
-        }
-
-        for (int i = 0; i < 9; i++) {
-            player.getBackpack().addItem(EntityGenerator.generateRandomWeapon());
-        }
-
-        for (int i = 0; i < 9; i++) {
-            player.getBackpack().addItem(EntityGenerator.generateRandomPotion());
-        }
-
-        for (int i = 0; i < 9; i++) {
-            player.getBackpack().addItem(EntityGenerator.generateRandomScroll());
-        }
-
         setGameLog("Game started");
     }
 
@@ -88,7 +70,7 @@ public class Game {
             }
             if (!enemy.isAlive()) {
                 setGameLog(enemy.getType() + " убит. Получено " + enemy.getTreasureValue() + " золота.");
-                player.setScore(enemy.getTreasureValue());
+                player.setScore(player.getScore() + enemy.getTreasureValue());
                 gameStats.addScore(enemy.getTreasureValue());
                 gameStats.addKill();
                 level.removeEnemy(enemy);      //Удалить животное
@@ -148,6 +130,8 @@ public class Game {
         if (player.getPosition().equal(level.getStairsDown())) {
             if (level.getLevelNumber() == 20) {
                 setGameLog("You are won game!");
+                gameStats.setResult("completed");
+                LoadSaveData.saveStatistics(gameStats);
             } else {
                 generateLevel(level.getLevelNumber() + 1);
                 gameStats.addLevel();

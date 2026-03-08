@@ -211,7 +211,6 @@ public class Room {
         return String.format("%s, %s", leftCorner, rightCorner);
     }
 
-    // Геттеры и сеттеры
     public Position getLeftCorner() { return leftCorner; }
     public void setLeftCorner(Position leftCorner) { this.leftCorner = leftCorner; }
 

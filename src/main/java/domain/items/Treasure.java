@@ -1,6 +1,5 @@
 package domain.items;
 
-import domain.Entity;
 import domain.Position;
 import domain.player.Player;
 
@@ -25,12 +24,10 @@ public class Treasure extends BaseItem  {
         return '*';
     }
 
-    // Геттер
     public int getValue() {
         return value;
     }
 
-    // Сеттер
     public void setValue(int value) {
         this.value = value;
     }

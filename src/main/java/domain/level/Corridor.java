@@ -20,7 +20,6 @@ public class Corridor {
                 position.getY() <= rightCorner.getY();
     }
 
-    // Геттеры и сеттеры
     public Position getLeftCorner() { return leftCorner; }
     public void setLeftCorner(Position leftCorner) { this.leftCorner = leftCorner; }
 

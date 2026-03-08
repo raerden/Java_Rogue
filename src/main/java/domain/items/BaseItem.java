@@ -43,7 +43,6 @@ public abstract class BaseItem implements Backpackable, Entity {
         return type;
     }
 
-    // Добавляем сеттер для type (нужен Gson)
     public void setType(ItemType type) {
         this.type = type;
     }
@@ -53,8 +52,7 @@ public abstract class BaseItem implements Backpackable, Entity {
         return name;
     }
 
-    // Добавляем сеттер для name (нужен Gson)
-    public void setName(String name) {
+        public void setName(String name) {
         this.name = name;
     }
 }

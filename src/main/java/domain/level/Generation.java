@@ -2,23 +2,9 @@ package domain.level;
 
 import domain.Position;
 import domain.items.BaseItem;
-import domain.items.Food;
-import domain.items.ItemType;
 import domain.monsters.Enemy;
-import domain.monsters.Ghost;
-import domain.monsters.Ogre;
-import domain.monsters.Zombie;
-import domain.player.Player;
 
 import java.util.*;
-/*
-Класс для генерации уровня
--Комнаты
--Двери
--Коридоры
--Предметы
--Монстры
- */
 
 public class Generation {
     private static final int WINDOW_WIDTH = 100;
@@ -60,7 +46,6 @@ public class Generation {
 
         //Создаем связный граф
         RoomGraph roomGraph = new RoomGraph();
-        //roomGraph.printGraph();
 
         // 2. создаем двери в комнатах на основе таблицы связности графа
         for (int i = 0; i < ROOM_COUNT; i++) {
@@ -139,35 +124,6 @@ public class Generation {
             }
         }
     }
-
-//    public BaseItem generateRandomItem(int level){
-//        ItemType itemTipe = ItemType.getRandomItem();
-//        if (itemTipe.equals(ItemType.FOOD) {
-//            return new Food("Bread", );
-//        }
-//    }
-//
-//    public Enemy generateRandomEnemy(int level, Position position){
-//        List<String> list = Arrays.asList("Ghost", "Ogre", "SnakeMagician", "Vampire", "Zombie");
-//        Random rand = new Random();
-//
-//        String randomEnemyType = list.get(rand.nextInt(list.size()));
-//        return new Enemy("Lary", randomEnemyType, level, position);
-//        if (randomEnemyType.equals("Zombie")) {
-//            return new Zombie("Lary", level, position);
-//        }else if (randomEnemyType.equals("Ghost")) {
-//            return new Ghost("Lary", level, position);
-//        }else if (randomEnemyType.equals("Ogre")) {
-//            return new Ogre("Lary", level, position);
-//        }else if (randomEnemyType.equals("Ghost")) {
-//            return new Ghost("Lary", level, position);
-//        }
-//    }
-
-    //Enemy: [z, g, z]
-    //for x in l:
-    //  x.update(
-
 
     public int getRoomAtDistance(int startRoom, boolean[][] connections) {
         int n = connections.length;

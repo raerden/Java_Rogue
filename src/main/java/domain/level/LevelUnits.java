@@ -20,7 +20,6 @@ public class LevelUnits {
         this.items = items != null ? items : new HashSet<>();
     }
 
-    // Геттеры и сеттеры
     public Set<Enemy> getEnemies() {
         return enemies;
     }
@@ -37,7 +36,6 @@ public class LevelUnits {
         this.items = items != null ? items : new HashSet<>();
     }
 
-    // Методы для работы с врагами
     public boolean addEnemy(Enemy enemy) {
         if (findEntityAt(enemy.getPosition()) != null) {
             return false;
@@ -58,7 +56,6 @@ public class LevelUnits {
         return null;
     }
 
-    // Методы для работы с предметами
     public boolean addItem(BaseItem item) {
         if (findEntityAt(item.getPosition()) != null) {
             return false;
@@ -79,7 +76,6 @@ public class LevelUnits {
         return null;
     }
 
-    // Общие методы
     public Entity findEntityAt(Position pos) {
         Enemy enemy = getEnemyAt(pos);
         if (enemy != null) return enemy;
