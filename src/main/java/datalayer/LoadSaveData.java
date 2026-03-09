@@ -2,15 +2,13 @@ package datalayer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 import domain.Game;
 
 import java.io.*;
-import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class LoadSaveData {
     private static final String SAVE_DIR = "./src/main/resources/";
@@ -124,7 +122,38 @@ public class LoadSaveData {
      */
     public static List<GameStats> getTopStats() {
         Savedata savedata = loadSavedata();
-        return savedata.getGameStatsList();
+        List<GameStats> allStats = savedata.getGameStatsList();
+
+        // Фильтруем, чтобы не попались 2 записи одного игрока
+        return getBestStatsPerPlayer(allStats);
+    }
+
+
+    private static List<GameStats> getBestStatsPerPlayer(List<GameStats> allStats) {
+        // Группируем по имени игрока и находим максимальный score для каждого
+        Map<String, GameStats> bestStatsMap = new HashMap<>();
+
+        for (GameStats stats : allStats) {
+            String playerName = stats.getPlayerName();
+            GameStats existing = bestStatsMap.get(playerName);
+
+            if (existing == null || stats.getScore() > existing.getScore()) {
+                bestStatsMap.put(playerName, stats);
+            }
+        }
+
+        // Преобразуем обратно в список
+        List<GameStats> bestStats = new ArrayList<>(bestStatsMap.values());
+
+        // Сортируем по убыванию score
+        bestStats.sort(Comparator.comparingInt(GameStats::getScore).reversed());
+
+        // Оставляем только топ-5
+        if (bestStats.size() > 5) {
+            bestStats = bestStats.subList(0, 5);
+        }
+
+        return bestStats;
     }
 
     /**

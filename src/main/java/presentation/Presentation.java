@@ -61,7 +61,7 @@ public class Presentation {
         factory.setInitialTerminalSize(new TerminalSize(WINDOW_WIDTH, WINDOW_HEIGHT)); // 100x40 символов
 
         // НАСТРОЙКА ШРИФТА - добавляем перед createTerminal()
-        Font font = new Font("Monospaced", Font.BOLD, 18); // жирный, размер 24
+        Font font = new Font("Monospaced", Font.BOLD, 24); // жирный, размер 24
         SwingTerminalFontConfiguration fontConfig =
                 SwingTerminalFontConfiguration.newInstance(font);
         factory.setTerminalEmulatorFontConfiguration(fontConfig);

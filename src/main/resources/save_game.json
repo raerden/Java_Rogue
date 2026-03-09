@@ -1,0 +1,2669 @@
+{
+  "level": {
+    "levelNumber": 1,
+    "rooms": [
+      {
+        "MAX_DOORS": 4,
+        "leftCorner": {
+          "x": 20,
+          "y": 3
+        },
+        "rightCorner": {
+          "x": 28,
+          "y": 9
+        },
+        "doors": [
+          null,
+          {
+            "position": {
+              "x": 28,
+              "y": 6
+            }
+          },
+          null,
+          null
+        ],
+        "isFreePositions": true,
+        "limitItemsAdd": false,
+        "enemies": [
+          {
+            "moveRight": true,
+            "moveDown": true,
+            "zigZagCicle": 0,
+            "type": "SNAKE_MAGICIAN",
+            "treasureValue": 125,
+            "hostility": 10,
+            "wasAttacked": false,
+            "strength": 9,
+            "dexterity": 31,
+            "maxHealth": 73,
+            "health": 68,
+            "position": {
+              "x": 23,
+              "y": 6
+            },
+            "ENEMY_CLASS": "domain.monsters.SnakeMagician"
+          }
+        ],
+        "items": [
+          {
+            "effectType": "STRENGTH",
+            "bonus": 5,
+            "name": "Свиток силы \"Сила мага\"",
+            "type": "SCROLL",
+            "position": {
+              "x": 23,
+              "y": 7
+            },
+            "itemClass": "domain.items.Scroll"
+          }
+        ]
+      },
+      {
+        "MAX_DOORS": 4,
+        "leftCorner": {
+          "x": 48,
+          "y": 4
+        },
+        "rightCorner": {
+          "x": 62,
+          "y": 12
+        },
+        "doors": [
+          null,
+          {
+            "position": {
+              "x": 62,
+              "y": 5
+            }
+          },
+          {
+            "position": {
+              "x": 56,
+              "y": 12
+            }
+          },
+          {
+            "position": {
+              "x": 48,
+              "y": 7
+            }
+          }
+        ],
+        "isFreePositions": true,
+        "limitItemsAdd": false,
+        "enemies": [],
+        "items": []
+      },
+      {
+        "MAX_DOORS": 4,
+        "leftCorner": {
+          "x": 76,
+          "y": 2
+        },
+        "rightCorner": {
+          "x": 89,
+          "y": 11
+        },
+        "doors": [
+          null,
+          null,
+          {
+            "position": {
+              "x": 87,
+              "y": 11
+            }
+          },
+          {
+            "position": {
+              "x": 76,
+              "y": 7
+            }
+          }
+        ],
+        "isFreePositions": true,
+        "limitItemsAdd": false,
+        "enemies": [],
+        "items": [
+          {
+            "bonus": 21,
+            "duration": 6,
+            "effectType": "HEALTH",
+            "isUsed": false,
+            "name": "Зелье здоровья Зелье исцеления",
+            "type": "POTION",
+            "position": {
+              "x": 84,
+              "y": 6
+            },
+            "itemClass": "domain.items.Potion"
+          },
+          {
+            "bonusStrength": 5,
+            "bonusDexterity": 9,
+            "equipped": false,
+            "name": "Старый посох убийца",
+            "type": "WEAPON",
+            "position": {
+              "x": 88,
+              "y": 3
+            },
+            "itemClass": "domain.items.Weapon"
+          },
+          {
+            "bonus": 7,
+            "duration": 8,
+            "effectType": "DEXTERITY",
+            "isUsed": false,
+            "name": "Зелье ловкости Нео",
+            "type": "POTION",
+            "position": {
+              "x": 88,
+              "y": 8
+            },
+            "itemClass": "domain.items.Potion"
+          }
+        ]
+      },
+      {
+        "MAX_DOORS": 4,
+        "leftCorner": {
+          "x": 4,
+          "y": 19
+        },
+        "rightCorner": {
+          "x": 14,
+          "y": 25
+        },
+        "doors": [
+          null,
+          {
+            "position": {
+              "x": 14,
+              "y": 24
+            }
+          },
+          {
+            "position": {
+              "x": 9,
+              "y": 25
+            }
+          },
+          null
+        ],
+        "isFreePositions": true,
+        "limitItemsAdd": false,
+        "enemies": [],
+        "items": [
+          {
+            "bonusStrength": 9,
+            "bonusDexterity": 26,
+            "equipped": false,
+            "name": "Ржавый катана воина",
+            "type": "WEAPON",
+            "position": {
+              "x": 11,
+              "y": 22
+            },
+            "itemClass": "domain.items.Weapon"
+          }
+        ]
+      },
+      {
+        "MAX_DOORS": 4,
+        "leftCorner": {
+          "x": 51,
+          "y": 15
+        },
+        "rightCorner": {
+          "x": 64,
+          "y": 22
+        },
+        "doors": [
+          {
+            "position": {
+              "x": 53,
+              "y": 15
+            }
+          },
+          {
+            "position": {
+              "x": 64,
+              "y": 19
+            }
+          },
+          null,
+          {
+            "position": {
+              "x": 51,
+              "y": 17
+            }
+          }
+        ],
+        "isFreePositions": true,
+        "limitItemsAdd": false,
+        "enemies": [
+          {
+            "fakeChar": "~",
+            "type": "MIMIC",
+            "treasureValue": 50,
+            "hostility": 10,
+            "wasAttacked": false,
+            "strength": 5,
+            "dexterity": 20,
+            "maxHealth": 82,
+            "health": 81,
+            "position": {
+              "x": 60,
+              "y": 18
+            },
+            "ENEMY_CLASS": "domain.monsters.Mimic"
+          }
+        ],
+        "items": [
+          {
+            "bonusStrength": 27,
+            "bonusDexterity": 4,
+            "equipped": false,
+            "name": "Ржавый молот варвара",
+            "type": "WEAPON",
+            "position": {
+              "x": 55,
+              "y": 21
+            },
+            "itemClass": "domain.items.Weapon"
+          },
+          {
+            "bonus": 12,
+            "duration": 9,
+            "effectType": "STRENGTH",
+            "isUsed": false,
+            "name": "Зелье силы Балтика 9",
+            "type": "POTION",
+            "position": {
+              "x": 59,
+              "y": 18
+            },
+            "itemClass": "domain.items.Potion"
+          }
+        ]
+      },
+      {
+        "MAX_DOORS": 4,
+        "leftCorner": {
+          "x": 88,
+          "y": 17
+        },
+        "rightCorner": {
+          "x": 96,
+          "y": 25
+        },
+        "doors": [
+          {
+            "position": {
+              "x": 95,
+              "y": 17
+            }
+          },
+          null,
+          {
+            "position": {
+              "x": 95,
+              "y": 25
+            }
+          },
+          {
+            "position": {
+              "x": 88,
+              "y": 20
+            }
+          }
+        ],
+        "isFreePositions": true,
+        "limitItemsAdd": false,
+        "enemies": [
+          {
+            "type": "ZOMBIE",
+            "treasureValue": 50,
+            "hostility": 6,
+            "wasAttacked": false,
+            "strength": 4,
+            "dexterity": 6,
+            "maxHealth": 60,
+            "health": 62,
+            "position": {
+              "x": 90,
+              "y": 20
+            },
+            "ENEMY_CLASS": "domain.monsters.Zombie"
+          }
+        ],
+        "items": [
+          {
+            "value": 15,
+            "name": "Золотое кольцо",
+            "type": "TREASURE",
+            "position": {
+              "x": 91,
+              "y": 19
+            },
+            "itemClass": "domain.items.Treasure"
+          }
+        ]
+      },
+      {
+        "MAX_DOORS": 4,
+        "leftCorner": {
+          "x": 18,
+          "y": 30
+        },
+        "rightCorner": {
+          "x": 31,
+          "y": 37
+        },
+        "doors": [
+          {
+            "position": {
+              "x": 26,
+              "y": 30
+            }
+          },
+          {
+            "position": {
+              "x": 31,
+              "y": 32
+            }
+          },
+          null,
+          null
+        ],
+        "isFreePositions": true,
+        "limitItemsAdd": false,
+        "enemies": [
+          {
+            "moveRight": true,
+            "moveDown": true,
+            "zigZagCicle": 0,
+            "type": "SNAKE_MAGICIAN",
+            "treasureValue": 125,
+            "hostility": 10,
+            "wasAttacked": false,
+            "strength": 9,
+            "dexterity": 31,
+            "maxHealth": 73,
+            "health": 73,
+            "position": {
+              "x": 27,
+              "y": 35
+            },
+            "ENEMY_CLASS": "domain.monsters.SnakeMagician"
+          }
+        ],
+        "items": [
+          {
+            "effectType": "HEALTH",
+            "bonus": 16,
+            "name": "Сыр",
+            "type": "FOOD",
+            "position": {
+              "x": 26,
+              "y": 34
+            },
+            "itemClass": "domain.items.Food"
+          },
+          {
+            "bonus": 35,
+            "duration": 10,
+            "effectType": "HEALTH",
+            "isUsed": false,
+            "name": "Зелье здоровья Живая вода",
+            "type": "POTION",
+            "position": {
+              "x": 23,
+              "y": 36
+            },
+            "itemClass": "domain.items.Potion"
+          },
+          {
+            "value": 90,
+            "name": "Древняя монета",
+            "type": "TREASURE",
+            "position": {
+              "x": 24,
+              "y": 35
+            },
+            "itemClass": "domain.items.Treasure"
+          }
+        ]
+      },
+      {
+        "MAX_DOORS": 4,
+        "leftCorner": {
+          "x": 56,
+          "y": 31
+        },
+        "rightCorner": {
+          "x": 64,
+          "y": 37
+        },
+        "doors": [
+          null,
+          {
+            "position": {
+              "x": 64,
+              "y": 32
+            }
+          },
+          null,
+          {
+            "position": {
+              "x": 56,
+              "y": 36
+            }
+          }
+        ],
+        "isFreePositions": true,
+        "limitItemsAdd": false,
+        "enemies": [
+          {
+            "firstAttack": true,
+            "type": "VAMPIRE",
+            "treasureValue": 100,
+            "hostility": 12,
+            "wasAttacked": false,
+            "strength": 5,
+            "dexterity": 16,
+            "maxHealth": 49,
+            "health": 51,
+            "position": {
+              "x": 61,
+              "y": 36
+            },
+            "ENEMY_CLASS": "domain.monsters.Vampire"
+          }
+        ],
+        "items": [
+          {
+            "bonusStrength": 24,
+            "bonusDexterity": 4,
+            "equipped": false,
+            "name": "Блестящий молот варвара",
+            "type": "WEAPON",
+            "position": {
+              "x": 62,
+              "y": 35
+            },
+            "itemClass": "domain.items.Weapon"
+          },
+          {
+            "bonusStrength": 9,
+            "bonusDexterity": 25,
+            "equipped": false,
+            "name": "Острый катана героя",
+            "type": "WEAPON",
+            "position": {
+              "x": 57,
+              "y": 34
+            },
+            "itemClass": "domain.items.Weapon"
+          },
+          {
+            "effectType": "DEXTERITY",
+            "bonus": 4,
+            "name": "Свиток ловкости \"Ловкость дракона\"",
+            "type": "SCROLL",
+            "position": {
+              "x": 62,
+              "y": 32
+            },
+            "itemClass": "domain.items.Scroll"
+          }
+        ]
+      },
+      {
+        "MAX_DOORS": 4,
+        "leftCorner": {
+          "x": 78,
+          "y": 29
+        },
+        "rightCorner": {
+          "x": 92,
+          "y": 35
+        },
+        "doors": [
+          {
+            "position": {
+              "x": 80,
+              "y": 29
+            }
+          },
+          null,
+          null,
+          {
+            "position": {
+              "x": 78,
+              "y": 33
+            }
+          }
+        ],
+        "isFreePositions": true,
+        "limitItemsAdd": false,
+        "enemies": [
+          {
+            "moveRight": true,
+            "moveDown": true,
+            "zigZagCicle": 0,
+            "type": "SNAKE_MAGICIAN",
+            "treasureValue": 125,
+            "hostility": 10,
+            "wasAttacked": false,
+            "strength": 10,
+            "dexterity": 30,
+            "maxHealth": 70,
+            "health": 71,
+            "position": {
+              "x": 80,
+              "y": 31
+            },
+            "ENEMY_CLASS": "domain.monsters.SnakeMagician"
+          }
+        ],
+        "items": [
+          {
+            "bonus": 8,
+            "duration": 7,
+            "effectType": "STRENGTH",
+            "isUsed": false,
+            "name": "Зелье силы Сила Огра",
+            "type": "POTION",
+            "position": {
+              "x": 79,
+              "y": 32
+            },
+            "itemClass": "domain.items.Potion"
+          }
+        ]
+      }
+    ],
+    "corridors": [
+      {
+        "leftCorner": {
+          "x": 29,
+          "y": 6
+        },
+        "rightCorner": {
+          "x": 42,
+          "y": 6
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 42,
+          "y": 6
+        },
+        "rightCorner": {
+          "x": 42,
+          "y": 7
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 42,
+          "y": 7
+        },
+        "rightCorner": {
+          "x": 47,
+          "y": 7
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 63,
+          "y": 5
+        },
+        "rightCorner": {
+          "x": 73,
+          "y": 5
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 73,
+          "y": 5
+        },
+        "rightCorner": {
+          "x": 73,
+          "y": 7
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 73,
+          "y": 7
+        },
+        "rightCorner": {
+          "x": 75,
+          "y": 7
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 15,
+          "y": 24
+        },
+        "rightCorner": {
+          "x": 37,
+          "y": 24
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 37,
+          "y": 17
+        },
+        "rightCorner": {
+          "x": 37,
+          "y": 24
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 37,
+          "y": 17
+        },
+        "rightCorner": {
+          "x": 50,
+          "y": 17
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 65,
+          "y": 19
+        },
+        "rightCorner": {
+          "x": 65,
+          "y": 19
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 65,
+          "y": 19
+        },
+        "rightCorner": {
+          "x": 65,
+          "y": 20
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 65,
+          "y": 20
+        },
+        "rightCorner": {
+          "x": 87,
+          "y": 20
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 32,
+          "y": 32
+        },
+        "rightCorner": {
+          "x": 42,
+          "y": 32
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 42,
+          "y": 32
+        },
+        "rightCorner": {
+          "x": 42,
+          "y": 36
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 42,
+          "y": 36
+        },
+        "rightCorner": {
+          "x": 55,
+          "y": 36
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 65,
+          "y": 32
+        },
+        "rightCorner": {
+          "x": 75,
+          "y": 32
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 75,
+          "y": 32
+        },
+        "rightCorner": {
+          "x": 75,
+          "y": 33
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 75,
+          "y": 33
+        },
+        "rightCorner": {
+          "x": 77,
+          "y": 33
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 56,
+          "y": 13
+        },
+        "rightCorner": {
+          "x": 56,
+          "y": 14
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 53,
+          "y": 14
+        },
+        "rightCorner": {
+          "x": 56,
+          "y": 14
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 53,
+          "y": 14
+        },
+        "rightCorner": {
+          "x": 53,
+          "y": 14
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 87,
+          "y": 12
+        },
+        "rightCorner": {
+          "x": 87,
+          "y": 16
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 87,
+          "y": 16
+        },
+        "rightCorner": {
+          "x": 95,
+          "y": 16
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 95,
+          "y": 16
+        },
+        "rightCorner": {
+          "x": 95,
+          "y": 16
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 9,
+          "y": 26
+        },
+        "rightCorner": {
+          "x": 9,
+          "y": 29
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 9,
+          "y": 29
+        },
+        "rightCorner": {
+          "x": 26,
+          "y": 29
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 26,
+          "y": 29
+        },
+        "rightCorner": {
+          "x": 26,
+          "y": 29
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 95,
+          "y": 26
+        },
+        "rightCorner": {
+          "x": 95,
+          "y": 27
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 80,
+          "y": 27
+        },
+        "rightCorner": {
+          "x": 95,
+          "y": 27
+        }
+      },
+      {
+        "leftCorner": {
+          "x": 80,
+          "y": 27
+        },
+        "rightCorner": {
+          "x": 80,
+          "y": 28
+        }
+      }
+    ],
+    "units": {
+      "enemies": [
+        {
+          "firstAttack": true,
+          "type": "VAMPIRE",
+          "treasureValue": 100,
+          "hostility": 12,
+          "wasAttacked": false,
+          "strength": 5,
+          "dexterity": 16,
+          "maxHealth": 49,
+          "health": 51,
+          "position": {
+            "x": 61,
+            "y": 36
+          },
+          "ENEMY_CLASS": "domain.monsters.Vampire"
+        },
+        {
+          "moveRight": true,
+          "moveDown": true,
+          "zigZagCicle": 0,
+          "type": "SNAKE_MAGICIAN",
+          "treasureValue": 125,
+          "hostility": 10,
+          "wasAttacked": false,
+          "strength": 10,
+          "dexterity": 30,
+          "maxHealth": 70,
+          "health": 71,
+          "position": {
+            "x": 80,
+            "y": 31
+          },
+          "ENEMY_CLASS": "domain.monsters.SnakeMagician"
+        },
+        {
+          "moveRight": true,
+          "moveDown": true,
+          "zigZagCicle": 0,
+          "type": "SNAKE_MAGICIAN",
+          "treasureValue": 125,
+          "hostility": 10,
+          "wasAttacked": false,
+          "strength": 9,
+          "dexterity": 31,
+          "maxHealth": 73,
+          "health": 68,
+          "position": {
+            "x": 23,
+            "y": 6
+          },
+          "ENEMY_CLASS": "domain.monsters.SnakeMagician"
+        },
+        {
+          "fakeChar": "~",
+          "type": "MIMIC",
+          "treasureValue": 50,
+          "hostility": 10,
+          "wasAttacked": false,
+          "strength": 5,
+          "dexterity": 20,
+          "maxHealth": 82,
+          "health": 81,
+          "position": {
+            "x": 60,
+            "y": 18
+          },
+          "ENEMY_CLASS": "domain.monsters.Mimic"
+        },
+        {
+          "moveRight": true,
+          "moveDown": true,
+          "zigZagCicle": 0,
+          "type": "SNAKE_MAGICIAN",
+          "treasureValue": 125,
+          "hostility": 10,
+          "wasAttacked": false,
+          "strength": 9,
+          "dexterity": 31,
+          "maxHealth": 73,
+          "health": 73,
+          "position": {
+            "x": 27,
+            "y": 35
+          },
+          "ENEMY_CLASS": "domain.monsters.SnakeMagician"
+        },
+        {
+          "type": "ZOMBIE",
+          "treasureValue": 50,
+          "hostility": 6,
+          "wasAttacked": false,
+          "strength": 4,
+          "dexterity": 6,
+          "maxHealth": 60,
+          "health": 62,
+          "position": {
+            "x": 90,
+            "y": 20
+          },
+          "ENEMY_CLASS": "domain.monsters.Zombie"
+        }
+      ],
+      "items": [
+        {
+          "effectType": "STRENGTH",
+          "bonus": 5,
+          "name": "Свиток силы \"Сила мага\"",
+          "type": "SCROLL",
+          "position": {
+            "x": 23,
+            "y": 7
+          },
+          "itemClass": "domain.items.Scroll"
+        },
+        {
+          "bonusStrength": 5,
+          "bonusDexterity": 9,
+          "equipped": false,
+          "name": "Старый посох убийца",
+          "type": "WEAPON",
+          "position": {
+            "x": 88,
+            "y": 3
+          },
+          "itemClass": "domain.items.Weapon"
+        },
+        {
+          "value": 90,
+          "name": "Древняя монета",
+          "type": "TREASURE",
+          "position": {
+            "x": 24,
+            "y": 35
+          },
+          "itemClass": "domain.items.Treasure"
+        },
+        {
+          "effectType": "HEALTH",
+          "bonus": 16,
+          "name": "Сыр",
+          "type": "FOOD",
+          "position": {
+            "x": 26,
+            "y": 34
+          },
+          "itemClass": "domain.items.Food"
+        },
+        {
+          "bonus": 12,
+          "duration": 9,
+          "effectType": "STRENGTH",
+          "isUsed": false,
+          "name": "Зелье силы Балтика 9",
+          "type": "POTION",
+          "position": {
+            "x": 59,
+            "y": 18
+          },
+          "itemClass": "domain.items.Potion"
+        },
+        {
+          "bonus": 21,
+          "duration": 6,
+          "effectType": "HEALTH",
+          "isUsed": false,
+          "name": "Зелье здоровья Зелье исцеления",
+          "type": "POTION",
+          "position": {
+            "x": 84,
+            "y": 6
+          },
+          "itemClass": "domain.items.Potion"
+        },
+        {
+          "bonusStrength": 9,
+          "bonusDexterity": 26,
+          "equipped": false,
+          "name": "Ржавый катана воина",
+          "type": "WEAPON",
+          "position": {
+            "x": 11,
+            "y": 22
+          },
+          "itemClass": "domain.items.Weapon"
+        },
+        {
+          "bonus": 8,
+          "duration": 7,
+          "effectType": "STRENGTH",
+          "isUsed": false,
+          "name": "Зелье силы Сила Огра",
+          "type": "POTION",
+          "position": {
+            "x": 79,
+            "y": 32
+          },
+          "itemClass": "domain.items.Potion"
+        },
+        {
+          "bonus": 35,
+          "duration": 10,
+          "effectType": "HEALTH",
+          "isUsed": false,
+          "name": "Зелье здоровья Живая вода",
+          "type": "POTION",
+          "position": {
+            "x": 23,
+            "y": 36
+          },
+          "itemClass": "domain.items.Potion"
+        },
+        {
+          "value": 15,
+          "name": "Золотое кольцо",
+          "type": "TREASURE",
+          "position": {
+            "x": 91,
+            "y": 19
+          },
+          "itemClass": "domain.items.Treasure"
+        },
+        {
+          "bonus": 7,
+          "duration": 8,
+          "effectType": "DEXTERITY",
+          "isUsed": false,
+          "name": "Зелье ловкости Нео",
+          "type": "POTION",
+          "position": {
+            "x": 88,
+            "y": 8
+          },
+          "itemClass": "domain.items.Potion"
+        },
+        {
+          "bonusStrength": 27,
+          "bonusDexterity": 4,
+          "equipped": false,
+          "name": "Ржавый молот варвара",
+          "type": "WEAPON",
+          "position": {
+            "x": 55,
+            "y": 21
+          },
+          "itemClass": "domain.items.Weapon"
+        },
+        {
+          "bonusStrength": 9,
+          "bonusDexterity": 25,
+          "equipped": false,
+          "name": "Острый катана героя",
+          "type": "WEAPON",
+          "position": {
+            "x": 57,
+            "y": 34
+          },
+          "itemClass": "domain.items.Weapon"
+        },
+        {
+          "effectType": "DEXTERITY",
+          "bonus": 4,
+          "name": "Свиток ловкости \"Ловкость дракона\"",
+          "type": "SCROLL",
+          "position": {
+            "x": 62,
+            "y": 32
+          },
+          "itemClass": "domain.items.Scroll"
+        },
+        {
+          "bonusStrength": 24,
+          "bonusDexterity": 4,
+          "equipped": false,
+          "name": "Блестящий молот варвара",
+          "type": "WEAPON",
+          "position": {
+            "x": 62,
+            "y": 35
+          },
+          "itemClass": "domain.items.Weapon"
+        }
+      ]
+    },
+    "startRoom": 1,
+    "endRoom": 6,
+    "stairsDown": {
+      "x": 25,
+      "y": 33
+    }
+  },
+  "player": {
+    "name": "123",
+    "backpack": {
+      "weapons": [],
+      "potions": [],
+      "scrolls": [],
+      "foods": [],
+      "totalTreasureValue": 0
+    },
+    "score": 0,
+    "activeEffects": [],
+    "sleepTurns": 0,
+    "strength": 10,
+    "dexterity": 10,
+    "maxHealth": 200,
+    "health": 200,
+    "position": {
+      "x": 56,
+      "y": 5
+    }
+  },
+  "generator": {
+    "roomCoords": [
+      [
+        1,
+        1,
+        32,
+        12
+      ],
+      [
+        34,
+        1,
+        65,
+        12
+      ],
+      [
+        67,
+        1,
+        96,
+        12
+      ],
+      [
+        1,
+        14,
+        32,
+        25
+      ],
+      [
+        34,
+        14,
+        65,
+        25
+      ],
+      [
+        67,
+        14,
+        96,
+        25
+      ],
+      [
+        1,
+        27,
+        32,
+        38
+      ],
+      [
+        34,
+        27,
+        65,
+        38
+      ],
+      [
+        67,
+        27,
+        96,
+        38
+      ]
+    ]
+  },
+  "currentRoom": 1,
+  "gameLog": "Game started",
+  "exploration": {
+    "visitedRooms": [
+      1
+    ],
+    "everVisitedCells": [
+      "56,12",
+      "52,10",
+      "52,11",
+      "56,10",
+      "56,11",
+      "61,9",
+      "61,6",
+      "61,5",
+      "61,8",
+      "61,7",
+      "59,10",
+      "59,8",
+      "55,10",
+      "59,9",
+      "59,11",
+      "51,10",
+      "55,11",
+      "51,8",
+      "53,6",
+      "51,11",
+      "53,7",
+      "51,9",
+      "55,5",
+      "55,6",
+      "53,8",
+      "57,5",
+      "55,7",
+      "53,9",
+      "57,6",
+      "55,8",
+      "59,5",
+      "57,7",
+      "55,9",
+      "59,6",
+      "57,8",
+      "59,7",
+      "57,9",
+      "51,5",
+      "61,11",
+      "51,6",
+      "61,10",
+      "51,7",
+      "53,5",
+      "49,7",
+      "49,8",
+      "49,9",
+      "58,10",
+      "58,11",
+      "54,11",
+      "54,10",
+      "50,11",
+      "50,10",
+      "49,5",
+      "49,6",
+      "60,5",
+      "62,5",
+      "60,7",
+      "60,6",
+      "60,11",
+      "60,9",
+      "60,10",
+      "60,8",
+      "58,9",
+      "53,11",
+      "57,10",
+      "57,11",
+      "53,10",
+      "50,9",
+      "52,7",
+      "54,5",
+      "52,8",
+      "54,6",
+      "56,5",
+      "54,7",
+      "52,9",
+      "56,6",
+      "54,8",
+      "58,5",
+      "56,7",
+      "54,9",
+      "58,6",
+      "56,8",
+      "58,7",
+      "56,9",
+      "58,8",
+      "50,5",
+      "50,6",
+      "50,7",
+      "52,5",
+      "50,8",
+      "52,6"
+    ],
+    "currentlyVisibleCells": [
+      "56,12",
+      "52,10",
+      "52,11",
+      "56,10",
+      "56,11",
+      "61,9",
+      "61,6",
+      "61,5",
+      "61,8",
+      "61,7",
+      "59,10",
+      "59,8",
+      "55,10",
+      "59,9",
+      "59,11",
+      "51,10",
+      "55,11",
+      "51,8",
+      "53,6",
+      "51,11",
+      "53,7",
+      "51,9",
+      "55,5",
+      "55,6",
+      "53,8",
+      "57,5",
+      "55,7",
+      "53,9",
+      "57,6",
+      "55,8",
+      "59,5",
+      "57,7",
+      "55,9",
+      "59,6",
+      "57,8",
+      "59,7",
+      "57,9",
+      "51,5",
+      "61,11",
+      "51,6",
+      "61,10",
+      "51,7",
+      "53,5",
+      "49,7",
+      "49,8",
+      "49,9",
+      "58,10",
+      "58,11",
+      "54,11",
+      "54,10",
+      "50,11",
+      "50,10",
+      "49,5",
+      "49,6",
+      "60,5",
+      "62,5",
+      "60,7",
+      "60,6",
+      "60,11",
+      "60,9",
+      "60,10",
+      "60,8",
+      "58,9",
+      "53,11",
+      "57,10",
+      "57,11",
+      "53,10",
+      "50,9",
+      "52,7",
+      "54,5",
+      "52,8",
+      "54,6",
+      "56,5",
+      "54,7",
+      "52,9",
+      "56,6",
+      "54,8",
+      "58,5",
+      "56,7",
+      "54,9",
+      "58,6",
+      "56,8",
+      "58,7",
+      "56,9",
+      "58,8",
+      "50,5",
+      "50,6",
+      "50,7",
+      "52,5",
+      "50,8",
+      "52,6"
+    ],
+    "level": {
+      "levelNumber": 1,
+      "rooms": [
+        {
+          "MAX_DOORS": 4,
+          "leftCorner": {
+            "x": 20,
+            "y": 3
+          },
+          "rightCorner": {
+            "x": 28,
+            "y": 9
+          },
+          "doors": [
+            null,
+            {
+              "position": {
+                "x": 28,
+                "y": 6
+              }
+            },
+            null,
+            null
+          ],
+          "isFreePositions": true,
+          "limitItemsAdd": false,
+          "enemies": [
+            {
+              "moveRight": true,
+              "moveDown": true,
+              "zigZagCicle": 0,
+              "type": "SNAKE_MAGICIAN",
+              "treasureValue": 125,
+              "hostility": 10,
+              "wasAttacked": false,
+              "strength": 9,
+              "dexterity": 31,
+              "maxHealth": 73,
+              "health": 68,
+              "position": {
+                "x": 23,
+                "y": 6
+              },
+              "ENEMY_CLASS": "domain.monsters.SnakeMagician"
+            }
+          ],
+          "items": [
+            {
+              "effectType": "STRENGTH",
+              "bonus": 5,
+              "name": "Свиток силы \"Сила мага\"",
+              "type": "SCROLL",
+              "position": {
+                "x": 23,
+                "y": 7
+              },
+              "itemClass": "domain.items.Scroll"
+            }
+          ]
+        },
+        {
+          "MAX_DOORS": 4,
+          "leftCorner": {
+            "x": 48,
+            "y": 4
+          },
+          "rightCorner": {
+            "x": 62,
+            "y": 12
+          },
+          "doors": [
+            null,
+            {
+              "position": {
+                "x": 62,
+                "y": 5
+              }
+            },
+            {
+              "position": {
+                "x": 56,
+                "y": 12
+              }
+            },
+            {
+              "position": {
+                "x": 48,
+                "y": 7
+              }
+            }
+          ],
+          "isFreePositions": true,
+          "limitItemsAdd": false,
+          "enemies": [],
+          "items": []
+        },
+        {
+          "MAX_DOORS": 4,
+          "leftCorner": {
+            "x": 76,
+            "y": 2
+          },
+          "rightCorner": {
+            "x": 89,
+            "y": 11
+          },
+          "doors": [
+            null,
+            null,
+            {
+              "position": {
+                "x": 87,
+                "y": 11
+              }
+            },
+            {
+              "position": {
+                "x": 76,
+                "y": 7
+              }
+            }
+          ],
+          "isFreePositions": true,
+          "limitItemsAdd": false,
+          "enemies": [],
+          "items": [
+            {
+              "bonus": 21,
+              "duration": 6,
+              "effectType": "HEALTH",
+              "isUsed": false,
+              "name": "Зелье здоровья Зелье исцеления",
+              "type": "POTION",
+              "position": {
+                "x": 84,
+                "y": 6
+              },
+              "itemClass": "domain.items.Potion"
+            },
+            {
+              "bonusStrength": 5,
+              "bonusDexterity": 9,
+              "equipped": false,
+              "name": "Старый посох убийца",
+              "type": "WEAPON",
+              "position": {
+                "x": 88,
+                "y": 3
+              },
+              "itemClass": "domain.items.Weapon"
+            },
+            {
+              "bonus": 7,
+              "duration": 8,
+              "effectType": "DEXTERITY",
+              "isUsed": false,
+              "name": "Зелье ловкости Нео",
+              "type": "POTION",
+              "position": {
+                "x": 88,
+                "y": 8
+              },
+              "itemClass": "domain.items.Potion"
+            }
+          ]
+        },
+        {
+          "MAX_DOORS": 4,
+          "leftCorner": {
+            "x": 4,
+            "y": 19
+          },
+          "rightCorner": {
+            "x": 14,
+            "y": 25
+          },
+          "doors": [
+            null,
+            {
+              "position": {
+                "x": 14,
+                "y": 24
+              }
+            },
+            {
+              "position": {
+                "x": 9,
+                "y": 25
+              }
+            },
+            null
+          ],
+          "isFreePositions": true,
+          "limitItemsAdd": false,
+          "enemies": [],
+          "items": [
+            {
+              "bonusStrength": 9,
+              "bonusDexterity": 26,
+              "equipped": false,
+              "name": "Ржавый катана воина",
+              "type": "WEAPON",
+              "position": {
+                "x": 11,
+                "y": 22
+              },
+              "itemClass": "domain.items.Weapon"
+            }
+          ]
+        },
+        {
+          "MAX_DOORS": 4,
+          "leftCorner": {
+            "x": 51,
+            "y": 15
+          },
+          "rightCorner": {
+            "x": 64,
+            "y": 22
+          },
+          "doors": [
+            {
+              "position": {
+                "x": 53,
+                "y": 15
+              }
+            },
+            {
+              "position": {
+                "x": 64,
+                "y": 19
+              }
+            },
+            null,
+            {
+              "position": {
+                "x": 51,
+                "y": 17
+              }
+            }
+          ],
+          "isFreePositions": true,
+          "limitItemsAdd": false,
+          "enemies": [
+            {
+              "fakeChar": "~",
+              "type": "MIMIC",
+              "treasureValue": 50,
+              "hostility": 10,
+              "wasAttacked": false,
+              "strength": 5,
+              "dexterity": 20,
+              "maxHealth": 82,
+              "health": 81,
+              "position": {
+                "x": 60,
+                "y": 18
+              },
+              "ENEMY_CLASS": "domain.monsters.Mimic"
+            }
+          ],
+          "items": [
+            {
+              "bonusStrength": 27,
+              "bonusDexterity": 4,
+              "equipped": false,
+              "name": "Ржавый молот варвара",
+              "type": "WEAPON",
+              "position": {
+                "x": 55,
+                "y": 21
+              },
+              "itemClass": "domain.items.Weapon"
+            },
+            {
+              "bonus": 12,
+              "duration": 9,
+              "effectType": "STRENGTH",
+              "isUsed": false,
+              "name": "Зелье силы Балтика 9",
+              "type": "POTION",
+              "position": {
+                "x": 59,
+                "y": 18
+              },
+              "itemClass": "domain.items.Potion"
+            }
+          ]
+        },
+        {
+          "MAX_DOORS": 4,
+          "leftCorner": {
+            "x": 88,
+            "y": 17
+          },
+          "rightCorner": {
+            "x": 96,
+            "y": 25
+          },
+          "doors": [
+            {
+              "position": {
+                "x": 95,
+                "y": 17
+              }
+            },
+            null,
+            {
+              "position": {
+                "x": 95,
+                "y": 25
+              }
+            },
+            {
+              "position": {
+                "x": 88,
+                "y": 20
+              }
+            }
+          ],
+          "isFreePositions": true,
+          "limitItemsAdd": false,
+          "enemies": [
+            {
+              "type": "ZOMBIE",
+              "treasureValue": 50,
+              "hostility": 6,
+              "wasAttacked": false,
+              "strength": 4,
+              "dexterity": 6,
+              "maxHealth": 60,
+              "health": 62,
+              "position": {
+                "x": 90,
+                "y": 20
+              },
+              "ENEMY_CLASS": "domain.monsters.Zombie"
+            }
+          ],
+          "items": [
+            {
+              "value": 15,
+              "name": "Золотое кольцо",
+              "type": "TREASURE",
+              "position": {
+                "x": 91,
+                "y": 19
+              },
+              "itemClass": "domain.items.Treasure"
+            }
+          ]
+        },
+        {
+          "MAX_DOORS": 4,
+          "leftCorner": {
+            "x": 18,
+            "y": 30
+          },
+          "rightCorner": {
+            "x": 31,
+            "y": 37
+          },
+          "doors": [
+            {
+              "position": {
+                "x": 26,
+                "y": 30
+              }
+            },
+            {
+              "position": {
+                "x": 31,
+                "y": 32
+              }
+            },
+            null,
+            null
+          ],
+          "isFreePositions": true,
+          "limitItemsAdd": false,
+          "enemies": [
+            {
+              "moveRight": true,
+              "moveDown": true,
+              "zigZagCicle": 0,
+              "type": "SNAKE_MAGICIAN",
+              "treasureValue": 125,
+              "hostility": 10,
+              "wasAttacked": false,
+              "strength": 9,
+              "dexterity": 31,
+              "maxHealth": 73,
+              "health": 73,
+              "position": {
+                "x": 27,
+                "y": 35
+              },
+              "ENEMY_CLASS": "domain.monsters.SnakeMagician"
+            }
+          ],
+          "items": [
+            {
+              "effectType": "HEALTH",
+              "bonus": 16,
+              "name": "Сыр",
+              "type": "FOOD",
+              "position": {
+                "x": 26,
+                "y": 34
+              },
+              "itemClass": "domain.items.Food"
+            },
+            {
+              "bonus": 35,
+              "duration": 10,
+              "effectType": "HEALTH",
+              "isUsed": false,
+              "name": "Зелье здоровья Живая вода",
+              "type": "POTION",
+              "position": {
+                "x": 23,
+                "y": 36
+              },
+              "itemClass": "domain.items.Potion"
+            },
+            {
+              "value": 90,
+              "name": "Древняя монета",
+              "type": "TREASURE",
+              "position": {
+                "x": 24,
+                "y": 35
+              },
+              "itemClass": "domain.items.Treasure"
+            }
+          ]
+        },
+        {
+          "MAX_DOORS": 4,
+          "leftCorner": {
+            "x": 56,
+            "y": 31
+          },
+          "rightCorner": {
+            "x": 64,
+            "y": 37
+          },
+          "doors": [
+            null,
+            {
+              "position": {
+                "x": 64,
+                "y": 32
+              }
+            },
+            null,
+            {
+              "position": {
+                "x": 56,
+                "y": 36
+              }
+            }
+          ],
+          "isFreePositions": true,
+          "limitItemsAdd": false,
+          "enemies": [
+            {
+              "firstAttack": true,
+              "type": "VAMPIRE",
+              "treasureValue": 100,
+              "hostility": 12,
+              "wasAttacked": false,
+              "strength": 5,
+              "dexterity": 16,
+              "maxHealth": 49,
+              "health": 51,
+              "position": {
+                "x": 61,
+                "y": 36
+              },
+              "ENEMY_CLASS": "domain.monsters.Vampire"
+            }
+          ],
+          "items": [
+            {
+              "bonusStrength": 24,
+              "bonusDexterity": 4,
+              "equipped": false,
+              "name": "Блестящий молот варвара",
+              "type": "WEAPON",
+              "position": {
+                "x": 62,
+                "y": 35
+              },
+              "itemClass": "domain.items.Weapon"
+            },
+            {
+              "bonusStrength": 9,
+              "bonusDexterity": 25,
+              "equipped": false,
+              "name": "Острый катана героя",
+              "type": "WEAPON",
+              "position": {
+                "x": 57,
+                "y": 34
+              },
+              "itemClass": "domain.items.Weapon"
+            },
+            {
+              "effectType": "DEXTERITY",
+              "bonus": 4,
+              "name": "Свиток ловкости \"Ловкость дракона\"",
+              "type": "SCROLL",
+              "position": {
+                "x": 62,
+                "y": 32
+              },
+              "itemClass": "domain.items.Scroll"
+            }
+          ]
+        },
+        {
+          "MAX_DOORS": 4,
+          "leftCorner": {
+            "x": 78,
+            "y": 29
+          },
+          "rightCorner": {
+            "x": 92,
+            "y": 35
+          },
+          "doors": [
+            {
+              "position": {
+                "x": 80,
+                "y": 29
+              }
+            },
+            null,
+            null,
+            {
+              "position": {
+                "x": 78,
+                "y": 33
+              }
+            }
+          ],
+          "isFreePositions": true,
+          "limitItemsAdd": false,
+          "enemies": [
+            {
+              "moveRight": true,
+              "moveDown": true,
+              "zigZagCicle": 0,
+              "type": "SNAKE_MAGICIAN",
+              "treasureValue": 125,
+              "hostility": 10,
+              "wasAttacked": false,
+              "strength": 10,
+              "dexterity": 30,
+              "maxHealth": 70,
+              "health": 71,
+              "position": {
+                "x": 80,
+                "y": 31
+              },
+              "ENEMY_CLASS": "domain.monsters.SnakeMagician"
+            }
+          ],
+          "items": [
+            {
+              "bonus": 8,
+              "duration": 7,
+              "effectType": "STRENGTH",
+              "isUsed": false,
+              "name": "Зелье силы Сила Огра",
+              "type": "POTION",
+              "position": {
+                "x": 79,
+                "y": 32
+              },
+              "itemClass": "domain.items.Potion"
+            }
+          ]
+        }
+      ],
+      "corridors": [
+        {
+          "leftCorner": {
+            "x": 29,
+            "y": 6
+          },
+          "rightCorner": {
+            "x": 42,
+            "y": 6
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 42,
+            "y": 6
+          },
+          "rightCorner": {
+            "x": 42,
+            "y": 7
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 42,
+            "y": 7
+          },
+          "rightCorner": {
+            "x": 47,
+            "y": 7
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 63,
+            "y": 5
+          },
+          "rightCorner": {
+            "x": 73,
+            "y": 5
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 73,
+            "y": 5
+          },
+          "rightCorner": {
+            "x": 73,
+            "y": 7
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 73,
+            "y": 7
+          },
+          "rightCorner": {
+            "x": 75,
+            "y": 7
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 15,
+            "y": 24
+          },
+          "rightCorner": {
+            "x": 37,
+            "y": 24
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 37,
+            "y": 17
+          },
+          "rightCorner": {
+            "x": 37,
+            "y": 24
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 37,
+            "y": 17
+          },
+          "rightCorner": {
+            "x": 50,
+            "y": 17
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 65,
+            "y": 19
+          },
+          "rightCorner": {
+            "x": 65,
+            "y": 19
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 65,
+            "y": 19
+          },
+          "rightCorner": {
+            "x": 65,
+            "y": 20
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 65,
+            "y": 20
+          },
+          "rightCorner": {
+            "x": 87,
+            "y": 20
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 32,
+            "y": 32
+          },
+          "rightCorner": {
+            "x": 42,
+            "y": 32
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 42,
+            "y": 32
+          },
+          "rightCorner": {
+            "x": 42,
+            "y": 36
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 42,
+            "y": 36
+          },
+          "rightCorner": {
+            "x": 55,
+            "y": 36
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 65,
+            "y": 32
+          },
+          "rightCorner": {
+            "x": 75,
+            "y": 32
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 75,
+            "y": 32
+          },
+          "rightCorner": {
+            "x": 75,
+            "y": 33
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 75,
+            "y": 33
+          },
+          "rightCorner": {
+            "x": 77,
+            "y": 33
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 56,
+            "y": 13
+          },
+          "rightCorner": {
+            "x": 56,
+            "y": 14
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 53,
+            "y": 14
+          },
+          "rightCorner": {
+            "x": 56,
+            "y": 14
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 53,
+            "y": 14
+          },
+          "rightCorner": {
+            "x": 53,
+            "y": 14
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 87,
+            "y": 12
+          },
+          "rightCorner": {
+            "x": 87,
+            "y": 16
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 87,
+            "y": 16
+          },
+          "rightCorner": {
+            "x": 95,
+            "y": 16
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 95,
+            "y": 16
+          },
+          "rightCorner": {
+            "x": 95,
+            "y": 16
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 9,
+            "y": 26
+          },
+          "rightCorner": {
+            "x": 9,
+            "y": 29
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 9,
+            "y": 29
+          },
+          "rightCorner": {
+            "x": 26,
+            "y": 29
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 26,
+            "y": 29
+          },
+          "rightCorner": {
+            "x": 26,
+            "y": 29
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 95,
+            "y": 26
+          },
+          "rightCorner": {
+            "x": 95,
+            "y": 27
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 80,
+            "y": 27
+          },
+          "rightCorner": {
+            "x": 95,
+            "y": 27
+          }
+        },
+        {
+          "leftCorner": {
+            "x": 80,
+            "y": 27
+          },
+          "rightCorner": {
+            "x": 80,
+            "y": 28
+          }
+        }
+      ],
+      "units": {
+        "enemies": [
+          {
+            "firstAttack": true,
+            "type": "VAMPIRE",
+            "treasureValue": 100,
+            "hostility": 12,
+            "wasAttacked": false,
+            "strength": 5,
+            "dexterity": 16,
+            "maxHealth": 49,
+            "health": 51,
+            "position": {
+              "x": 61,
+              "y": 36
+            },
+            "ENEMY_CLASS": "domain.monsters.Vampire"
+          },
+          {
+            "moveRight": true,
+            "moveDown": true,
+            "zigZagCicle": 0,
+            "type": "SNAKE_MAGICIAN",
+            "treasureValue": 125,
+            "hostility": 10,
+            "wasAttacked": false,
+            "strength": 10,
+            "dexterity": 30,
+            "maxHealth": 70,
+            "health": 71,
+            "position": {
+              "x": 80,
+              "y": 31
+            },
+            "ENEMY_CLASS": "domain.monsters.SnakeMagician"
+          },
+          {
+            "moveRight": true,
+            "moveDown": true,
+            "zigZagCicle": 0,
+            "type": "SNAKE_MAGICIAN",
+            "treasureValue": 125,
+            "hostility": 10,
+            "wasAttacked": false,
+            "strength": 9,
+            "dexterity": 31,
+            "maxHealth": 73,
+            "health": 68,
+            "position": {
+              "x": 23,
+              "y": 6
+            },
+            "ENEMY_CLASS": "domain.monsters.SnakeMagician"
+          },
+          {
+            "fakeChar": "~",
+            "type": "MIMIC",
+            "treasureValue": 50,
+            "hostility": 10,
+            "wasAttacked": false,
+            "strength": 5,
+            "dexterity": 20,
+            "maxHealth": 82,
+            "health": 81,
+            "position": {
+              "x": 60,
+              "y": 18
+            },
+            "ENEMY_CLASS": "domain.monsters.Mimic"
+          },
+          {
+            "moveRight": true,
+            "moveDown": true,
+            "zigZagCicle": 0,
+            "type": "SNAKE_MAGICIAN",
+            "treasureValue": 125,
+            "hostility": 10,
+            "wasAttacked": false,
+            "strength": 9,
+            "dexterity": 31,
+            "maxHealth": 73,
+            "health": 73,
+            "position": {
+              "x": 27,
+              "y": 35
+            },
+            "ENEMY_CLASS": "domain.monsters.SnakeMagician"
+          },
+          {
+            "type": "ZOMBIE",
+            "treasureValue": 50,
+            "hostility": 6,
+            "wasAttacked": false,
+            "strength": 4,
+            "dexterity": 6,
+            "maxHealth": 60,
+            "health": 62,
+            "position": {
+              "x": 90,
+              "y": 20
+            },
+            "ENEMY_CLASS": "domain.monsters.Zombie"
+          }
+        ],
+        "items": [
+          {
+            "effectType": "STRENGTH",
+            "bonus": 5,
+            "name": "Свиток силы \"Сила мага\"",
+            "type": "SCROLL",
+            "position": {
+              "x": 23,
+              "y": 7
+            },
+            "itemClass": "domain.items.Scroll"
+          },
+          {
+            "bonusStrength": 5,
+            "bonusDexterity": 9,
+            "equipped": false,
+            "name": "Старый посох убийца",
+            "type": "WEAPON",
+            "position": {
+              "x": 88,
+              "y": 3
+            },
+            "itemClass": "domain.items.Weapon"
+          },
+          {
+            "value": 90,
+            "name": "Древняя монета",
+            "type": "TREASURE",
+            "position": {
+              "x": 24,
+              "y": 35
+            },
+            "itemClass": "domain.items.Treasure"
+          },
+          {
+            "effectType": "HEALTH",
+            "bonus": 16,
+            "name": "Сыр",
+            "type": "FOOD",
+            "position": {
+              "x": 26,
+              "y": 34
+            },
+            "itemClass": "domain.items.Food"
+          },
+          {
+            "bonus": 12,
+            "duration": 9,
+            "effectType": "STRENGTH",
+            "isUsed": false,
+            "name": "Зелье силы Балтика 9",
+            "type": "POTION",
+            "position": {
+              "x": 59,
+              "y": 18
+            },
+            "itemClass": "domain.items.Potion"
+          },
+          {
+            "bonus": 21,
+            "duration": 6,
+            "effectType": "HEALTH",
+            "isUsed": false,
+            "name": "Зелье здоровья Зелье исцеления",
+            "type": "POTION",
+            "position": {
+              "x": 84,
+              "y": 6
+            },
+            "itemClass": "domain.items.Potion"
+          },
+          {
+            "bonusStrength": 9,
+            "bonusDexterity": 26,
+            "equipped": false,
+            "name": "Ржавый катана воина",
+            "type": "WEAPON",
+            "position": {
+              "x": 11,
+              "y": 22
+            },
+            "itemClass": "domain.items.Weapon"
+          },
+          {
+            "bonus": 8,
+            "duration": 7,
+            "effectType": "STRENGTH",
+            "isUsed": false,
+            "name": "Зелье силы Сила Огра",
+            "type": "POTION",
+            "position": {
+              "x": 79,
+              "y": 32
+            },
+            "itemClass": "domain.items.Potion"
+          },
+          {
+            "bonus": 35,
+            "duration": 10,
+            "effectType": "HEALTH",
+            "isUsed": false,
+            "name": "Зелье здоровья Живая вода",
+            "type": "POTION",
+            "position": {
+              "x": 23,
+              "y": 36
+            },
+            "itemClass": "domain.items.Potion"
+          },
+          {
+            "value": 15,
+            "name": "Золотое кольцо",
+            "type": "TREASURE",
+            "position": {
+              "x": 91,
+              "y": 19
+            },
+            "itemClass": "domain.items.Treasure"
+          },
+          {
+            "bonus": 7,
+            "duration": 8,
+            "effectType": "DEXTERITY",
+            "isUsed": false,
+            "name": "Зелье ловкости Нео",
+            "type": "POTION",
+            "position": {
+              "x": 88,
+              "y": 8
+            },
+            "itemClass": "domain.items.Potion"
+          },
+          {
+            "bonusStrength": 27,
+            "bonusDexterity": 4,
+            "equipped": false,
+            "name": "Ржавый молот варвара",
+            "type": "WEAPON",
+            "position": {
+              "x": 55,
+              "y": 21
+            },
+            "itemClass": "domain.items.Weapon"
+          },
+          {
+            "bonusStrength": 9,
+            "bonusDexterity": 25,
+            "equipped": false,
+            "name": "Острый катана героя",
+            "type": "WEAPON",
+            "position": {
+              "x": 57,
+              "y": 34
+            },
+            "itemClass": "domain.items.Weapon"
+          },
+          {
+            "effectType": "DEXTERITY",
+            "bonus": 4,
+            "name": "Свиток ловкости \"Ловкость дракона\"",
+            "type": "SCROLL",
+            "position": {
+              "x": 62,
+              "y": 32
+            },
+            "itemClass": "domain.items.Scroll"
+          },
+          {
+            "bonusStrength": 24,
+            "bonusDexterity": 4,
+            "equipped": false,
+            "name": "Блестящий молот варвара",
+            "type": "WEAPON",
+            "position": {
+              "x": 62,
+              "y": 35
+            },
+            "itemClass": "domain.items.Weapon"
+          }
+        ]
+      },
+      "startRoom": 1,
+      "endRoom": 6,
+      "stairsDown": {
+        "x": 25,
+        "y": 33
+      }
+    },
+    "player": {
+      "name": "123",
+      "backpack": {
+        "weapons": [],
+        "potions": [],
+        "scrolls": [],
+        "foods": [],
+        "totalTreasureValue": 0
+      },
+      "score": 0,
+      "activeEffects": [],
+      "sleepTurns": 0,
+      "strength": 10,
+      "dexterity": 10,
+      "maxHealth": 200,
+      "health": 200,
+      "position": {
+        "x": 56,
+        "y": 5
+      }
+    },
+    "showAllMap": false
+  },
+  "gameStats": {
+    "playerName": "123",
+    "score": 0,
+    "level": 1,
+    "consumedFoods": 0,
+    "consumedElixirs": 0,
+    "readedScrolls": 0,
+    "kills": 0,
+    "attacks": 0,
+    "missed": 0,
+    "steps": 0,
+    "result": "unknown"
+  }
+}

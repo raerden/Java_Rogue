@@ -1,0 +1,69 @@
+{
+  "gameStatsList": [
+    {
+      "playerName": "IDDQD",
+      "score": 2700,
+      "level": 20,
+      "consumedFoods": 0,
+      "consumedElixirs": 0,
+      "readedScrolls": 0,
+      "kills": 28,
+      "attacks": 28,
+      "missed": 0,
+      "steps": 2226,
+      "result": "completed"
+    },
+    {
+      "playerName": "Ощрт",
+      "score": 1275,
+      "level": 3,
+      "consumedFoods": 4,
+      "consumedElixirs": 0,
+      "readedScrolls": 7,
+      "kills": 14,
+      "attacks": 58,
+      "missed": 21,
+      "steps": 1631,
+      "result": "quit"
+    },
+    {
+      "playerName": "dead",
+      "score": 200,
+      "level": 1,
+      "consumedFoods": 0,
+      "consumedElixirs": 0,
+      "readedScrolls": 0,
+      "kills": 2,
+      "attacks": 26,
+      "missed": 30,
+      "steps": 253,
+      "result": "death"
+    },
+    {
+      "playerName": "rOOT",
+      "score": 125,
+      "level": 1,
+      "consumedFoods": 0,
+      "consumedElixirs": 0,
+      "readedScrolls": 1,
+      "kills": 2,
+      "attacks": 14,
+      "missed": 13,
+      "steps": 119,
+      "result": "level up"
+    },
+    {
+      "playerName": "rOOT",
+      "score": 125,
+      "level": 2,
+      "consumedFoods": 0,
+      "consumedElixirs": 0,
+      "readedScrolls": 1,
+      "kills": 2,
+      "attacks": 14,
+      "missed": 13,
+      "steps": 119,
+      "result": "quit"
+    }
+  ]
+}
